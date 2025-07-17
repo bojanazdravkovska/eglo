@@ -4,6 +4,7 @@
       "id": "interior-lights",
       "name": "Interior lights",
       "icon": "Lightbulb",
+      "description": "A perfect light for every room. Emphasise the uniqueness of your room through combining soft colours, elegant furniture and the latest lighting technology.\n\nEvery room is different; you want to create a relaxing atmosphere in one and work in another. Discover our extensive selection of lighting products and find your personal style.",
       "subcategories": [
         {
           "id": "smart-lighting",
@@ -76,6 +77,7 @@
       "id": "outdoor-lights",
       "name": "Outdoor lights",
       "icon": "Zap",
+      "description": "Illuminate your outdoor spaces with our comprehensive range of exterior lighting solutions. From garden path lights to sophisticated facade lighting, we offer everything you need to create the perfect outdoor ambiance.\n\nTransform your garden, patio, and entrance areas with weather-resistant lighting that combines functionality with elegant design. Our outdoor collection ensures safety and beauty in every season.",
       "subcategories": [
         {
           "id": "outdoor-led-lights",
@@ -138,6 +140,7 @@
       "id": "ceiling-fans",
       "name": "Ceiling fans",
       "icon": "Fan",
+      "description": "Stay cool and comfortable with our selection of ceiling fans that combine style with functionality. Whether you prefer fans with integrated lighting or standalone models, we have options to suit every room and preference.\n\nOur ceiling fans are designed for optimal air circulation while maintaining a quiet, efficient operation. Choose from modern designs to classic styles that complement your interior perfectly.",
       "subcategories": [
         {
           "id": "ceiling-fans-with-light",
@@ -155,6 +158,7 @@
       "id": "illuminants",
       "name": "Illuminants",
       "icon": "Zap",
+      "description": "Find the perfect bulbs and illuminants for your lighting fixtures. Our comprehensive range includes various socket types, energy-efficient LED options, and traditional lighting solutions to meet all your illumination needs.\n\nFrom E27 and E14 sockets to specialized GU10 and G9 bulbs, we offer high-quality illuminants that provide optimal brightness, color temperature, and energy efficiency for every application.",
       "subcategories": [
         {
           "id": "e27",
@@ -202,6 +206,7 @@
       "id": "inspiration",
       "name": "Inspiration",
       "icon": "Home",
+      "description": "Discover lighting inspiration for every room in your home. Our room-by-room guides help you create the perfect ambiance for living spaces, kitchens, bedrooms, and more with expert lighting solutions.\n\nGet inspired by our curated collections and expert tips that show you how to combine different lighting types to achieve the ideal atmosphere for any space. From cozy living rooms to functional kitchens, find your perfect lighting style.",
       "subcategories": [
         {
           "id": "room-solutions",

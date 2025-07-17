@@ -76,7 +76,7 @@ export function Navigation() {
               onMouseLeave={handleMouseLeave}
             >
               <Link
-                href="#"
+                href={`/category/${category.id}`}
                 className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors font-medium"
               >
                 {getIcon(category.icon)}

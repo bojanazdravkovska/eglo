@@ -33,7 +33,7 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <div className="w-8 h-8 bg-teal-600 rounded mr-3"></div>
-            <span className="text-2xl font-bold text-gray-900">LUMINA</span>
+            <span className="text-2xl font-bold text-gray-900">EGLO</span>
           </div>
 
           {/* Search */}
