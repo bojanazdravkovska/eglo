@@ -1,8 +1,9 @@
 import Link from "next/link"
-import { Search, MapPin, User, ShoppingCart, Lightbulb, Fan, Zap, Home } from "lucide-react"
+import { Search, MapPin, User, ShoppingCart } from "lucide-react"
 import { Button } from "./Button"
 import { Input } from "./Input"
 import { Badge } from "./Badge"
+import { Navigation } from "./Navigation"
 
 export function Header() {
   return (
@@ -64,46 +65,7 @@ export function Header() {
       </div>
 
       {/* Navigation */}
-      <nav className="border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-8 py-4">
-            <Link
-              href="#"
-              className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors font-medium"
-            >
-              <Lightbulb className="w-4 h-4" />
-              Interior Lights
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors font-medium"
-            >
-              <Zap className="w-4 h-4" />
-              Outdoor Lights
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors font-medium"
-            >
-              <Fan className="w-4 h-4" />
-              Ceiling Fans
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors font-medium"
-            >
-              <Home className="w-4 h-4" />
-              Smart Lighting
-            </Link>
-            <Link href="#" className="text-gray-700 hover:text-teal-600 transition-colors font-medium">
-              Inspiration
-            </Link>
-            <Link href="#" className="text-red-600 hover:text-red-700 transition-colors font-semibold">
-              Sale %
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
     </header>
   )
 }

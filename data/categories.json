@@ -1,0 +1,224 @@
+{
+  "categories": [
+    {
+      "id": "interior-lights",
+      "name": "Interior lights",
+      "icon": "Lightbulb",
+      "subcategories": [
+        {
+          "id": "smart-lighting",
+          "name": "Smart Lighting",
+          "subcategories": []
+        },
+        {
+          "id": "led-lamps",
+          "name": "LED lamps",
+          "subcategories": [
+            "LED Strips",
+            "LED Panel",
+            "LED tubes",
+            "Floor LED lights",
+            "Ceiling LED lights",
+            "LED pendant lights",
+            "Wall LED lights",
+            "Table LED lights",
+            "Ceiling LED floodlight"
+          ]
+        },
+        {
+          "id": "floor-lamps",
+          "name": "Floor lamps",
+          "subcategories": []
+        },
+        {
+          "id": "ceiling-lights",
+          "name": "Ceiling lights",
+          "subcategories": []
+        },
+        {
+          "id": "pendant-lights",
+          "name": "Pendant lights",
+          "subcategories": []
+        },
+        {
+          "id": "chandeliers",
+          "name": "Chandeliers",
+          "subcategories": []
+        },
+        {
+          "id": "wall-lights",
+          "name": "Wall lights",
+          "subcategories": []
+        },
+        {
+          "id": "table-lamps",
+          "name": "Table lamps",
+          "subcategories": []
+        },
+        {
+          "id": "track-spotlights",
+          "name": "Track and spotlights",
+          "subcategories": []
+        },
+        {
+          "id": "recessed-surface",
+          "name": "Recessed and surface-mounted lights",
+          "subcategories": []
+        },
+        {
+          "id": "under-cabinet",
+          "name": "Under-cabinet lights",
+          "subcategories": []
+        }
+      ]
+    },
+    {
+      "id": "outdoor-lights",
+      "name": "Outdoor lights",
+      "icon": "Zap",
+      "subcategories": [
+        {
+          "id": "outdoor-led-lights",
+          "name": "Outdoor LED lights",
+          "subcategories": []
+        },
+        {
+          "id": "solar-lights",
+          "name": "Solar lights",
+          "subcategories": []
+        },
+        {
+          "id": "motion-detectors",
+          "name": "Motion detectors",
+          "subcategories": []
+        },
+        {
+          "id": "outdoor-wall-lights",
+          "name": "Outdoor wall lights",
+          "subcategories": []
+        },
+        {
+          "id": "house-number-lighting",
+          "name": "House number lighting",
+          "subcategories": []
+        },
+        {
+          "id": "outdoor-ceiling-luminaire",
+          "name": "Outdoor ceiling luminaire",
+          "subcategories": []
+        },
+        {
+          "id": "outdoor-spotlights",
+          "name": "Outdoor spotlights",
+          "subcategories": []
+        },
+        {
+          "id": "path-lamps",
+          "name": "Path lamps",
+          "subcategories": []
+        },
+        {
+          "id": "pedestal-lights",
+          "name": "Pedestal lights",
+          "subcategories": []
+        },
+        {
+          "id": "recessed-surface-mounted",
+          "name": "Recessed- and surface mounted lights",
+          "subcategories": []
+        },
+        {
+          "id": "smart-outdoor-lighting",
+          "name": "Smart outdoor lighting",
+          "subcategories": []
+        }
+      ]
+    },
+    {
+      "id": "ceiling-fans",
+      "name": "Ceiling fans",
+      "icon": "Fan",
+      "subcategories": [
+        {
+          "id": "ceiling-fans-with-light",
+          "name": "Ceiling Fans With Light",
+          "subcategories": []
+        },
+        {
+          "id": "ceiling-fans-without-light",
+          "name": "Ceiling fans without light",
+          "subcategories": []
+        }
+      ]
+    },
+    {
+      "id": "illuminants",
+      "name": "Illuminants",
+      "icon": "Zap",
+      "subcategories": [
+        {
+          "id": "e27",
+          "name": "E27",
+          "subcategories": []
+        },
+        {
+          "id": "e14",
+          "name": "E14",
+          "subcategories": []
+        },
+        {
+          "id": "g4",
+          "name": "G4",
+          "subcategories": []
+        },
+        {
+          "id": "g9",
+          "name": "G9",
+          "subcategories": []
+        },
+        {
+          "id": "gu5-3",
+          "name": "GU5.3",
+          "subcategories": []
+        },
+        {
+          "id": "gu10",
+          "name": "GU10",
+          "subcategories": []
+        },
+        {
+          "id": "r7s",
+          "name": "R7S",
+          "subcategories": []
+        },
+        {
+          "id": "gx53",
+          "name": "GX53",
+          "subcategories": []
+        }
+      ]
+    },
+    {
+      "id": "inspiration",
+      "name": "Inspiration",
+      "icon": "Home",
+      "subcategories": [
+        {
+          "id": "room-solutions",
+          "name": "Room solutions",
+          "subcategories": [
+            "Living room lighting",
+            "Kitchen lighting",
+            "Dining room lighting",
+            "Child bedroom lighting",
+            "Bedroom lighting",
+            "Bathroom lighting",
+            "Office lighting",
+            "Hallway lighting",
+            "Stairwell lighting"
+          ]
+        }
+      ]
+    }
+  ]
+} 
