@@ -5,10 +5,14 @@ import { useState, useRef, useEffect } from "react"
 import { Lightbulb, Fan, Zap, Home, ChevronRight, Menu, X } from "lucide-react"
 import categoriesData from "../data/categories.json"
 
-export function Navigation() {
+interface NavigationProps {
+  isMobileMenuOpen: boolean
+  setIsMobileMenuOpen: (open: boolean) => void
+}
+
+export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: NavigationProps) {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
   const [hoveredSubcategory, setHoveredSubcategory] = useState<string | null>(null)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>(null)
   const [expandedMobileSubcategory, setExpandedMobileSubcategory] = useState<string | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -146,21 +150,6 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         <div className="md:hidden">
-          {/* Mobile Menu Button */}
-          <div className="flex items-center justify-center py-4">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-              <span className="font-medium">Menu</span>
-            </button>
-          </div>
-
           {/* Mobile Menu Overlay */}
           {isMobileMenuOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
@@ -208,6 +197,7 @@ export function Navigation() {
                                 <Link
                                   href="#"
                                   className="block p-4 pl-12 text-gray-700 hover:text-teal-600 transition-colors"
+                                  onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                   {subcategory}
                                 </Link>
@@ -237,6 +227,7 @@ export function Navigation() {
                                           key={subIndex}
                                           href="#"
                                           className="block p-3 pl-16 text-sm text-gray-600 hover:text-teal-600 transition-colors"
+                                          onClick={() => setIsMobileMenuOpen(false)}
                                         >
                                           {subSubcategory}
                                         </Link>
@@ -244,6 +235,7 @@ export function Navigation() {
                                       <Link
                                         href="#"
                                         className="block p-3 pl-16 text-sm text-teal-600 hover:text-teal-700 transition-colors font-medium"
+                                        onClick={() => setIsMobileMenuOpen(false)}
                                       >
                                         All
                                       </Link>

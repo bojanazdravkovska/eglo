@@ -16,14 +16,13 @@ export const viewport = {
   initialScale: 1,
 };
 
-
 export default async function Layout(props: {
   children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body>
-        <EgloDefaultLayout>
+        <EgloDefaultLayout noPadding={true}>
           {props.children}
         </EgloDefaultLayout>
       </body>

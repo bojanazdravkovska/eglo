@@ -27,7 +27,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     <div className="min-h-screen bg-white">
       {/* Breadcrumbs */}
       <div className="border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-0 py-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4">
           <nav className="flex items-center space-x-2 text-sm text-gray-500">
             <Link href="/" className="hover:text-teal-600 transition-colors">
               Home
@@ -39,18 +39,18 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-0 py-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-2 lg:px-2 py-4 md:py-12">
         {/* Main Content - Full Width */}
-        <div className="mb-12">
+        <div className="mb-6 md:mb-8">
           {/* Page Title */}
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">{category.name}</h1>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">{category.name}</h1>
           
           {/* Description and Images Section */}
-          <div className="grid lg:grid-cols-4 gap-8">
+          <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
             {/* Text Description */}
-            <div className="lg:col-span-1 space-y-6">
-              <h2 className="text-2xl font-semibold text-gray-900">{category.name}</h2>
-              <div className="space-y-4 text-gray-600 leading-relaxed">
+            <div className="lg:col-span-1 space-y-3 md:space-y-4">
+              <h2 className="text-xl md:text-2xl font-semibold text-gray-900">{category.name}</h2>
+              <div className="space-y-2 md:space-y-3 text-gray-600 leading-relaxed text-sm md:text-base">
                 {category.description.split('\n\n').map((paragraph, index) => (
                   <p key={index}>
                     {paragraph}
@@ -59,7 +59,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               </div>
               <Link 
                 href="#" 
-                className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium transition-colors"
+                className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium transition-colors text-sm md:text-base"
               >
                 Read more
                 <ChevronRight className="ml-1 w-4 h-4" />
@@ -67,19 +67,19 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             </div>
 
             {/* Images */}
-            <div className="lg:col-span-3 grid grid-cols-2 gap-2">
-              <div className="relative h-96 bg-gray-100 rounded-2xl overflow-hidden">
+            <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+              <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 bg-gray-100 rounded-lg md:rounded-2xl overflow-hidden">
                 <Image
-                  src="/assets/images/interior-lights1.jpg"
-                  alt="Interior lighting example 1"
+                  src={category.images?.image1 || "/assets/images/interior-lights1.jpg"}
+                  alt={`${category.name} example 1`}
                   fill
                   className="object-cover"
                 />
               </div>
-              <div className="relative h-96 bg-gray-100 rounded-2xl overflow-hidden">
+              <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 bg-gray-100 rounded-lg md:rounded-2xl overflow-hidden">
                 <Image
-                  src="/assets/images/interior-lights2.jpg"
-                  alt="Interior lighting example 2"
+                  src={category.images?.image2 || "/assets/images/interior-lights2.jpg"}
+                  alt={`${category.name} example 2`}
                   fill
                   className="object-cover"
                 />
@@ -89,17 +89,17 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         </div>
 
         {/* Product Section */}
-        <div className="flex gap-8">
-          {/* Subcategories Sidebar - Left Side */}
-          <div className="w-80 bg-gray-50 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
-            <div className="space-y-2">
+        <div className="flex flex-col lg:flex-row gap-8 md:gap-6 mt-18">
+          {/* Subcategories Sidebar - Mobile: Full width, Desktop: Fixed width */}
+          <div className="lg:w-80 bg-gray-50 rounded-lg p-3 md:p-4 order-2 lg:order-1">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3 md:mb-4">Categories</h3>
+            <div className="space-y-1 md:space-y-2">
               {category.subcategories.map((subcategory, index) => (
                 <div key={subcategory.id || index}>
                   {typeof subcategory === 'string' ? (
                     <Link
                       href="#"
-                      className="block py-2 px-3 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded transition-colors"
+                      className="block py-2 px-3 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded transition-colors text-sm md:text-base"
                     >
                       {subcategory}
                     </Link>
@@ -109,7 +109,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                         onClick={() => setExpandedSubcategory(
                           expandedSubcategory === subcategory.id ? null : subcategory.id
                         )}
-                        className="w-full flex items-center justify-between py-2 px-3 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded transition-colors"
+                        className="w-full flex items-center justify-between py-2 px-3 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded transition-colors text-sm md:text-base"
                       >
                         <span>{subcategory.name}</span>
                         {subcategory.subcategories.length > 0 && (
@@ -141,8 +141,8 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           </div>
 
           {/* Product Grid */}
-          <div className="flex-1">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="flex-1 order-1 lg:order-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-4">
     
               {/* Duplicate cards for demo */}
               {[...Array(12)].map((_, index) => (
