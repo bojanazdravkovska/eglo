@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ChevronRight, ChevronDown } from "lucide-react"
 import { useState, use } from "react"
 import categoriesData from "../../../data/categories.json"
+import productsData from "../../../data/products.json"
 import ProductCard from "../../../components/ProductCard"
 
 interface CategoryPageProps {
@@ -23,6 +24,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     notFound()
   }
 
+  // Filter products by category
+  const categoryProducts = productsData.products.filter(product => product.category === resolvedParams.slug)
+
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumbs */}
@@ -39,7 +43,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 md:px-2 lg:px-2 py-4 md:py-12">
+      <div className="max-w-7xl mx-auto px-1 md:px-2 lg:px-2 py-4 md:py-12">
         {/* Main Content - Full Width */}
         <div className="mb-6 md:mb-8">
           {/* Page Title */}
@@ -89,7 +93,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         </div>
 
         {/* Product Section */}
-        <div className="flex flex-col lg:flex-row gap-8 md:gap-6 mt-18">
+        <div className="flex flex-col lg:flex-row gap-4 md:gap-6 mt-18">
           {/* Subcategories Sidebar - Mobile: Full width, Desktop: Fixed width */}
           <div className="lg:w-80 bg-gray-50 rounded-lg p-3 md:p-4 order-2 lg:order-1">
             <h3 className="text-lg font-semibold text-gray-900 mb-3 md:mb-4">Categories</h3>
@@ -142,16 +146,15 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
           {/* Product Grid */}
           <div className="flex-1 order-1 lg:order-2">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-4">
-    
-              {/* Duplicate cards for demo */}
-              {[...Array(12)].map((_, index) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
+              {categoryProducts.map((product) => (
                 <ProductCard
-                  key={index}
-                  productName="MOGANO 3 ceiling light"
-                  productDesc="Modern ceiling light with elegant design"
-                  productPrice="€299"
-                  productImg="/assets/images/MOGANO-3-ceiling-light.jpg"
+                  key={product.id}
+                  productName={product.name}
+                  productDesc={product.description}
+                  productPrice={product.price}
+                  productImg={product.images[0]}
+                  productSlug={product.slug}
                 />
               ))}
             </div>

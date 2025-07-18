@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { useState } from "react"
 
 interface ProductCardProps {
@@ -6,22 +7,24 @@ interface ProductCardProps {
   productDesc: string
   productPrice: string
   productImg: string
+  productSlug?: string
 }
 
 export default function ProductCard({ 
   productName, 
   productDesc, 
   productPrice, 
-  productImg 
+  productImg,
+  productSlug
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   
   // Create the view image path by replacing the filename
   const viewImagePath = productImg.replace('.jpg', '-view.jpg')
   
-  return (
+  const cardContent = (
     <div 
-      className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+      className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -41,11 +44,25 @@ export default function ProductCard({
         <p className="text-gray-600 text-sm mb-3">{productDesc}</p>
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold text-gray-900">{productPrice}</span>
-          <button className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition-colors">
+          <button 
+            className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
             Add to Cart
           </button>
         </div>
       </div>
     </div>
   )
+
+  // If productSlug is provided, wrap in Link, otherwise return just the card
+  if (productSlug) {
+    return (
+      <Link href={`/product/${productSlug}`} className="block">
+        {cardContent}
+      </Link>
+    )
+  }
+
+  return cardContent
 } 

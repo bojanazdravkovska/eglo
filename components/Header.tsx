@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link"
+import Image from "next/image"
 import { Search, MapPin, User, ShoppingCart, Menu, X } from "lucide-react"
 import { Button } from "./Button"
 import { Input } from "./Input"
@@ -52,10 +53,15 @@ export function Header({ noPadding = false }: HeaderProps) {
           </button>
 
           {/* Logo */}
-          <div className="flex items-center">
-            <div className="w-8 h-8 bg-teal-600 rounded mr-3"></div>
-            <span className="text-xl md:text-2xl font-bold text-gray-900">EGLO</span>
-          </div>
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+            <Image
+              src="/assets/images/Logo_EGLO.png"
+              alt="EGLO Logo"
+              width={120}
+              height={40}
+              className="h-8 w-auto"
+            />
+          </Link>
 
           {/* Search - Hidden on mobile, shown on tablet and up */}
           <div className="hidden sm:flex flex-1 max-w-xl mx-4 lg:mx-8">

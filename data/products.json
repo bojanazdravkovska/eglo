@@ -1,0 +1,244 @@
+{
+  "products": [
+    {
+      "id": "fueva-5-light",
+      "slug": "fueva-5-light",
+      "name": "FUEVA 5 light surface mounted",
+      "price": "€41.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "interior-lights",
+      "images": [
+        "/assets/images/MOGANO-3-ceiling-light.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-2.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-3.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-view.jpg"
+      ],
+      "product_details": {
+        "Material number": "901012",
+        "Enclosure Material": "steel",
+        "Enclosure Colour": "white",
+        "Protection Degree": "IP20",
+        "Illuminant 1": "INCLUDING",
+        "Lamp socket 1": "LED"
+      },
+      "dimensions": {
+        "Article Height": "120 / 4.72 mm/in",
+        "Article Diameter": "280 / 11.02 mm/in",
+        "Net Weight": "1.5 kg"
+      },
+      "technical_information": {
+        "Protection Class": "2",
+        "Mains Voltage": "220-240V,50/60Hz",
+        "Operation Voltage": "220-240V,50/60Hz",
+        "Switch Type": "Integrated motion detector",
+        "Battery": "No"
+      },
+      "other_information": {
+        "Illuminant type 1": "LED",
+        "EAN/UPC": "9008606328740"
+      },
+      "description": "Modern surface mounted light with elegant design and integrated motion detector. Perfect for any room in your home."
+    },
+    {
+      "id": "mogano-3-ceiling",
+      "slug": "mogano-3-ceiling",
+      "name": "MOGANO 3 ceiling light",
+      "price": "€299.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "interior-lights",
+      "images": [
+        "/assets/images/MOGANO-3-ceiling-light.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-2.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-3.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-view.jpg"
+      ],
+      "product_details": {
+        "Material number": "901747",
+        "Enclosure Material": "steel",
+        "Enclosure Colour": "sandy",
+        "Protection Degree": "-",
+        "Illuminant 1": "Exclusive",
+        "Lamp socket 1": "E27"
+      },
+      "dimensions": {
+        "Article Height": "180 / 7.09 mm/in",
+        "Article Diameter": "430 / 16.93 mm/in",
+        "Net Weight": "2.24 kg"
+      },
+      "technical_information": {
+        "Protection Class": "2",
+        "Mains Voltage": "220-240V,50/60Hz",
+        "Operation Voltage": "220-240V,50/60Hz",
+        "Switch Type": "without switch",
+        "Battery": "No"
+      },
+      "other_information": {
+        "Illuminant type 1": "AGL",
+        "EAN/UPC": "9008606328741"
+      },
+      "description": "Elegant ceiling light with premium steel construction and sandy finish. Features exclusive illuminant with E27 socket for optimal lighting performance."
+    },
+    {
+      "id": "industrial-2-3",
+      "slug": "industrial-2-3",
+      "name": "Industrial 2/3 pendant light",
+      "price": "€89.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "interior-lights",
+      "images": [
+        "/assets/images/industrial-2_3.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-2.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-3.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-view.jpg"
+      ],
+      "product_details": {
+        "Material number": "901014",
+        "Enclosure Material": "metal",
+        "Enclosure Colour": "black",
+        "Protection Degree": "IP20",
+        "Illuminant 1": "INCLUDING",
+        "Lamp socket 1": "LED"
+      },
+      "dimensions": {
+        "Article Height": "150 / 5.91 mm/in",
+        "Article Diameter": "200 / 7.87 mm/in",
+        "Net Weight": "1.8 kg"
+      },
+      "technical_information": {
+        "Protection Class": "2",
+        "Mains Voltage": "220-240V,50/60Hz",
+        "Operation Voltage": "220-240V,50/60Hz",
+        "Switch Type": "Vintage style",
+        "Battery": "No"
+      },
+      "other_information": {
+        "Illuminant type 1": "LED",
+        "EAN/UPC": "9008606328742"
+      },
+      "description": "Vintage industrial style pendant light with amber glass and metal construction."
+    },
+    {
+      "id": "natural-ceiling",
+      "slug": "natural-ceiling",
+      "name": "Natural ceiling light",
+      "price": "€156.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "interior-lights",
+      "images": [
+        "/assets/images/natural.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-2.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-3.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-view.jpg"
+      ],
+      "product_details": {
+        "Material number": "901015",
+        "Enclosure Material": "wood",
+        "Enclosure Colour": "natural",
+        "Protection Degree": "IP20",
+        "Illuminant 1": "INCLUDING",
+        "Lamp socket 1": "LED"
+      },
+      "dimensions": {
+        "Article Height": "160 / 6.30 mm/in",
+        "Article Diameter": "350 / 13.78 mm/in",
+        "Net Weight": "2.1 kg"
+      },
+      "technical_information": {
+        "Protection Class": "2",
+        "Mains Voltage": "220-240V,50/60Hz",
+        "Operation Voltage": "220-240V,50/60Hz",
+        "Switch Type": "Natural materials",
+        "Battery": "No"
+      },
+      "other_information": {
+        "Illuminant type 1": "LED",
+        "EAN/UPC": "9008606328743"
+      },
+      "description": "Natural wood ceiling light with clear glass diffuser for a warm, organic feel."
+    },
+    {
+      "id": "scandinavian-pendant",
+      "slug": "scandinavian-pendant",
+      "name": "Scandinavian pendant light",
+      "price": "€124.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "interior-lights",
+      "images": [
+        "/assets/images/scandinavian.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-2.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-3.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-view.jpg"
+      ],
+      "product_details": {
+        "Material number": "901016",
+        "Enclosure Material": "metal",
+        "Enclosure Colour": "white",
+        "Protection Degree": "IP20",
+        "Illuminant 1": "INCLUDING",
+        "Lamp socket 1": "LED"
+      },
+      "dimensions": {
+        "Article Height": "140 / 5.51 mm/in",
+        "Article Diameter": "300 / 11.81 mm/in",
+        "Net Weight": "1.6 kg"
+      },
+      "technical_information": {
+        "Protection Class": "2",
+        "Mains Voltage": "220-240V,50/60Hz",
+        "Operation Voltage": "220-240V,50/60Hz",
+        "Switch Type": "Minimalist design",
+        "Battery": "No"
+      },
+      "other_information": {
+        "Illuminant type 1": "LED",
+        "EAN/UPC": "9008606328744"
+      },
+      "description": "Minimalist Scandinavian pendant light with frosted glass for soft, diffused lighting."
+    },
+    {
+      "id": "vintage-retro-lamp",
+      "slug": "vintage-retro-lamp",
+      "name": "Vintage retro table lamp",
+      "price": "€78.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "interior-lights",
+      "images": [
+        "/assets/images/vintage-retro.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-2.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-3.jpg",
+        "/assets/images/MOGANO-3-ceiling-light-view.jpg"
+      ],
+      "product_details": {
+        "Material number": "901017",
+        "Enclosure Material": "metal",
+        "Enclosure Colour": "brass",
+        "Protection Degree": "IP20",
+        "Illuminant 1": "INCLUDING",
+        "Lamp socket 1": "LED"
+      },
+      "dimensions": {
+        "Article Height": "250 / 9.84 mm/in",
+        "Article Diameter": "180 / 7.09 mm/in",
+        "Net Weight": "1.2 kg"
+      },
+      "technical_information": {
+        "Protection Class": "2",
+        "Mains Voltage": "220-240V,50/60Hz",
+        "Operation Voltage": "220-240V,50/60Hz",
+        "Switch Type": "Retro styling",
+        "Battery": "No"
+      },
+      "other_information": {
+        "Illuminant type 1": "LED",
+        "EAN/UPC": "9008606328745"
+      },
+      "description": "Retro-inspired table lamp with brass finish and amber glass for nostalgic charm."
+    }
+  ]
+} 
