@@ -13,8 +13,8 @@ export function ConditionalLayout({ children }: ConditionalLayoutProps) {
   // Check if this is the login or signup page
   const isAuthPage = pathname === '/login' || pathname === '/signup'
   
-  // Set noPadding to true for product and category pages
-  const noPadding = pathname.startsWith('/product/') || pathname.startsWith('/category/')
+  // Set noPadding to true for product, category, and inspiration pages
+  const noPadding = pathname.startsWith('/product/') || pathname.startsWith('/category/') || pathname === '/inspiration'
 
   if (isAuthPage) {
     return <>{children}</>

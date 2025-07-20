@@ -35,8 +35,17 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const categoryProducts = productsData.products.filter(product => product.category === resolvedParams.slug)
 
   // Show 12 instances for category pages
+  const fallbackProduct = {
+    id: "fallback",
+    name: "Sample Product",
+    description: "This is a sample product for demonstration purposes.",
+    price: "$99.99",
+    images: ["/assets/images/E27-bulb.jpg"],
+    slug: "sample-product"
+  }
+  
   const displayProducts = pathname.startsWith('/category/')
-    ? Array(12).fill(categoryProducts[0]) // Show 12 instances for 4x3 grid
+    ? Array(12).fill(categoryProducts[0] || fallbackProduct) // Show 12 instances for 4x3 grid
     : categoryProducts
 
   // Get filters from JSON file

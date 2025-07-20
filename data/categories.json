@@ -216,34 +216,7 @@
           "name": "GX53",
           "subcategories": []
         }
-      ]
-    },
-    {
-      "id": "inspiration",
-      "name": "Inspiration",
-      "icon": "Home",
-      "description": "Discover lighting inspiration for every room in your home. Our room-by-room guides help you create the perfect ambiance for living spaces, kitchens, bedrooms, and more with expert lighting solutions.\n\nGet inspired by our curated collections and expert tips that show you how to combine different lighting types to achieve the ideal atmosphere for any space. From cozy living rooms to functional kitchens, find your perfect lighting style.",
-      "images": {
-        "image1": "/assets/images/inspiration1.jpg",
-        "image2": "/assets/images/inspiration2.jpg"
-      },
-      "subcategories": [
-        {
-          "id": "room-solutions",
-          "name": "Room solutions",
-          "subcategories": [
-            "Living room lighting",
-            "Kitchen lighting",
-            "Dining room lighting",
-            "Child bedroom lighting",
-            "Bedroom lighting",
-            "Bathroom lighting",
-            "Office lighting",
-            "Hallway lighting",
-            "Stairwell lighting"
-          ]
-        }
-      ]
-    }
-  ]
+              ]
+      }
+    ]
 } 

@@ -72,7 +72,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
       <div className="max-w-7xl mx-auto px-4">
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center justify-center gap-8 py-4">
-          {categoriesData.categories.map((category) => (
+          {categoriesData?.categories?.map((category) => (
             <div
               key={category.id}
               className="relative"
@@ -146,6 +146,15 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
               )}
             </div>
           ))}
+          
+          {/* Inspiration Link */}
+          <Link
+            href="/inspiration"
+            className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors font-medium"
+          >
+            <Lightbulb className="w-4 h-4" />
+            Inspiration
+          </Link>
         </div>
 
         {/* Mobile Navigation */}
@@ -167,7 +176,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                 </div>
 
                 <div className="overflow-y-auto h-full">
-                  {categoriesData.categories.map((category) => (
+                  {categoriesData?.categories?.map((category) => (
                     <div key={category.id} className="border-b border-gray-100">
                       <button
                         onClick={() => setExpandedMobileCategory(
@@ -249,6 +258,18 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                       )}
                     </div>
                   ))}
+                  
+                  {/* Mobile Inspiration Link */}
+                  <div className="border-b border-gray-100">
+                    <Link
+                      href="/inspiration"
+                      className="flex items-center gap-3 p-4 text-left hover:bg-gray-50 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <Lightbulb className="w-5 h-5" />
+                      <span className="font-medium">Inspiration</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

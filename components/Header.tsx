@@ -79,10 +79,12 @@ export function Header({ noPadding = false }: HeaderProps) {
 
           {/* User Actions */}
           <div className="flex items-center gap-2 md:gap-4">
-            <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 p-2 md:p-3">
-              <User className="w-5 h-5" />
-              <span className="hidden lg:inline">Account</span>
-            </Button>
+            <Link href="/login">
+              <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 p-2 md:p-3 hover:text-teal-600 transition-colors">
+                <User className="w-5 h-5" />
+                <span className="hidden lg:inline">Login</span>
+              </Button>
+            </Link>
             <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 p-2 md:p-3 relative">
               <ShoppingCart className="w-5 h-5" />
               <span className="hidden lg:inline">Cart</span>
