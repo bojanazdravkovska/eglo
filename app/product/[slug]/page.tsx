@@ -7,6 +7,8 @@ import { ChevronRight, ChevronLeft, Download, Plus, Minus, ChevronDown, ChevronU
 import { useState, use } from "react"
 import { Button } from "../../../components/Button"
 import { Input } from "../../../components/Input"
+import { CartPopup } from "../../../components/CartPopup"
+import { useCart } from "../../context/CartContext"
 import productsData from "../../../data/products.json"
 import categoriesData from "../../../data/categories.json"
 
@@ -20,12 +22,15 @@ export default function ProductPage({ params }: ProductPageProps) {
   const resolvedParams = use(params) as { slug: string }
   const [selectedImage, setSelectedImage] = useState(0)
   const [quantity, setQuantity] = useState(1)
+  const [showCartPopup, setShowCartPopup] = useState(false)
   const [expandedSections, setExpandedSections] = useState({
     product_details: true,
     dimensions: false,
     technical_information: false,
     other_information: false
   })
+  
+  const { addToCart } = useCart()
   
   // Find the product based on the slug
   const product = productsData.products.find(prod => prod.slug === resolvedParams.slug)
@@ -44,6 +49,21 @@ export default function ProductPage({ params }: ProductPageProps) {
     } else if (quantity > 1) {
       setQuantity(prev => prev - 1)
     }
+  }
+
+  const handleAddToCart = () => {
+    // Add the product to cart with the selected quantity
+    for (let i = 0; i < quantity; i++) {
+      addToCart({
+        id: product.slug,
+        name: product.name,
+        price: product.price,
+        image: product.images[0]
+      })
+    }
+    
+    // Show the popup
+    setShowCartPopup(true)
   }
 
   const toggleSection = (section: keyof typeof expandedSections) => {
@@ -227,7 +247,11 @@ export default function ProductPage({ params }: ProductPageProps) {
                 </div>
                 
                 {/* Add to Cart Button */}
-                <Button variant="primary" className="flex-1 py-3 px-6">
+                <Button 
+                  variant="primary" 
+                  className="flex-1 py-3 px-6"
+                  onClick={handleAddToCart}
+                >
                   Add to cart
                 </Button>
               </div>
@@ -252,6 +276,13 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
       </div>
+
+      {/* Cart Popup */}
+      <CartPopup
+        productName={product.name}
+        isVisible={showCartPopup}
+        onClose={() => setShowCartPopup(false)}
+      />
     </div>
   ) 
 } 

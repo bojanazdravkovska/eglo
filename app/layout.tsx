@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css'
 import { ConditionalLayout } from '../components/ConditionalLayout';
+import { CartProvider } from './context/CartContext';
 
 export const metadata: Metadata = {
   title: 'EGLO',
@@ -22,9 +23,11 @@ export default async function Layout(props: {
   return (
     <html lang="en">
       <body>
-        <ConditionalLayout>
-          {props.children}
-        </ConditionalLayout>
+        <CartProvider>
+          <ConditionalLayout>
+            {props.children}
+          </ConditionalLayout>
+        </CartProvider>
       </body>
     </html>
   );

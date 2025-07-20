@@ -7,6 +7,7 @@ import { Input } from "./Input"
 import { Badge } from "./Badge"
 import { Navigation } from "./Navigation"
 import { useState } from "react"
+import { useCart } from "../app/context/CartContext"
 
 interface HeaderProps {
   noPadding?: boolean
@@ -14,6 +15,8 @@ interface HeaderProps {
 
 export function Header({ noPadding = false }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { getTotalItems } = useCart()
+  const cartItemCount = getTotalItems()
 
   return (
     <header className="border-b border-gray-100">
@@ -83,9 +86,11 @@ export function Header({ noPadding = false }: HeaderProps) {
             <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 p-2 md:p-3 relative">
               <ShoppingCart className="w-5 h-5" />
               <span className="hidden lg:inline">Cart</span>
-              <Badge variant="secondary" className="absolute -top-1 -right-1 md:static md:ml-1">
-                0
-              </Badge>
+              {cartItemCount > 0 && (
+                <Badge variant="secondary" className="absolute -top-1 -right-1 md:static md:ml-1 bg-teal-600 text-white">
+                  {cartItemCount}
+                </Badge>
+              )}
             </Button>
           </div>
         </div>
