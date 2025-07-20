@@ -83,8 +83,8 @@
       "icon": "Zap",
       "description": "Illuminate your outdoor spaces with our comprehensive range of exterior lighting solutions. From garden path lights to sophisticated facade lighting, we offer everything you need to create the perfect outdoor ambiance.\n\nTransform your garden, patio, and entrance areas with weather-resistant lighting that combines functionality with elegant design. Our outdoor collection ensures safety and beauty in every season.",
       "images": {
-        "image1": "/assets/images/outdoor-lights1.jpg",
-        "image2": "/assets/images/outdoor-lights2.jpg"
+        "image1": "/assets/images/outdoor-lights1.png",
+        "image2": "/assets/images/outdoor-lights2.png"
       },
       "subcategories": [
         {

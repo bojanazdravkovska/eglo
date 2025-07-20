@@ -26,6 +26,8 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [expandedSections, setExpandedSections] = useState({
     product_details: true,
     dimensions: false,
+    light_information: false,
+    switching_information: false,
     technical_information: false,
     other_information: false
   })
@@ -270,9 +272,16 @@ export default function ProductPage({ params }: ProductPageProps) {
         {/* Additional Specifications Below Images */}
         <div className="mt-12">
           <div className="lg:max-w-[calc(50%-1rem)] bg-gray-50 rounded-lg overflow-hidden p-4">
-            {renderSpecificationSection("Dimensions", product.dimensions, "dimensions")}
-            {renderSpecificationSection("Technical information", product.technical_information, "technical_information")}
-            {renderSpecificationSection("Other information", product.other_information, "other_information")}
+            {product.category === 'illuminants' ? (
+              <>
+                {renderSpecificationSection("Information about light", product.light_information as unknown as Record<string, string>, "light_information")}
+                {renderSpecificationSection("Information about switching", product.switching_information as unknown as Record<string, string>, "switching_information")}
+              </>
+            ) : (
+              renderSpecificationSection("Dimensions", product.dimensions as unknown as Record<string, string>, "dimensions")
+            )}
+            {renderSpecificationSection("Technical information", product.technical_information as unknown as Record<string, string>, "technical_information")}
+            {renderSpecificationSection("Other information", product.other_information as unknown as Record<string, string>, "other_information")}
           </div>
         </div>
       </div>

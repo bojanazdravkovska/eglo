@@ -5,9 +5,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, ChevronDown } from "lucide-react"
 import { useState, use } from "react"
+import { usePathname } from "next/navigation"
 import categoriesData from "../../../data/categories.json"
 import productsData from "../../../data/products.json"
 import ProductCard from "../../../components/ProductCard"
+import { FilterGrid } from "../../../components/FilterGrid"
 
 interface CategoryPageProps {
   params: Promise<{
@@ -17,8 +19,10 @@ interface CategoryPageProps {
 
 export default function CategoryPage({ params }: CategoryPageProps) {
   const resolvedParams = use(params) as { slug: string }
+  const pathname = usePathname()
   const category = categoriesData.categories.find(cat => cat.id === resolvedParams.slug)
   const [expandedSubcategory, setExpandedSubcategory] = useState<string | null>(null)
+  const [activeFilters, setActiveFilters] = useState<Record<string, string>>({})
   
   if (!category) {
     notFound()
@@ -26,6 +30,150 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
   // Filter products by category
   const categoryProducts = productsData.products.filter(product => product.category === resolvedParams.slug)
+
+  // Show 12 instances for category pages
+  const displayProducts = pathname.startsWith('/category/')
+    ? Array(12).fill(categoryProducts[0]) // Show 12 instances for 4x3 grid
+    : categoryProducts
+
+  // Sample filters for the category page
+  const categoryFilters = [
+    {
+      key: "price",
+      label: "Price",
+      options: [
+        { value: "0-50", label: "$0 - $50" },
+        { value: "50-100", label: "$50 - $100" },
+        { value: "100-200", label: "$100 - $200" },
+        { value: "200+", label: "$200+" }
+      ]
+    },
+    {
+      key: "room",
+      label: "Room / Field",
+      options: [
+        { value: "living-room", label: "Living Room" },
+        { value: "bedroom", label: "Bedroom" },
+        { value: "kitchen", label: "Kitchen" },
+        { value: "bathroom", label: "Bathroom" },
+        { value: "dining-room", label: "Dining Room" },
+        { value: "office", label: "Office" }
+      ]
+    },
+    {
+      key: "product-type",
+      label: "Product-Type",
+      options: [
+        { value: "ceiling-light", label: "Ceiling Light" },
+        { value: "wall-light", label: "Wall Light" },
+        { value: "table-lamp", label: "Table Lamp" },
+        { value: "floor-lamp", label: "Floor Lamp" },
+        { value: "pendant-light", label: "Pendant Light" }
+      ]
+    },
+    {
+      key: "functions",
+      label: "Functions",
+      options: [
+        { value: "dimmable", label: "Dimmable" },
+        { value: "smart-control", label: "Smart Control" },
+        { value: "motion-sensor", label: "Motion Sensor" },
+        { value: "color-changing", label: "Color Changing" }
+      ]
+    },
+    {
+      key: "design",
+      label: "Design",
+      options: [
+        { value: "modern", label: "Modern" },
+        { value: "traditional", label: "Traditional" },
+        { value: "industrial", label: "Industrial" },
+        { value: "minimalist", label: "Minimalist" },
+        { value: "vintage", label: "Vintage" }
+      ]
+    },
+    {
+      key: "technology",
+      label: "Technology",
+      options: [
+        { value: "led", label: "LED" },
+        { value: "incandescent", label: "Incandescent" },
+        { value: "fluorescent", label: "Fluorescent" },
+        { value: "smart-led", label: "Smart LED" }
+      ]
+    },
+    {
+      key: "material",
+      label: "Material",
+      options: [
+        { value: "metal", label: "Metal" },
+        { value: "glass", label: "Glass" },
+        { value: "plastic", label: "Plastic" },
+        { value: "wood", label: "Wood" },
+        { value: "fabric", label: "Fabric" }
+      ]
+    },
+    {
+      key: "color",
+      label: "Color",
+      options: [
+        { value: "white", label: "White" },
+        { value: "black", label: "Black" },
+        { value: "silver", label: "Silver" },
+        { value: "gold", label: "Gold" },
+        { value: "bronze", label: "Bronze" },
+        { value: "colored", label: "Colored" }
+      ]
+    },
+    {
+      key: "flames",
+      label: "Number of flames",
+      options: [
+        { value: "1", label: "1 Flame" },
+        { value: "2", label: "2 Flames" },
+        { value: "3", label: "3 Flames" },
+        { value: "4", label: "4 Flames" },
+        { value: "5+", label: "5+ Flames" }
+      ]
+    },
+    {
+      key: "throat",
+      label: "Throat",
+      options: [
+        { value: "small", label: "Small" },
+        { value: "medium", label: "Medium" },
+        { value: "large", label: "Large" },
+        { value: "extra-large", label: "Extra Large" }
+      ]
+    },
+    {
+      key: "bulbs-included",
+      label: "Bulbs included",
+      options: [
+        { value: "yes", label: "Yes" },
+        { value: "no", label: "No" },
+        { value: "optional", label: "Optional" }
+      ]
+    },
+    {
+      key: "energy-class",
+      label: "Energy saving class",
+      options: [
+        { value: "a", label: "Class A" },
+        { value: "b", label: "Class B" },
+        { value: "c", label: "Class C" },
+        { value: "d", label: "Class D" },
+        { value: "e", label: "Class E" }
+      ]
+    }
+  ]
+
+  const handleFilterChange = (key: string, value: string) => {
+    setActiveFilters(prev => ({
+      ...prev,
+      [key]: value
+    }))
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -92,8 +240,8 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           </div>
         </div>
 
-        {/* Product Section */}
-        <div className="flex flex-col lg:flex-row gap-4 md:gap-6 mt-18">
+        {/* Product Section with Filters */}
+        <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
           {/* Subcategories Sidebar - Mobile: Full width, Desktop: Fixed width */}
           <div className="lg:w-80 bg-gray-50 rounded-lg p-3 md:p-4 order-2 lg:order-1">
             <h3 className="text-lg font-semibold text-gray-900 mb-3 md:mb-4">Categories</h3>
@@ -144,12 +292,39 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             </div>
           </div>
 
-          {/* Product Grid */}
+          {/* Right Side - Filters and Products */}
           <div className="flex-1 order-1 lg:order-2">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
-              {categoryProducts.map((product) => (
+            {/* Filters Section */}
+            <div className="mb-6 md:mb-8">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold text-gray-900 pr-4">Filters</h2>
+                  {Object.keys(activeFilters).length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {Object.entries(activeFilters).map(([key, value]) => {
+                        const filter = categoryFilters.find(f => f.key === key)
+                        const option = filter?.options.find(o => o.value === value)
+                        return (
+                          <div key={key} className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">
+                            {filter?.label}: {option?.label}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+                <FilterGrid 
+                  filters={categoryFilters}
+                  onFilterChange={handleFilterChange}
+                />
+              </div>
+            </div>
+
+            {/* Product Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 md:gap-4">
+              {displayProducts.map((product, index) => (
                 <ProductCard
-                  key={product.id}
+                  key={`${product.id}-${index}`}
                   productName={product.name}
                   productDesc={product.description}
                   productPrice={product.price}
