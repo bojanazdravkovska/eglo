@@ -78,7 +78,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
       </div>
-    )
+    ) 
   }
 
   return (
@@ -227,7 +227,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 </div>
                 
                 {/* Add to Cart Button */}
-                <Button className="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-3 px-6">
+                <Button variant="primary" className="flex-1 py-3 px-6">
                   Add to cart
                 </Button>
               </div>
@@ -253,5 +253,5 @@ export default function ProductPage({ params }: ProductPageProps) {
         </div>
       </div>
     </div>
-  )
+  ) 
 } 

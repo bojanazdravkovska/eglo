@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css'
-import { EgloDefaultLayout } from '../components/EgloDefaultLayout';
+import { ConditionalLayout } from '../components/ConditionalLayout';
 
 export const metadata: Metadata = {
   title: 'EGLO',
@@ -22,9 +22,9 @@ export default async function Layout(props: {
   return (
     <html lang="en">
       <body>
-        <EgloDefaultLayout noPadding={true}>
+        <ConditionalLayout>
           {props.children}
-        </EgloDefaultLayout>
+        </ConditionalLayout>
       </body>
     </html>
   );

@@ -9,6 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        primary:
+          "bg-teal-600 text-white shadow-xs hover:bg-teal-700",
         default:
           "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
         destructive:
@@ -29,7 +31,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
       size: "default",
     },
   }
