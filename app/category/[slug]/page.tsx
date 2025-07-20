@@ -3,11 +3,12 @@
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronRight, ChevronDown } from "lucide-react"
+import { ChevronRight, ChevronDown, X } from "lucide-react"
 import { useState, use } from "react"
 import { usePathname } from "next/navigation"
 import categoriesData from "../../../data/categories.json"
 import productsData from "../../../data/products.json"
+import categoryFiltersData from "../../../data/categoryFilters.json"
 import ProductCard from "../../../components/ProductCard"
 import { FilterGrid } from "../../../components/FilterGrid"
 
@@ -22,7 +23,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   const pathname = usePathname()
   const category = categoriesData.categories.find(cat => cat.id === resolvedParams.slug)
   const [expandedSubcategory, setExpandedSubcategory] = useState<string | null>(null)
-  const [activeFilters, setActiveFilters] = useState<Record<string, string>>({})
+  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({})
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
+  const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false)
   
   if (!category) {
     notFound()
@@ -36,143 +39,57 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     ? Array(12).fill(categoryProducts[0]) // Show 12 instances for 4x3 grid
     : categoryProducts
 
-  // Sample filters for the category page
-  const categoryFilters = [
-    {
-      key: "price",
-      label: "Price",
-      options: [
-        { value: "0-50", label: "$0 - $50" },
-        { value: "50-100", label: "$50 - $100" },
-        { value: "100-200", label: "$100 - $200" },
-        { value: "200+", label: "$200+" }
-      ]
-    },
-    {
-      key: "room",
-      label: "Room / Field",
-      options: [
-        { value: "living-room", label: "Living Room" },
-        { value: "bedroom", label: "Bedroom" },
-        { value: "kitchen", label: "Kitchen" },
-        { value: "bathroom", label: "Bathroom" },
-        { value: "dining-room", label: "Dining Room" },
-        { value: "office", label: "Office" }
-      ]
-    },
-    {
-      key: "product-type",
-      label: "Product-Type",
-      options: [
-        { value: "ceiling-light", label: "Ceiling Light" },
-        { value: "wall-light", label: "Wall Light" },
-        { value: "table-lamp", label: "Table Lamp" },
-        { value: "floor-lamp", label: "Floor Lamp" },
-        { value: "pendant-light", label: "Pendant Light" }
-      ]
-    },
-    {
-      key: "functions",
-      label: "Functions",
-      options: [
-        { value: "dimmable", label: "Dimmable" },
-        { value: "smart-control", label: "Smart Control" },
-        { value: "motion-sensor", label: "Motion Sensor" },
-        { value: "color-changing", label: "Color Changing" }
-      ]
-    },
-    {
-      key: "design",
-      label: "Design",
-      options: [
-        { value: "modern", label: "Modern" },
-        { value: "traditional", label: "Traditional" },
-        { value: "industrial", label: "Industrial" },
-        { value: "minimalist", label: "Minimalist" },
-        { value: "vintage", label: "Vintage" }
-      ]
-    },
-    {
-      key: "technology",
-      label: "Technology",
-      options: [
-        { value: "led", label: "LED" },
-        { value: "incandescent", label: "Incandescent" },
-        { value: "fluorescent", label: "Fluorescent" },
-        { value: "smart-led", label: "Smart LED" }
-      ]
-    },
-    {
-      key: "material",
-      label: "Material",
-      options: [
-        { value: "metal", label: "Metal" },
-        { value: "glass", label: "Glass" },
-        { value: "plastic", label: "Plastic" },
-        { value: "wood", label: "Wood" },
-        { value: "fabric", label: "Fabric" }
-      ]
-    },
-    {
-      key: "color",
-      label: "Color",
-      options: [
-        { value: "white", label: "White" },
-        { value: "black", label: "Black" },
-        { value: "silver", label: "Silver" },
-        { value: "gold", label: "Gold" },
-        { value: "bronze", label: "Bronze" },
-        { value: "colored", label: "Colored" }
-      ]
-    },
-    {
-      key: "flames",
-      label: "Number of flames",
-      options: [
-        { value: "1", label: "1 Flame" },
-        { value: "2", label: "2 Flames" },
-        { value: "3", label: "3 Flames" },
-        { value: "4", label: "4 Flames" },
-        { value: "5+", label: "5+ Flames" }
-      ]
-    },
-    {
-      key: "throat",
-      label: "Throat",
-      options: [
-        { value: "small", label: "Small" },
-        { value: "medium", label: "Medium" },
-        { value: "large", label: "Large" },
-        { value: "extra-large", label: "Extra Large" }
-      ]
-    },
-    {
-      key: "bulbs-included",
-      label: "Bulbs included",
-      options: [
-        { value: "yes", label: "Yes" },
-        { value: "no", label: "No" },
-        { value: "optional", label: "Optional" }
-      ]
-    },
-    {
-      key: "energy-class",
-      label: "Energy saving class",
-      options: [
-        { value: "a", label: "Class A" },
-        { value: "b", label: "Class B" },
-        { value: "c", label: "Class C" },
-        { value: "d", label: "Class D" },
-        { value: "e", label: "Class E" }
-      ]
-    }
-  ]
+  // Get filters from JSON file
+  const categoryFilters = categoryFiltersData.filters
 
   const handleFilterChange = (key: string, value: string) => {
-    setActiveFilters(prev => ({
-      ...prev,
-      [key]: value
-    }))
+    if (value) {
+      // Split comma-separated values and update the filter
+      const values = value.split(',')
+      setActiveFilters(prev => ({
+        ...prev,
+        [key]: values
+      }))
+    } else {
+      // Remove the filter if no values
+      setActiveFilters(prev => {
+        const newFilters = { ...prev }
+        delete newFilters[key]
+        return newFilters
+      })
+    }
+  }
+
+  const handleResetFilters = () => {
+    setActiveFilters({})
+  }
+
+  const handleRemoveFilter = (filterKey: string, valueToRemove: string) => {
+    const newActiveFilters = { ...activeFilters }
+    if (newActiveFilters[filterKey]) {
+      newActiveFilters[filterKey] = newActiveFilters[filterKey].filter(value => value !== valueToRemove)
+      if (newActiveFilters[filterKey].length === 0) {
+        delete newActiveFilters[filterKey]
+      }
+    }
+    setActiveFilters(newActiveFilters)
+  }
+
+  // Get all selected values for badges
+  const getAllSelectedValues = () => {
+    const allValues: string[] = []
+    Object.entries(activeFilters).forEach(([filterKey, values]) => {
+      const filter = categoryFilters.find(f => f.key === filterKey)
+      if (filter) {
+        values.forEach(value => {
+          const option = filter.options.find(o => o.value === value)
+          if (option) {
+            allValues.push(option.label)
+          }
+        })
+      }
+    })
+    return allValues
   }
 
   return (
@@ -243,7 +160,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         {/* Product Section with Filters */}
         <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
           {/* Subcategories Sidebar - Mobile: Full width, Desktop: Fixed width */}
-          <div className="lg:w-80 bg-gray-50 rounded-lg p-3 md:p-4 order-2 lg:order-1">
+          <div className="hidden lg:block lg:w-80 bg-gray-50 rounded-lg p-3 md:p-4 order-2 lg:order-1">
             <h3 className="text-lg font-semibold text-gray-900 mb-3 md:mb-4">Categories</h3>
             <div className="space-y-1 md:space-y-2">
               {category.subcategories.map((subcategory, index) => (
@@ -294,28 +211,126 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
           {/* Right Side - Filters and Products */}
           <div className="flex-1 order-1 lg:order-2">
+            {/* Mobile Categories and Filters Buttons */}
+            <div className="lg:hidden mb-4">
+              <div className="grid grid-cols-2 gap-3">
+                {/* Categories Button */}
+                <button
+                  onClick={() => {
+                    setIsCategoriesOpen(!isCategoriesOpen)
+                    if (!isCategoriesOpen) {
+                      setIsFilterPanelOpen(false)
+                    }
+                  }}
+                  className="w-full flex items-center justify-between px-4 py-3 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors text-left"
+                >
+                  <span className="text-sm font-medium text-gray-700">
+                    Categories
+                  </span>
+                  <ChevronDown className={`w-4 h-4 text-teal-600 transition-transform ${isCategoriesOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {/* Filters Button */}
+                <button
+                  onClick={() => {
+                    setIsFilterPanelOpen(!isFilterPanelOpen)
+                    if (!isFilterPanelOpen) {
+                      setIsCategoriesOpen(false)
+                    }
+                  }}
+                  className="w-full flex items-center justify-between px-4 py-3 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors text-left"
+                >
+                  <span className="text-sm font-medium text-gray-700">
+                    Filters
+                  </span>
+                  <ChevronDown className={`w-4 h-4 text-teal-600 transition-transform ${isFilterPanelOpen ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile Categories Dropdown */}
+            {isCategoriesOpen && (
+              <div className="lg:hidden mb-4">
+                <div className="rounded-lg p-4" style={{ backgroundColor: '#e7f5f5' }}>
+                  {category.subcategories.map((subcategory, index) => (
+                    <div key={subcategory.id || index}>
+                      {typeof subcategory === 'string' ? (
+                        <Link
+                          href="#"
+                          className="block py-3 text-left hover:bg-white/50 transition-colors rounded"
+                        >
+                          <span className="text-sm font-medium text-gray-700">
+                            {subcategory}
+                          </span>
+                        </Link>
+                      ) : (
+                        <div>
+                          <button
+                            onClick={() => setExpandedSubcategory(
+                              expandedSubcategory === subcategory.id ? null : subcategory.id
+                            )}
+                            className="w-full flex items-center justify-between py-3 text-left hover:bg-white/50 transition-colors rounded"
+                          >
+                            <span className="text-sm font-medium text-gray-700">
+                              {subcategory.name}
+                            </span>
+                            {subcategory.subcategories.length > 0 && (
+                              expandedSubcategory === subcategory.id ? (
+                                <ChevronDown className="w-4 h-4 text-teal-600" />
+                              ) : (
+                                <ChevronRight className="w-4 h-4 text-teal-600" />
+                              )
+                            )}
+                          </button>
+                          {expandedSubcategory === subcategory.id && subcategory.subcategories.length > 0 && (
+                            <div className="ml-4 mt-1 space-y-1">
+                              {subcategory.subcategories.map((subSubcategory, subIndex) => (
+                                <Link
+                                  key={subIndex}
+                                  href="#"
+                                  className="block py-2 px-3 text-sm text-gray-600 hover:bg-white/50 rounded transition-colors"
+                                >
+                                  {subSubcategory}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* Divider Line (except for last item) */}
+                      {index < category.subcategories.length - 1 && (
+                        <div className="border-t border-white my-2"></div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Filters Section */}
             <div className="mb-6 md:mb-8">
-              <div className="bg-white border border-gray-200 rounded-lg p-4 md:p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900 pr-4">Filters</h2>
-                  {Object.keys(activeFilters).length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {Object.entries(activeFilters).map(([key, value]) => {
-                        const filter = categoryFilters.find(f => f.key === key)
-                        const option = filter?.options.find(o => o.value === value)
-                        return (
-                          <div key={key} className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm">
-                            {filter?.label}: {option?.label}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )}
-                </div>
+              <div className="hidden md:block bg-white border border-gray-200 rounded-lg p-4 md:p-6">
                 <FilterGrid 
                   filters={categoryFilters}
                   onFilterChange={handleFilterChange}
+                  onResetFilters={handleResetFilters}
+                  selectedFilters={activeFilters}
+                  onSelectedFiltersChange={setActiveFilters}
+                />
+              </div>
+              
+              {/* Mobile Filters - No container or heading */}
+              <div className="md:hidden">
+                <FilterGrid 
+                  filters={categoryFilters}
+                  onFilterChange={handleFilterChange}
+                  onResetFilters={handleResetFilters}
+                  showMobileButton={false}
+                  isFilterPanelOpen={isFilterPanelOpen}
+                  onToggleFilterPanel={setIsFilterPanelOpen}
+                  selectedFilters={activeFilters}
+                  onSelectedFiltersChange={setActiveFilters}
                 />
               </div>
             </div>
