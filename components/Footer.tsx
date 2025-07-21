@@ -90,7 +90,7 @@ export function Footer({ noPadding = false }: FooterProps) {
               <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">Career</h3>
               <ul className="space-y-1 md:space-y-2 text-gray-400 text-sm md:text-base">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/working-at-eglo" className="hover:text-white transition-colors">
                     Working at EGLO
                   </Link>
                 </li>
@@ -102,7 +102,7 @@ export function Footer({ noPadding = false }: FooterProps) {
               <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">Service</h3>
               <ul className="space-y-1 md:space-y-2 text-gray-400 text-sm md:text-base">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="warranty" className="hover:text-white transition-colors">
                     Warranty conditions
                   </Link>
                 </li>
