@@ -11,34 +11,34 @@ const products = [
     originalPrice: "$399",
     rating: 4.8,
     reviews: 124,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/assets/images/modern-brass-pendant.webp",
   },
   {
     name: "Industrial Ceiling Fan",
     price: "$449",
     rating: 4.9,
     reviews: 89,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/assets/images/industrial-ceiling-fan.webp",
   },
   {
     name: "Smart LED Strip Kit",
     price: "$79",
     rating: 4.7,
     reviews: 256,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/assets/images/Smart-LED-Strip-Kit.jpg",
   },
   {
     name: "Outdoor Wall Sconce",
     price: "$159",
     rating: 4.6,
     reviews: 67,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/assets/images/Outdoor-Wall-Sconce.jpg",
   },
 ]
 
 export function FeaturedProducts() {
   return (
-    <section className="py-16 px-4 bg-gray-50">
+    <section className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-12">
           <div>
@@ -55,15 +55,15 @@ export function FeaturedProducts() {
           {products.map((product, index) => (
             <Card
               key={index}
-              className="group cursor-pointer border-0 shadow-md hover:shadow-lg transition-all duration-300 bg-white"
+              className="group cursor-pointer border border-gray-200 rounded-xl p-4 bg-white hover:border-gray-300 hover:shadow-lg transition-all duration-300"
             >
-              <div className="relative overflow-hidden">
+              {/* Image Container matching StyleGrid */}
+              <div className="relative h-72 mb-4 overflow-hidden rounded-lg">
                 <Image
                   src={product.image || "/placeholder.svg"}
                   alt={product.name}
-                  width={300}
-                  height={300}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 {product.originalPrice && <Badge className="absolute top-4 right-4 bg-red-500">Sale</Badge>}
               </div>

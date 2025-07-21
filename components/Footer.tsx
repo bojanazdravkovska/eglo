@@ -68,17 +68,17 @@ export function Footer({ noPadding = false }: FooterProps) {
               <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">Company</h3>
               <ul className="space-y-1 md:space-y-2 text-gray-400 text-sm md:text-base">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/about" className="hover:text-white transition-colors">
                     About EGLO
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/worldwide" className="hover:text-white transition-colors">
                     EGLO worldwide
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="principles" className="hover:text-white transition-colors">
                     Our principles
                   </Link>
                 </li>

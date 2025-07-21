@@ -5,32 +5,32 @@ const rooms = [
   {
     title: "Living Room",
     subtitle: "Cozy & Inviting",
-    image: "/images/living-room-inspiration.png",
+    image: "/assets/images/livingRoom.jpg",
     description: "Create warmth with layered lighting",
     featured: true,
   },
   {
     title: "Kitchen",
     subtitle: "Functional & Bright",
-    image: "/images/kitchen-inspiration.png",
+    image: "/assets/images/kitchen.jpg",
     description: "Perfect task and ambient lighting",
   },
   {
     title: "Bedroom",
     subtitle: "Relaxing & Soft",
-    image: "/images/bedroom-inspiration.png",
+    image: "/assets/images/bedroom.webp",
     description: "Gentle illumination for rest",
   },
   {
     title: "Dining Room",
     subtitle: "Elegant & Dramatic",
-    image: "/images/dining-room-inspiration.png",
+    image: "/assets/images/diningroom.webp",
     description: "Statement lighting for gatherings",
   },
   {
     title: "Bathroom",
     subtitle: "Clean & Bright",
-    image: "/images/bathroom-inspiration.png",
+    image: "/assets/images/bathroom.webp",
     description: "Crisp, even illumination",
   },
 ]
