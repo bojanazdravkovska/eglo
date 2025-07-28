@@ -174,13 +174,12 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
         {/* Main Content - Full Width */}
         <div className="mb-6 md:mb-8">
           {/* Page Title */}
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">{subcategory.name}</h1>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 md:mb-3">{subcategory.name}</h1>
           
           {/* Description and Images Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
             {/* Text Description */}
-            <div className="space-y-3 md:space-y-4">
-              <h2 className="text-xl md:text-2xl font-semibold text-gray-900">{subcategory.name}</h2>
+            <div className="space-y-2 md:space-y-3">
               <div className="space-y-2 md:space-y-3 text-gray-600 leading-relaxed text-sm md:text-base">
                 {subcategory.description?.split('\n\n').map((paragraph: string, index: number) => (
                   <p key={index}>{paragraph}</p>

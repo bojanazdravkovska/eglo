@@ -247,18 +247,25 @@
       "icon": "Fan",
       "description": "Stay cool and comfortable with our selection of ceiling fans that combine style with functionality. Whether you prefer fans with integrated lighting or standalone models, we have options to suit every room and preference.\n\nOur ceiling fans are designed for optimal air circulation while maintaining a quiet, efficient operation. Choose from modern designs to classic styles that complement your interior perfectly.",
       "images": {
-        "image1": "/assets/images/ceiling-fans1.jpg",
-        "image2": "/assets/images/ceiling-fans2.jpg"
+        "image1": "/assets/images/ceilingFan.jpg"
       },
       "subcategories": [
         {
           "id": "ceiling-fans-with-light",
           "name": "Ceiling Fans With Light",
+          "description": "Our ceiling fans with light are designed to provide both cooling and lighting. They are perfect for rooms where you want to create a comfortable and stylish atmosphere.",
+          "images": {
+            "image1": "/assets/images/ceilingFan.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "ceiling-fans-without-light",
           "name": "Ceiling fans without light",
+          "description": "Our ceiling fans without light are designed to provide cooling and ventilation. They are perfect for rooms where you want to create a comfortable and stylish atmosphere.",
+          "images": {
+            "image1": "/assets/images/ceilingFan.jpg"
+          },
           "subcategories": []
         }
       ]

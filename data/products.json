@@ -1237,6 +1237,98 @@
         "Lighter type 1": "LED",
         "EAN/UPC": "9008606274574"
       }
+    },  
+    {
+      "id": "marine-ceiling-light-with-fan",
+      "slug": "marine-ceiling-light-with-fan",
+      "name": "MARINELLA ceiling light with fan",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "ceiling-fans",
+      "subcategory": "ceiling-fans-with-light",
+      "images": [
+        "/assets/images/MARINELLA.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
+    },
+    {
+      "id": "portsea-ceiling-fan",
+      "slug": "portsea-ceiling-fan",
+      "name": "PORTSEA ceiling fan",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "ceiling-fans",
+      "subcategory": "ceiling-fans-without-light",
+      "images": [
+        "/assets/images/PORTSEA.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
     }
   ]
 
