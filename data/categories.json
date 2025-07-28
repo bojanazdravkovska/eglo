@@ -13,66 +13,164 @@
         {
           "id": "smart-lighting",
           "name": "Smart Lighting",
+          "description": "We have the best smart lighting solutions for your home, with our EGLO Connect and EGLO Access range. There's something for every family.\n\nControl your lighting via a remote control or an app. It's convenient and easy to use, with the touch of a button.",
+          "images": {
+            "image1": "/assets/images/smart-lighting.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "led-lamps",
           "name": "LED lamps",
+          "description": "LED offers the best lighting technology on the market. Take care of your pennies with modern LED lights and take care of our planet.\n\nMove away from traditional bulbs, LEDs illuminate the future. Discover a wide selection of exceptional designs for every taste.",
+          "images": {
+            "image1": "/assets/images/led-lamps.jpg"
+          },
           "subcategories": [
-            "LED Strips",
-            "LED Panel",
-            "LED tubes",
-            "Floor LED lights",
-            "Ceiling LED lights",
-            "LED pendant lights",
-            "Wall LED lights",
-            "Table LED lights",
-            "Ceiling LED floodlight"
+            {
+              "id": "led-strips",
+              "name": "LED Strips",
+              "description": "LED strips provide indirect lighting in your home to showcase and illuminate specific pieces of furniture and home decor, including bookcases or frames.",
+              "images": {
+                "image1": "/assets/images/led-strips.jpg"
+              },
+              "subcategories": []
+            },
+            {
+              "id": "led-panel",
+              "name": "LED panel",
+              "description": "LED panels provide fantastic lighting through a discreet design and integrated style. With the ability to be integrated into the wall or ceiling, our LED panels provide good lighting in your desired area while saving space in your home.",
+              "images": {
+                "image1": "/assets/images/ledPanel.jpg"
+              },
+              "subcategories": []
+            },  
+            {
+              "id": "floor-led-lights",
+              "name": "Floor LED lights",
+              "description": "LED floor lamps offer durability, efficiency and mobility. Our LED floor lamps not only compliment your basic lighting, but can be perfectly matched to enhance and illuminate your interior.",
+              "images": {
+                "image1": "/assets/images/ledFloor.jpg"
+              },
+              "subcategories": []
+            },
+            {
+              "id": "ceiling-led-lights",
+              "name": "Ceiling LED lights",
+              "description": "LED ceiling lights provide bright lighting with low energy consumption. Unlike conventional ceiling lights, they are approximately 90% more efficient and last up to 50 times longer.",
+              "images": {
+                "image1": "/assets/images/ceilingLight.jpg"
+              },
+              "subcategories": []
+            },
+            {
+              "id": "led-pendant-lights",
+              "name": "LED pendant lights",
+              "description": "Our range of LED pendant lighting offers both contemporary style and energy efficient technology. The wide range provides lighting for any interior, such as just lighting your dining room table, complimenting your decor and saving money at the same time. Explore our large range of LED pendant lights with our variety of styles, materials and colours.",
+              "images": {
+                "image1": "/assets/images/pendantLight.jpg"
+              },
+              "subcategories": []
+            },
+            {
+              "id": "led-wall-lights",
+              "name": "LED wall lights",
+              "description": "Our LED wall lights offer an energy-efficient and sustainable lighting solution. This product can be adapted and used in many ways, to create indirect or direct lighting in your home.",
+              "images": {
+                "image1": "/assets/images/wallLight.jpg"
+              },
+              "subcategories": []
+            },
+            {
+              "id": "led-table-lights",
+              "name": "LED table lights",
+              "description": "Our LED table lamp collection is not only functional, but can also be used as a decorative element in your home. LED technology provides lighting products that are energy efficient and environmentally friendly.",
+              "images": {
+                "image1": "/assets/images/tableLamp.jpg"
+              },
+              "subcategories": []
+            }
           ]
         },
         {
           "id": "floor-lamps",
           "name": "Floor lamps",
+          "description": "Add feature lighting to your home and brighten up areas with our collection of floor lamps. Versatile and modern, allowing you to adapt the style of the lamps to your home. Regardless of the style, you're sure to find the perfect floor lamp for your home. All you have to do is insert the floor lamp where you want it and you're done! Anyone who enjoys renovating or changing their decor will be happy that their floor lamp simply moves with them.",
+          "images": {
+            "image1": "/assets/images/floorLamp.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "ceiling-lights",
           "name": "Ceiling lights",
+          "description": "Ceiling light is one of the most important elements of interior lighting in any room. It provides basic lighting and illuminates your interior space. Create beautiful atmospheres in your home by combining ceiling lights with other lighting products. We offer a wide range of different designs to compliment any decor.",
+          "images": {
+            "image1": "/assets/images/ceilingLights.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "pendant-lights",
           "name": "Pendant lights",
+          "description": "Pendant lights are the bright centerpiece for your room. Our modern and unusual designs offer a unique touch to your home. Our incredible range of pendant lights offers some elegant designs. You're sure to find your next statement piece here.",
+          "images": {
+            "image1": "/assets/images/pendantLights.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "chandeliers",
           "name": "Chandeliers",
+          "description": "Our chandeliers offer luxury and grandeur. Transform your home and bring shine and glamour to your living space.",
+          "images": {
+            "image1": "/assets/images/chandelier.webp"
+          },
           "subcategories": []
         },
         {
           "id": "wall-lights",
           "name": "Wall lights",
+          "description": "Wall lights are versatile, applicable, universal and practical. Whether they are used for lighting hallways, bathrooms, as accent lights or reading lamps, we offer a wide variety of stylish wall lamps.",
+          "images": {
+            "image1": "/assets/images/wallLamp.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "table-lamps",
           "name": "Table lamps",
+          "description": "Whether you're reading or working, enhance your interior lighting with a stunning table lamp. Our table lamps offer a variety of designs from trendy to classic. Discover new styles using high-quality materials.",
+          "images": {
+            "image1": "/assets/images/tableLamps.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "track-spotlights",
           "name": "Track and spotlights",
+          "description": "Track and spotlights are a great way to add a touch of light to your home. They are perfect for reading, working, or just relaxing. Our track and spotlights are designed to be stylish and functional, with a range of styles and colours to choose from.",
+          "images": {
+            "image1": "/assets/images/tracks.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "recessed-surface",
           "name": "Recessed and surface-mounted lights",
+          "description": "Recessed and surface-mounted lights are a great way to add a touch of light to your home. They are perfect for reading, working, or just relaxing. Our recessed and surface-mounted lights are designed to be stylish and functional, with a range of styles and colours to choose from.",
+          "images": {
+            "image1": "/assets/images/recessed.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "under-cabinet",
           "name": "Under-cabinet lights",
+          "description": "You don't want shadows on your work surface when you're cutting and chopping in the kitchen. We have the solution for you! Illuminate your kitchen work surfaces using under-cabinet lighting. Using LED strips would involve a very simple installation process - stick, connect, done.",
+          "images": {
+            "image1": "/assets/images/cabinetLights.jpg"
+          },
           "subcategories": []
         }
       ]
@@ -90,56 +188,55 @@
         {
           "id": "outdoor-led-lights",
           "name": "Outdoor LED lights",
+          "description": "Want to make your home's exterior energy efficient? Then simply use our LED outdoor lighting products. Forget about traditional bulbs and join the 21st century. Do you want your home's exterior lighting design to be energy efficient? By using our LED exterior lights, you are investing in an energy-efficient home.",
+          "images": {
+            "image1": "/assets/images/outdoor-lights1.png"
+          },
           "subcategories": []
         },
         {
           "id": "solar-lights",
           "name": "Solar lights",
-          "subcategories": []
-        },
-        {
-          "id": "motion-detectors",
-          "name": "Motion detectors",
+          "description": "The benefits of solar lighting are that it is versatile, practical and sustainable. You don't need an electrical connection. The sun provides all the energy needed to operate the light. Find the perfect spot for your outdoor lighting. We can help you plan.",
+          "images": {
+            "image1": "/assets/images/solar.jpg"
+          },
           "subcategories": []
         },
         {
           "id": "outdoor-wall-lights",
           "name": "Outdoor wall lights",
+          "description": "Our outdoor wall lights offer a great solution for your outdoor lighting needs. Explore our wide range of wall lighting, understanding the use of colors and material combinations to meet your lighting needs.",
+          "images": {
+            "image1": "/assets/images/outdoor-wall-lights.png"
+          },
           "subcategories": []
         },
         {
-          "id": "house-number-lighting",
-          "name": "House number lighting",
-          "subcategories": []
-        },
-        {
-          "id": "outdoor-ceiling-luminaire",
-          "name": "Outdoor ceiling luminaire",
+          "id": "exterior-ceiling-lights",
+          "name": "Exterior ceiling lights",
+          "description": "Our outdoor wall lights offer a great solution for your outdoor lighting needs. Explore our wide range of wall lighting, understanding the use of colors and material combinations to meet your lighting needs.",
+          "images": {
+            "image1": "/assets/images/Exterior.webp"
+          },
           "subcategories": []
         },
         {
           "id": "outdoor-spotlights",
           "name": "Outdoor spotlights",
+          "description": "Who doesn't love nature? We believe that your living space doesn't end at the patio door. We have a wide range of outdoor lighting products to illuminate your garden. Our outdoor lights offer functionality and practicality. Light up your garden. EGLO has something for everyone. Using our smart solutions and LED technology, you are in control.",
+          "images": {
+            "image1": "/assets/images/spotlights.webp"
+          },
           "subcategories": []
-        },
+        },  
         {
-          "id": "path-lamps",
-          "name": "Path lamps",
-          "subcategories": []
-        },
-        {
-          "id": "pedestal-lights",
-          "name": "Pedestal lights",
-          "subcategories": []
-        },
-        {
-          "id": "recessed-surface-mounted",
-          "name": "Recessed- and surface mounted lights",
-          "subcategories": []
-        },
-        {
-          "id": "smart-outdoor-lighting",
-          "name": "Smart outdoor lighting",
+          "id": "earth-luminaires",
+          "name": "Earth luminaires",
+          "description": "Who doesn't love nature? We believe that your living space doesn't end at the patio door. We have a wide range of outdoor lighting products to illuminate your garden. Our outdoor lights offer functionality and practicality. Light up your garden. EGLO has something for everyone. Using our smart solutions and LED technology, you are in control.",
+          "images": {
+            "image1": "/assets/images/earth.jpg"
+          },
           "subcategories": []
         }
       ]

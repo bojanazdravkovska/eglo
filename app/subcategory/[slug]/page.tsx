@@ -12,29 +12,78 @@ import categoryFiltersData from "../../../data/categoryFilters.json"
 import ProductCard from "../../../components/ProductCard"
 import { FilterGrid } from "../../../components/FilterGrid"
 
-interface CategoryPageProps {
+interface SubcategoryPageProps {
   params: Promise<{
     slug: string
   }>
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
+// Helper: recursively find subcategory by id
+function findSubcategoryById(categories: any[], id: string): any {
+  for (const cat of categories) {
+    if (cat.id === id) return cat;
+    if (cat.subcategories && cat.subcategories.length > 0) {
+      const found = findSubcategoryById(
+        cat.subcategories.filter((sub: any) => typeof sub === 'object'),
+        id
+      );
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+// Optionally, find parentCategory if needed for breadcrumbs
+function findParentCategory(categories: any[], id: string, parent: any = null): any {
+  for (const cat of categories) {
+    if (cat.id === id) return parent;
+    if (cat.subcategories && cat.subcategories.length > 0) {
+      const found = findParentCategory(
+        cat.subcategories.filter((sub: any) => typeof sub === 'object'),
+        id,
+        cat
+      );
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+// Helper: recursively find top-level category for a given subcategory id
+function findTopLevelCategory(categories: any[], id: string): any {
+  for (const cat of categories) {
+    if (cat.id === id) return cat;
+    if (cat.subcategories && cat.subcategories.length > 0) {
+      const found = findTopLevelCategory(
+        cat.subcategories.filter((sub: any) => typeof sub === 'object'),
+        id
+      );
+      if (found) return cat;
+    }
+  }
+  return null;
+}
+
+export default function SubcategoryPage({ params }: SubcategoryPageProps) {
   const resolvedParams = use(params) as { slug: string }
   const pathname = usePathname()
-  const category = categoriesData.categories.find(cat => cat.id === resolvedParams.slug)
+  // Recursively find the subcategory in categories.json
+  let subcategory = findSubcategoryById(categoriesData.categories, resolvedParams.slug);
+  let parentCategory = findParentCategory(categoriesData.categories, resolvedParams.slug);
+  let topLevelCategory = findTopLevelCategory(categoriesData.categories, resolvedParams.slug);
   const [expandedSubcategory, setExpandedSubcategory] = useState<string | null>(null)
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({})
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false)
   
-  if (!category) {
+  if (!subcategory) {
     notFound()
   }
 
-  // Filter products by category
-  const categoryProducts = productsData.products.filter(product => product.category === resolvedParams.slug)
+  // Filter products by subcategory (to be implemented after products.json update)
+  const subcategoryProducts = productsData.products.filter(product => product.subcategory === resolvedParams.slug)
 
-  // Show 12 instances for category pages
+  // Show 12 instances for subcategory pages
   const fallbackProduct = {
     id: "fallback",
     name: "Sample Product",
@@ -44,23 +93,21 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     slug: "sample-product"
   }
   
-  const displayProducts = pathname.startsWith('/category/')
-    ? Array(12).fill(categoryProducts[0] || fallbackProduct) // Show 12 instances for 4x3 grid
-    : categoryProducts
+  const displayProducts = pathname.startsWith('/subcategory/')
+    ? Array(12).fill(subcategoryProducts[0] || fallbackProduct)
+    : subcategoryProducts
 
   // Get filters from JSON file
   const categoryFilters = categoryFiltersData.filters
 
   const handleFilterChange = (key: string, value: string) => {
     if (value) {
-      // Split comma-separated values and update the filter
       const values = value.split(',')
       setActiveFilters(prev => ({
         ...prev,
         [key]: values
       }))
     } else {
-      // Remove the filter if no values
       setActiveFilters(prev => {
         const newFilters = { ...prev }
         delete newFilters[key]
@@ -111,7 +158,13 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               Home
             </Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-gray-900">{category.name}</span>
+            {parentCategory && <>
+              <Link href={`/category/${parentCategory.id}`} className="hover:text-teal-600 transition-colors">
+                {parentCategory.name}
+              </Link>
+              <ChevronRight className="w-4 h-4" />
+            </>}
+            <span className="text-gray-900">{subcategory.name}</span>
           </nav>
         </div>
       </div>
@@ -121,18 +174,16 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         {/* Main Content - Full Width */}
         <div className="mb-6 md:mb-8">
           {/* Page Title */}
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">{category.name}</h1>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">{subcategory.name}</h1>
           
           {/* Description and Images Section */}
-          <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center">
             {/* Text Description */}
-            <div className="lg:col-span-1 space-y-3 md:space-y-4">
-              <h2 className="text-xl md:text-2xl font-semibold text-gray-900">{category.name}</h2>
+            <div className="space-y-3 md:space-y-4">
+              <h2 className="text-xl md:text-2xl font-semibold text-gray-900">{subcategory.name}</h2>
               <div className="space-y-2 md:space-y-3 text-gray-600 leading-relaxed text-sm md:text-base">
-                {category.description.split('\n\n').map((paragraph, index) => (
-                  <p key={index}>
-                    {paragraph}
-                  </p>
+                {subcategory.description?.split('\n\n').map((paragraph: string, index: number) => (
+                  <p key={index}>{paragraph}</p>
                 ))}
               </div>
               <Link 
@@ -143,25 +194,14 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 <ChevronRight className="ml-1 w-4 h-4" />
               </Link>
             </div>
-
-            {/* Images */}
-            <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-              <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 bg-gray-100 rounded-lg md:rounded-2xl overflow-hidden">
-                <Image
-                  src={category.images?.image1 || "/assets/images/interior-lights1.jpg"}
-                  alt={`${category.name} example 1`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 bg-gray-100 rounded-lg md:rounded-2xl overflow-hidden">
-                <Image
-                  src={category.images?.image2 || "/assets/images/interior-lights2.jpg"}
-                  alt={`${category.name} example 2`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+            {/* Image */}
+            <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 bg-gray-100 rounded-lg md:rounded-2xl overflow-hidden flex items-center justify-center">
+              <Image
+                src={subcategory.images?.image1 || "/assets/images/interior-lights1.jpg"}
+                alt={`${subcategory.name} example`}
+                fill
+                className="object-cover rounded-2xl"
+              />
             </div>
           </div>
         </div>
@@ -172,7 +212,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           <div className="hidden lg:block lg:w-80 bg-gray-50 rounded-lg p-3 md:p-4 order-2 lg:order-1">
             <h3 className="text-lg font-semibold text-gray-900 mb-3 md:mb-4">Categories</h3>
             <div className="space-y-1 md:space-y-2">
-              {category.subcategories.map((subcategory, index) => (
+              {topLevelCategory && topLevelCategory.subcategories.map((subcategory: any, index: number) => (
                 <div key={subcategory.id || index}>
                   {typeof subcategory === 'string' ? (
                     <Link
@@ -186,7 +226,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                       <div className="flex items-center">
                         <Link
                           href={`/subcategory/${subcategory.id}`}
-                          className="flex-1 py-2 px-3 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded transition-colors text-sm md:text-base text-left"
+                          className={`flex-1 py-2 px-3 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded transition-colors text-sm md:text-base text-left${subcategory.id === subcategory.id ? ' font-semibold' : ''}`}
                           style={{ textDecoration: 'none' }}
                         >
                           {subcategory.name}
@@ -253,7 +293,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                   className="w-full flex items-center justify-between px-4 py-3 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors text-left"
                 >
                   <span className="text-sm font-medium text-gray-700">
-                    Categories
+                    Subcategories
                   </span>
                   <ChevronDown className={`w-4 h-4 text-teal-600 transition-transform ${isCategoriesOpen ? 'rotate-180' : ''}`} />
                 </button>
@@ -280,68 +320,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             {isCategoriesOpen && (
               <div className="lg:hidden mb-4">
                 <div className="rounded-lg p-4" style={{ backgroundColor: '#e7f5f5' }}>
-                  {category.subcategories.map((subcategory, index) => (
-                    <div key={subcategory.id || index}>
-                      {typeof subcategory === 'string' ? (
-                        <Link
-                          href="#"
-                          className="block py-3 text-left hover:bg-white/50 transition-colors rounded"
-                        >
-                          <span className="text-sm font-medium text-gray-700">
-                            {subcategory}
-                          </span>
-                        </Link>
-                      ) : (
-                        <div>
-                          <button
-                            onClick={() => setExpandedSubcategory(
-                              expandedSubcategory === subcategory.id ? null : subcategory.id
-                            )}
-                            className="w-full flex items-center justify-between py-3 text-left hover:bg-white/50 transition-colors rounded"
-                          >
-                            <span className="text-sm font-medium text-gray-700">
-                              {subcategory.name}
-                            </span>
-                            {subcategory.subcategories.length > 0 && (
-                              expandedSubcategory === subcategory.id ? (
-                                <ChevronDown className="w-4 h-4 text-teal-600" />
-                              ) : (
-                                <ChevronRight className="w-4 h-4 text-teal-600" />
-                              )
-                            )}
-                          </button>
-                          {expandedSubcategory === subcategory.id && subcategory.subcategories.length > 0 && (
-                            <div className="ml-4 mt-1 space-y-1">
-                              {subcategory.subcategories.map((subSubcategory: any, subIndex: number) =>
-                                typeof subSubcategory === 'string' ? (
-                                  <Link
-                                    key={subIndex}
-                                    href="#"
-                                    className="block py-2 px-3 text-sm text-gray-600 hover:bg-white/50 rounded transition-colors"
-                                  >
-                                    {subSubcategory}
-                                  </Link>
-                                ) : (
-                                  <Link
-                                    key={subSubcategory.id}
-                                    href={`/subcategory/${subSubcategory.id}`}
-                                    className="block py-2 px-3 text-sm text-gray-600 hover:bg-white/50 rounded transition-colors"
-                                  >
-                                    {subSubcategory.name}
-                                  </Link>
-                                )
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      
-                      {/* Divider Line (except for last item) */}
-                      {index < category.subcategories.length - 1 && (
-                        <div className="border-t border-white my-2"></div>
-                      )}
-                    </div>
-                  ))}
+                  {/* Optionally list sibling subcategories here if needed */}
                 </div>
               </div>
             )}

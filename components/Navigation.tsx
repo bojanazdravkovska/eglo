@@ -105,28 +105,55 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                             onMouseEnter={() => handleSubcategoryMouseEnter(subcategory.id || `sub-${index}`)}
                             onMouseLeave={handleSubcategoryMouseLeave}
                           >
-                            <div className="flex items-center justify-between text-gray-700 hover:text-teal-600 transition-colors cursor-pointer py-1 px-2 rounded">
-                              <span className="text-sm font-medium">
-                                {typeof subcategory === 'string' ? subcategory : subcategory.name}
+                            {typeof subcategory === 'string' ? (
+                              <span className="flex items-center justify-between text-gray-700 hover:text-teal-600 transition-colors cursor-pointer py-1 px-2 rounded">
+                                <span className="text-sm font-medium">{subcategory}</span>
                               </span>
-                              {typeof subcategory !== 'string' && subcategory.subcategories.length > 0 && (
-                                <ChevronRight className="w-4 h-4" />
-                              )}
-                            </div>
+                            ) : (
+                              <Link
+                                href={`/subcategory/${subcategory.id}`}
+                                className="flex items-center justify-between text-gray-700 hover:text-teal-600 transition-colors cursor-pointer py-1 px-2 rounded"
+                              >
+                                <span className="text-sm font-medium">{subcategory.name}</span>
+                                {subcategory.subcategories.length > 0 && (
+                                  <ChevronRight className="w-4 h-4" />
+                                )}
+                              </Link>
+                            )}
                             
                             {/* Right Column - Sub-subcategories */}
                             {typeof subcategory !== 'string' && subcategory.subcategories.length > 0 && hoveredSubcategory === (subcategory.id || `sub-${index}`) && (
                               <div className="absolute left-full top-0 ml-2 bg-white border border-gray-200 rounded-lg shadow-lg p-3 min-w-48 z-10">
                                 <div className="space-y-1">
-                                  {subcategory.subcategories.map((subSubcategory, subIndex) => (
-                                    <Link
-                                      key={subIndex}
-                                      href="#"
-                                      className="block text-sm text-gray-600 hover:text-teal-600 transition-colors py-1 px-2 rounded"
-                                    >
-                                      {subSubcategory}
-                                    </Link>
-                                  ))}
+                                  {subcategory.subcategories.map((subSubcategory, subIndex) => {
+                                    if (typeof subSubcategory === 'string') {
+                                      return (
+                                        <Link
+                                          key={subIndex}
+                                          href="#"
+                                          className="block text-sm text-gray-600 hover:text-teal-600 transition-colors py-1 px-2 rounded"
+                                        >
+                                          {subSubcategory}
+                                        </Link>
+                                      );
+                                    } else if (
+                                      typeof subSubcategory === 'object' &&
+                                      subSubcategory !== null &&
+                                      'id' in subSubcategory &&
+                                      'name' in subSubcategory
+                                    ) {
+                                      return (
+                                        <Link
+                                          key={subSubcategory.id}
+                                          href={`/subcategory/${subSubcategory.id}`}
+                                          className="block text-sm text-gray-600 hover:text-teal-600 transition-colors py-1 px-2 rounded"
+                                        >
+                                          {subSubcategory.name}
+                                        </Link>
+                                      );
+                                    }
+                                    return null;
+                                  }).filter(Boolean)}
                                   <Link
                                     href="#"
                                     className="block text-sm text-teal-600 hover:text-teal-700 transition-colors py-1 px-2 rounded font-medium flex items-center gap-1"

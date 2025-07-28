@@ -18,10 +18,18 @@ export default function ProductCard({
   productSlug
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
-  
+
   // Create the view image path by replacing the filename
   const viewImagePath = productImg.replace('.jpg', '-view.jpg')
-  
+
+  // Only use the hover image if it exists in the images array
+  // We'll assume productImg is the first image, and if a corresponding -view.jpg exists in the same folder, it should be in the images array
+  // So, let's check for it in the images array if available
+  // For this, let's accept an optional productImages prop (array) and check for viewImagePath
+  // Fallback: if not provided, just use productImg
+  const productImages = (typeof productImg === 'string' ? [productImg] : productImg) as string[];
+  const hasViewImage = productImages.includes(viewImagePath);
+
   const cardContent = (
     <div 
       className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
@@ -30,7 +38,7 @@ export default function ProductCard({
     >
       <div className="relative h-48 bg-gray-100">
         <Image
-          src={isHovered ? viewImagePath : productImg}
+          src={isHovered && hasViewImage ? viewImagePath : productImg}
           alt={productName}
           fill
           className="object-cover transition-opacity duration-300"
