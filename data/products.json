@@ -1329,6 +1329,374 @@
         "Lighter type 1": "LED",
         "EAN/UPC": "9008606274574"
       }
+    },
+    {
+      "id": "e27-bulb",
+      "slug": "e27-bulb",
+      "name": "E27 bulb",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "illuminants",
+      "subcategory": "e27",
+      "images": [
+        "/assets/images/E27.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
+    },
+    {
+      "id": "e14-bulb",
+      "slug": "e14-bulb",
+      "name": "E14 bulb",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "illuminants",
+      "subcategory": "e14",
+      "images": [
+        "/assets/images/E14.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
+    },
+    {
+      "id": "g4-bulb",
+      "slug": "g4-bulb",
+      "name": "G4 bulb",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "illuminants",
+      "subcategory": "g4",
+      "images": [
+        "/assets/images/G4.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
+    },
+    {
+      "id": "led-bulb-g9-3w-3000k-warm-light-dimmable-320lm",
+      "slug": "led-bulb-g9-3w-3000k-warm-light-dimmable-320lm",
+      "name": "LED Bulb G9 3W 3000K warm light dimmable 320lm",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "illuminants",
+      "subcategory": "g9",
+      "images": [
+        "/assets/images/g9.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
+    },
+    {
+      "id": "gu5-3-bulb",
+      "slug": "gu5-3-bulb",
+      "name": "GU5.3 bulb",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "illuminants",
+      "subcategory": "gu5-3",
+      "images": [
+        "/assets/images/GU5.3.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
+    },
+    {
+      "id": "gu10-bulb",
+      "slug": "gu10-bulb",
+      "name": "GU10 bulb",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "illuminants",
+      "subcategory": "gu10",
+      "images": [
+        "/assets/images/GU10.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
+    },
+    {
+      "id": "r7s-bulb",
+      "slug": "r7s-bulb",
+      "name": "R7S light bulb",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "illuminants",
+      "subcategory": "r7s",
+      "images": [
+        "/assets/images/R7S.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
+    },
+    {
+      "id": "gx53-bulb",
+      "slug": "gx53-bulb",
+      "name": "GX53 bulb",
+      "price": "€66.00",
+      "priceDetails": "Includes 18% VAT, plus shipping costs",
+      "shippingInfo": "Shipping in 2-3 business days",
+      "category": "illuminants",
+      "subcategory": "gx53",
+      "images": [
+        "/assets/images/GX53.jpg"
+      ],
+      "product_details": {
+        "Full lumen": "3 400",
+        "Full Kelvin": "3000",
+        "Item number": "900892",
+        "Material": "steel, wood",
+        "Color": "black, rural brown",
+        "Glass/Contour Material": "plastic",
+        "Glass/Contour Color": "white",
+        "Security level": "IP20",
+        "Included light 1": "INCLUDING",
+        "Opening type 1": "LED",
+        "Energy saving class": "The",
+        "Warranty": "5 years",
+        "Instruction manual": "Download"
+      },
+      "dimensions": {
+        "Length (in mm/in)": "300 / 11.81",
+        "Height (in mm/in)": "1 500 / 0.0419.69",
+        "Base lenght (in mm/in)": "250 / 9.84",
+        "Base widht": "200 / 7.87",
+        "Weight": "5.42"
+      },
+      "technical_information": {
+        "Info changeability light source/driver": "LED + driver can be exchanged by a specialist",
+        "Security class": "2",
+        "Mains voltage": "-",
+        "Type of circuit breaker": "foot switch",
+        "Battery": "not"
+      },
+      "other_information": {
+        "Lighter type 1": "LED",
+        "EAN/UPC": "9008606274574"
+      }
     }
   ]
 

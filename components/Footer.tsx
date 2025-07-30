@@ -5,7 +5,7 @@ interface FooterProps {
   noPadding?: boolean
 }
 
-export function Footer({ noPadding = false }: FooterProps) {
+export function Footer({}: FooterProps) {
   return (
     <>
       {/* Contact Section Above Footer */}
@@ -34,7 +34,7 @@ export function Footer({ noPadding = false }: FooterProps) {
                 <Mail className="w-6 h-6 text-teal-600" />
               </div>
               <p className="text-gray-600 font-medium">Email</p>
-              <p className="text-teal-600 text-sm">info-kosovo@eglo.com</p>
+              <p className="text-teal-600 text-sm">info-macedonia@eglo.com</p>
             </div>
             
             <div className="flex flex-col items-center text-center">
@@ -123,21 +123,51 @@ export function Footer({ noPadding = false }: FooterProps) {
             <div>
               <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">Social networks</h3>
               <div className="flex space-x-3">
-                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link 
+                  href="https://www.facebook.com/eglo.mk" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label="Follow us on Facebook"
+                >
                   <Facebook className="w-5 h-5" />
                 </Link>
-                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link 
+                  href="https://www.youtube.com/user/EGLOunited" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label="Follow us on YouTube"
+                >
                   <Youtube className="w-5 h-5" />
                 </Link>
-                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link 
+                  href="https://at.pinterest.com/eglounited/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label="Follow us on Pinterest"
+                >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
                   </svg>
                 </Link>
-                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link 
+                  href="https://www.linkedin.com/company/eglo-leuchten-gmbh/?originalSubdomain=at" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label="Follow us on LinkedIn"
+                >
                   <Linkedin className="w-5 h-5" />
                 </Link>
-                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link 
+                  href="https://www.instagram.com/eglo.macedonia/?hl=en" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label="Follow us on Instagram"
+                >
                   <Instagram className="w-5 h-5" />
                 </Link>
               </div>
@@ -153,7 +183,7 @@ export function Footer({ noPadding = false }: FooterProps) {
               <div className="text-center mb-2 md:mb-0 max-w-2xl">
                 <p>
                   All prices are inclusive of 18% VAT and, where applicable, delivery costs may be added. 
-                  RRP = Manufacturer's Recommended Retail Price
+                  RRP = Manufacturer&apos;s Recommended Retail Price
                 </p>
               </div>
               <div className="flex space-x-4">

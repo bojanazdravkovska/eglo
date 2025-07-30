@@ -8,6 +8,7 @@ import { Badge } from "./Badge"
 import { Navigation } from "./Navigation"
 import { useState } from "react"
 import { useCart } from "../app/context/CartContext"
+import { useRouter } from "next/navigation"
 
 interface HeaderProps {
   noPadding?: boolean
@@ -15,8 +16,17 @@ interface HeaderProps {
 
 export function Header({ noPadding = false }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
   const { getTotalItems } = useCart()
   const cartItemCount = getTotalItems()
+  const router = useRouter()
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchTerm.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`)
+    }
+  }
 
   return (
     <header className="border-b border-gray-100">
@@ -68,13 +78,16 @@ export function Header({ noPadding = false }: HeaderProps) {
 
           {/* Search - Hidden on mobile, shown on tablet and up */}
           <div className="hidden sm:flex flex-1 max-w-xl mx-4 lg:mx-8">
-            <div className="relative w-full">
+            <form onSubmit={handleSearch} className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
+                type="text"
                 placeholder="Search for lights, fans, and more..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 py-3 border-gray-200 focus:border-teal-500 focus:ring-teal-500 w-full"
               />
-            </div>
+            </form>
           </div>
 
           {/* User Actions */}
@@ -98,14 +111,17 @@ export function Header({ noPadding = false }: HeaderProps) {
         </div>
 
         {/* Mobile Search Bar */}
-        <div className="sm:hidden mt-4">
-          <div className="relative">
+        <div className="sm:hidden mt-4 px-4">
+          <form onSubmit={handleSearch} className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <Input
-              placeholder="Search..."
+              type="text"
+              placeholder="Search for lights, fans, and more..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 py-3 border-gray-200 focus:border-teal-500 focus:ring-teal-500 w-full"
             />
-          </div>
+          </form>
         </div>
       </div>
 

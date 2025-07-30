@@ -3,8 +3,8 @@
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronRight, ChevronDown, X } from "lucide-react"
-import { useState, use } from "react"
+import { ChevronRight, ChevronDown } from "lucide-react"
+import { useState, use, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import categoriesData from "../../../data/categories.json"
 import productsData from "../../../data/products.json"
@@ -68,13 +68,32 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
   const resolvedParams = use(params) as { slug: string }
   const pathname = usePathname()
   // Recursively find the subcategory in categories.json
-  let subcategory = findSubcategoryById(categoriesData.categories, resolvedParams.slug);
-  let parentCategory = findParentCategory(categoriesData.categories, resolvedParams.slug);
-  let topLevelCategory = findTopLevelCategory(categoriesData.categories, resolvedParams.slug);
+  const subcategory = findSubcategoryById(categoriesData.categories, resolvedParams.slug);
+  const parentCategory = findParentCategory(categoriesData.categories, resolvedParams.slug);
+  const topLevelCategory = findTopLevelCategory(categoriesData.categories, resolvedParams.slug);
   const [expandedSubcategory, setExpandedSubcategory] = useState<string | null>(null)
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({})
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false)
+  
+  // Auto-expand the parent subcategory dropdown when the page loads
+  useEffect(() => {
+    if (topLevelCategory && topLevelCategory.subcategories) {
+      // Find which subcategory contains the current page's subcategory
+      const parentSubcategory = topLevelCategory.subcategories.find((sub: any) => {
+        if (typeof sub === 'object' && sub.subcategories) {
+          return sub.subcategories.some((nestedSub: any) => 
+            typeof nestedSub === 'object' && nestedSub.id === resolvedParams.slug
+          )
+        }
+        return false
+      })
+      
+      if (parentSubcategory && typeof parentSubcategory === 'object') {
+        setExpandedSubcategory(parentSubcategory.id)
+      }
+    }
+  }, [topLevelCategory, resolvedParams.slug])
   
   if (!subcategory) {
     notFound()
@@ -120,33 +139,7 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
     setActiveFilters({})
   }
 
-  const handleRemoveFilter = (filterKey: string, valueToRemove: string) => {
-    const newActiveFilters = { ...activeFilters }
-    if (newActiveFilters[filterKey]) {
-      newActiveFilters[filterKey] = newActiveFilters[filterKey].filter(value => value !== valueToRemove)
-      if (newActiveFilters[filterKey].length === 0) {
-        delete newActiveFilters[filterKey]
-      }
-    }
-    setActiveFilters(newActiveFilters)
-  }
 
-  // Get all selected values for badges
-  const getAllSelectedValues = () => {
-    const allValues: string[] = []
-    Object.entries(activeFilters).forEach(([filterKey, values]) => {
-      const filter = categoryFilters.find(f => f.key === filterKey)
-      if (filter) {
-        values.forEach(value => {
-          const option = filter.options.find(o => o.value === value)
-          if (option) {
-            allValues.push(option.label)
-          }
-        })
-      }
-    })
-    return allValues
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -176,33 +169,35 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
           {/* Page Title */}
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 md:mb-3">{subcategory.name}</h1>
           
-          {/* Description and Images Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
-            {/* Text Description */}
-            <div className="space-y-2 md:space-y-3">
-              <div className="space-y-2 md:space-y-3 text-gray-600 leading-relaxed text-sm md:text-base">
-                {subcategory.description?.split('\n\n').map((paragraph: string, index: number) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
+          {/* Description and Images Section - Only show for non-Illuminants subcategories */}
+          {topLevelCategory?.id !== 'illuminants' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
+              {/* Text Description */}
+              <div className="space-y-2 md:space-y-3">
+                <div className="space-y-2 md:space-y-3 text-gray-600 leading-relaxed text-sm md:text-base">
+                  {subcategory.description?.split('\n\n').map((paragraph: string, index: number) => (
+                    <p key={index}>{paragraph}</p>
+                  ))}
+                </div>
+                <Link 
+                  href="#" 
+                  className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium transition-colors text-sm md:text-base"
+                >
+                  Read more
+                  <ChevronRight className="ml-1 w-4 h-4" />
+                </Link>
               </div>
-              <Link 
-                href="#" 
-                className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium transition-colors text-sm md:text-base"
-              >
-                Read more
-                <ChevronRight className="ml-1 w-4 h-4" />
-              </Link>
+              {/* Image */}
+              <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 bg-gray-100 rounded-lg md:rounded-2xl overflow-hidden flex items-center justify-center">
+                <Image
+                  src={subcategory.images?.image1 || "/assets/images/interior-lights1.jpg"}
+                  alt={`${subcategory.name} example`}
+                  fill
+                  className="object-cover rounded-2xl"
+                />
+              </div>
             </div>
-            {/* Image */}
-            <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 bg-gray-100 rounded-lg md:rounded-2xl overflow-hidden flex items-center justify-center">
-              <Image
-                src={subcategory.images?.image1 || "/assets/images/interior-lights1.jpg"}
-                alt={`${subcategory.name} example`}
-                fill
-                className="object-cover rounded-2xl"
-              />
-            </div>
-          </div>
+          )}
         </div>
 
         {/* Product Section with Filters */}

@@ -3,7 +3,7 @@
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronRight, ChevronLeft, Download, Plus, Minus, ChevronDown, ChevronUp, Info } from "lucide-react"
+import { ChevronRight, ChevronLeft, Download, Plus, Minus, ChevronDown } from "lucide-react"
 import { useState, use } from "react"
 import { Button } from "../../../components/Button"
 import { Input } from "../../../components/Input"
@@ -75,7 +75,20 @@ export default function ProductPage({ params }: ProductPageProps) {
     }))
   }
 
-  const renderSpecificationSection = (title: string, data: Record<string, string>, sectionKey: keyof typeof expandedSections) => {
+  const renderSpecificationSection = (title: string, data: Record<string, unknown> | undefined | null, sectionKey: keyof typeof expandedSections) => {
+    // Don't render if data is null or undefined
+    if (!data || typeof data !== 'object') {
+      return null;
+    }
+
+    // Filter out undefined values and convert to proper entries
+    const validEntries = Object.entries(data).filter(([, value]) => value !== undefined);
+
+    // Don't render if no valid entries
+    if (validEntries.length === 0) {
+      return null;
+    }
+
     return (
       <div className="border-b border-gray-200 last:border-b-0">
         <button
@@ -91,10 +104,10 @@ export default function ProductPage({ params }: ProductPageProps) {
           expandedSections[sectionKey] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}>
           <div className="pb-4 space-y-2">
-            {Object.entries(data).map(([key, value]) => (
+            {validEntries.map(([key, value]) => (
               <div key={key} className="flex justify-between text-sm">
                 <span className="text-gray-600">{key}:</span>
-                <span className="text-gray-900 font-medium">{value}</span>
+                <span className="text-gray-900 font-medium">{String(value)}</span>
               </div>
             ))}
           </div>
@@ -274,14 +287,14 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="lg:max-w-[calc(50%-1rem)] bg-gray-50 rounded-lg overflow-hidden p-4">
             {product.category === 'illuminants' ? (
               <>
-                {renderSpecificationSection("Information about light", product.light_information as unknown as Record<string, string>, "light_information")}
-                {renderSpecificationSection("Information about switching", product.switching_information as unknown as Record<string, string>, "switching_information")}
+                {renderSpecificationSection("Information about light", product.light_information, "light_information")}
+                {renderSpecificationSection("Information about switching", product.switching_information, "switching_information")}
               </>
             ) : (
-              renderSpecificationSection("Dimensions", product.dimensions as unknown as Record<string, string>, "dimensions")
+              renderSpecificationSection("Dimensions", product.dimensions, "dimensions")
             )}
-            {renderSpecificationSection("Technical information", product.technical_information as unknown as Record<string, string>, "technical_information")}
-            {renderSpecificationSection("Other information", product.other_information as unknown as Record<string, string>, "other_information")}
+            {renderSpecificationSection("Technical information", product.technical_information, "technical_information")}
+            {renderSpecificationSection("Other information", product.other_information, "other_information")}
           </div>
         </div>
       </div>
