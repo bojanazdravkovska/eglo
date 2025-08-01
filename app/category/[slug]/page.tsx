@@ -78,33 +78,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     setActiveFilters({})
   }
 
-  const handleRemoveFilter = (filterKey: string, valueToRemove: string) => {
-    const newActiveFilters = { ...activeFilters }
-    if (newActiveFilters[filterKey]) {
-      newActiveFilters[filterKey] = newActiveFilters[filterKey].filter(value => value !== valueToRemove)
-      if (newActiveFilters[filterKey].length === 0) {
-        delete newActiveFilters[filterKey]
-      }
-    }
-    setActiveFilters(newActiveFilters)
-  }
 
-  // Get all selected values for badges
-  const getAllSelectedValues = () => {
-    const allValues: string[] = []
-    Object.entries(activeFilters).forEach(([filterKey, values]) => {
-      const filter = categoryFilters.find(f => f.key === filterKey)
-      if (filter) {
-        values.forEach(value => {
-          const option = filter.options.find(o => o.value === value)
-          if (option) {
-            allValues.push(option.label)
-          }
-        })
-      }
-    })
-    return allValues
-  }
 
   return (
     <div className="min-h-screen bg-white">

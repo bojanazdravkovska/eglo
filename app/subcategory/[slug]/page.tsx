@@ -12,6 +12,17 @@ import categoryFiltersData from "../../../data/categoryFilters.json"
 import ProductCard from "../../../components/ProductCard"
 import { FilterGrid } from "../../../components/FilterGrid"
 
+interface Category {
+  id: string
+  name: string
+  description?: string
+  images?: {
+    image1?: string
+    image2?: string
+  }
+  subcategories: (Category | string)[]
+}
+
 interface SubcategoryPageProps {
   params: Promise<{
     slug: string
@@ -19,12 +30,12 @@ interface SubcategoryPageProps {
 }
 
 // Helper: recursively find subcategory by id
-function findSubcategoryById(categories: any[], id: string): any {
+function findSubcategoryById(categories: Category[], id: string): Category | null {
   for (const cat of categories) {
     if (cat.id === id) return cat;
     if (cat.subcategories && cat.subcategories.length > 0) {
       const found = findSubcategoryById(
-        cat.subcategories.filter((sub: any) => typeof sub === 'object'),
+        cat.subcategories.filter((sub): sub is Category => typeof sub === 'object'),
         id
       );
       if (found) return found;
@@ -34,12 +45,12 @@ function findSubcategoryById(categories: any[], id: string): any {
 }
 
 // Optionally, find parentCategory if needed for breadcrumbs
-function findParentCategory(categories: any[], id: string, parent: any = null): any {
+function findParentCategory(categories: Category[], id: string, parent: Category | null = null): Category | null {
   for (const cat of categories) {
     if (cat.id === id) return parent;
     if (cat.subcategories && cat.subcategories.length > 0) {
       const found = findParentCategory(
-        cat.subcategories.filter((sub: any) => typeof sub === 'object'),
+        cat.subcategories.filter((sub): sub is Category => typeof sub === 'object'),
         id,
         cat
       );
@@ -50,12 +61,12 @@ function findParentCategory(categories: any[], id: string, parent: any = null): 
 }
 
 // Helper: recursively find top-level category for a given subcategory id
-function findTopLevelCategory(categories: any[], id: string): any {
+function findTopLevelCategory(categories: Category[], id: string): Category | null {
   for (const cat of categories) {
     if (cat.id === id) return cat;
     if (cat.subcategories && cat.subcategories.length > 0) {
       const found = findTopLevelCategory(
-        cat.subcategories.filter((sub: any) => typeof sub === 'object'),
+        cat.subcategories.filter((sub): sub is Category => typeof sub === 'object'),
         id
       );
       if (found) return cat;
@@ -80,9 +91,9 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
   useEffect(() => {
     if (topLevelCategory && topLevelCategory.subcategories) {
       // Find which subcategory contains the current page's subcategory
-      const parentSubcategory = topLevelCategory.subcategories.find((sub: any) => {
+      const parentSubcategory = topLevelCategory.subcategories.find((sub) => {
         if (typeof sub === 'object' && sub.subcategories) {
-          return sub.subcategories.some((nestedSub: any) => 
+          return sub.subcategories.some((nestedSub) => 
             typeof nestedSub === 'object' && nestedSub.id === resolvedParams.slug
           )
         }
@@ -206,8 +217,8 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
           <div className="hidden lg:block lg:w-80 bg-gray-50 rounded-lg p-3 md:p-4 order-2 lg:order-1">
             <h3 className="text-lg font-semibold text-gray-900 mb-3 md:mb-4">Categories</h3>
             <div className="space-y-1 md:space-y-2">
-              {topLevelCategory && topLevelCategory.subcategories.map((subcategory: any, index: number) => (
-                <div key={subcategory.id || index}>
+              {topLevelCategory && topLevelCategory.subcategories.map((subcategory, index: number) => (
+                <div key={typeof subcategory === 'string' ? index : subcategory.id}>
                   {typeof subcategory === 'string' ? (
                     <Link
                       href="#"
@@ -243,7 +254,7 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
                       </div>
                       {expandedSubcategory === subcategory.id && subcategory.subcategories.length > 0 && (
                         <div className="ml-4 mt-1 space-y-1 animate-in slide-in-from-top-2 duration-200">
-                          {subcategory.subcategories.map((subSubcategory: any, subIndex: number) =>
+                          {subcategory.subcategories.map((subSubcategory, subIndex: number) =>
                             typeof subSubcategory === 'string' ? (
                               <Link
                                 key={subIndex}

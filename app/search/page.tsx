@@ -1,6 +1,6 @@
 "use client"
 import { useSearchParams } from "next/navigation"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import ProductCard from "../../components/ProductCard"
 import { Input } from "../../components/Input"
 import { Button } from "../../components/Button"
@@ -16,7 +16,7 @@ interface Product {
   category: string
   images: string[]
   description?: string
-  product_details: Record<string, any>
+  product_details: Record<string, string | number | boolean | undefined>
 }
 
 export default function SearchPage() {
@@ -26,6 +26,21 @@ export default function SearchPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
+
+  const performSearch = useCallback((searchQuery: string) => {
+    if (!searchQuery.trim()) {
+      setFilteredProducts([])
+      return
+    }
+
+    const searchLower = searchQuery.toLowerCase()
+    const results = products.filter((product) => {
+      // Search only in product name
+      return product.name.toLowerCase().includes(searchLower)
+    })
+
+    setFilteredProducts(results)
+  }, [products])
 
   useEffect(() => {
     // Load products data
@@ -39,22 +54,7 @@ export default function SearchPage() {
     } else if (products.length > 0) {
       setFilteredProducts([])
     }
-  }, [query, products])
-
-  const performSearch = (searchQuery: string) => {
-    if (!searchQuery.trim()) {
-      setFilteredProducts([])
-      return
-    }
-
-    const searchLower = searchQuery.toLowerCase()
-    const results = products.filter((product) => {
-      // Search only in product name
-      return product.name.toLowerCase().includes(searchLower)
-    })
-
-    setFilteredProducts(results)
-  }
+  }, [query, products, performSearch])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()

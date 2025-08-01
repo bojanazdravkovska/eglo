@@ -50,7 +50,7 @@ export default function AboutEglo() {
       <div className="max-w-4xl mx-auto mt-12 px-4">
         <div className="bg-white border-l-4 border-teal-600 p-6 rounded-lg shadow-md">
           <blockquote className="text-xl italic text-gray-700 mb-2">
-            "Contemporary design, coupled with high functionality, at affordable prices."
+            &quot;Contemporary design, coupled with high functionality, at affordable prices.&quot;
           </blockquote>
           <div className="text-gray-600 text-base">
             <span className="font-semibold">This has always been and continues to be our motto.</span> In step with the times, we develop and produce products tailored to the needs of our customers. We are currently working intensively on Smart Lighting, bringing light and illumination into a digitally networked and easily controllable form.<br/><br/>

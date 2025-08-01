@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const infoCard = `Our factories in Hungary, China and India produce products to satisfy our customers. To make this possible, we search the world for new ideas. These are transformed into products available all over the world. Our sales companies in around 50 countries around the world are the key to this.`;
 
@@ -397,7 +398,7 @@ export default function WorldwidePage() {
       <div className="border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4">
           <nav className="flex items-center space-x-2 text-sm text-gray-500">
-            <a href="/" className="hover:text-teal-600 transition-colors">Home</a>
+            <Link href="/" className="hover:text-teal-600 transition-colors">Home</Link>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
             <span className="text-gray-900">Worldwide</span>
           </nav>

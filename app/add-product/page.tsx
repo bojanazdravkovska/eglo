@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "../../components/Button"
 import { ArrowLeft, ArrowRight, Check, Plus, X } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import categoriesData from "../../data/categories.json"
 
 type Step = 1 | 2 | 3 | 4
@@ -527,9 +528,11 @@ export default function AddProductPage() {
                       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {productImages.map((image) => (
                           <div key={image.id} className="relative group">
-                            <img
+                            <Image
                               src={image.preview}
                               alt="Product preview"
+                              width={128}
+                              height={128}
                               className="w-full h-32 object-cover rounded-lg border border-gray-200"
                             />
                             <button

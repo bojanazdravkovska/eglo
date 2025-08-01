@@ -50,7 +50,7 @@ export default function WarrantyPage() {
       <div className="max-w-6xl mx-auto px-4 flex flex-col gap-10 items-center mt-8">
         <h1 className="text-3xl md:text-4xl font-bold mb-4 mt-2 text-gray-900 w-full text-left">Warranty conditions</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 w-full mt-4">
-          {warrantyCards.map((card, idx) => (
+          {warrantyCards.map((card) => (
             <Link
               href={card.href}
               key={card.title}
