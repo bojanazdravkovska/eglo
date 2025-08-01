@@ -560,7 +560,7 @@ export default function AddProductPage() {
                 
                 <h2 className="text-2xl font-semibold text-gray-900">Your Product is Created!</h2>
                 <p className="text-gray-600 max-w-md mx-auto">
-                  Congratulations! Your product "{formData.name}" has been successfully created and added to your store.
+                  Congratulations! Your product &quot;{formData.name}&quot; has been successfully created and added to your store.
                 </p>
                 
                 <div className="bg-gray-50 p-4 rounded-lg max-w-md mx-auto">

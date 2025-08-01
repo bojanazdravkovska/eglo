@@ -34,7 +34,7 @@ export function TrendingIdeas() {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-2 mb-4">
             <TrendingUp className="w-6 h-6 text-teal-600" />
-            <span className="text-teal-600 font-semibold uppercase tracking-wide text-sm">What's Trending</span>
+            <span className="text-teal-600 font-semibold uppercase tracking-wide text-sm">What&apos;s Trending</span>
           </div>
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Latest Lighting Ideas</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">

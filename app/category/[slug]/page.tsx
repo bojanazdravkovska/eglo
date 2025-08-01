@@ -3,7 +3,7 @@
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronRight, ChevronDown, X } from "lucide-react"
+import { ChevronRight, ChevronDown } from "lucide-react"
 import { useState, use } from "react"
 import { usePathname } from "next/navigation"
 import categoriesData from "../../../data/categories.json"
@@ -11,6 +11,11 @@ import productsData from "../../../data/products.json"
 import categoryFiltersData from "../../../data/categoryFilters.json"
 import ProductCard from "../../../components/ProductCard"
 import { FilterGrid } from "../../../components/FilterGrid"
+
+interface SubSubcategory {
+  id: string
+  name: string
+}
 
 interface CategoryPageProps {
   params: Promise<{
@@ -209,7 +214,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                       </div>
                       {expandedSubcategory === subcategory.id && subcategory.subcategories.length > 0 && (
                         <div className="ml-4 mt-1 space-y-1 animate-in slide-in-from-top-2 duration-200">
-                          {subcategory.subcategories.map((subSubcategory: any, subIndex: number) =>
+                          {subcategory.subcategories.map((subSubcategory: SubSubcategory | string, subIndex: number) =>
                             typeof subSubcategory === 'string' ? (
                               <Link
                                 key={subIndex}
@@ -312,7 +317,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                           </button>
                           {expandedSubcategory === subcategory.id && subcategory.subcategories.length > 0 && (
                             <div className="ml-4 mt-1 space-y-1">
-                              {subcategory.subcategories.map((subSubcategory: any, subIndex: number) =>
+                              {subcategory.subcategories.map((subSubcategory: SubSubcategory | string, subIndex: number) =>
                                 typeof subSubcategory === 'string' ? (
                                   <Link
                                     key={subIndex}

@@ -103,7 +103,7 @@ export default function Landmark() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4 mt-2 text-gray-900">Landmark</h2>
           <p className="text-lg text-gray-600 mb-8">Moments that showcase our bright history.</p>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {milestones.map((milestone, idx) => (
+            {milestones.map((milestone) => (
               <div
                 key={milestone.year + milestone.title}
                 className="bg-white rounded-xl shadow-md p-6 flex flex-col items-start hover:shadow-lg transition-shadow duration-200"

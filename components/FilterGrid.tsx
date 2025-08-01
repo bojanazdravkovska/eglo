@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { ChevronDown, X, Check } from "lucide-react"
+import { useState } from "react"
+import { ChevronDown, X } from "lucide-react"
 import { Button } from "./Button"
 
 interface FilterOption {

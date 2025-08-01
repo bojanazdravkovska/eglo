@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const summary = `EGLO’s development has been and continues to be rapid: from the number of employees, through sales development, to production facilities and sales companies around the globe: These growth rates exceed the market, to ensure that EGLO will continue to grow healthily in the future, business development is driven with great sustainability. We retain what is tried and tested and leave room to let our principles grow along with us.`;
 
@@ -40,7 +41,7 @@ export default function PrinciplesPage() {
       <div className="border-b border-gray-100">
         <div className="max-w-5xl mx-auto px-4 md:px-6 lg:px-8 py-4">
           <nav className="flex items-center space-x-2 text-sm text-gray-500">
-            <a href="/" className="hover:text-teal-600 transition-colors">Home page</a>
+            <Link href="/" className="hover:text-teal-600 transition-colors">Home page</Link>
             <span>/</span>
             <span className="text-gray-900">Our principles</span>
           </nav>
