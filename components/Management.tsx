@@ -1,4 +1,5 @@
-import React from "react";
+import React from "react"
+import Image from "next/image";
 
 const management = [
   {
@@ -82,9 +83,11 @@ const Management: React.FC = () => {
         <div className="flex flex-wrap justify-center gap-12 mb-10">
           {management.map((person) => (
             <div key={person.name} className="text-center w-44">
-              <img
+              <Image
                 src={person.image}
                 alt={person.name}
+                width={112}
+                height={112}
                 className="w-28 h-28 object-cover rounded-xl mb-3 mx-auto"
               />
               <div className="font-semibold">{person.name}</div>
@@ -96,9 +99,11 @@ const Management: React.FC = () => {
         <div className="flex flex-wrap justify-center gap-8">
           {extendedManagement.map((person) => (
             <div key={person.name} className="text-center w-36 mb-6">
-              <img
+              <Image
                 src={person.image}
                 alt={person.name}
+                width={96}
+                height={96}
                 className="w-24 h-24 object-cover rounded-lg mb-2 mx-auto"
               />
               <div className="font-medium">{person.name}</div>

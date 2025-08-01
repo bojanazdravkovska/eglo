@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
-import { Lightbulb, Fan, Zap, Home, ChevronRight, Menu, X } from "lucide-react"
+import { Lightbulb, Fan, Zap, Home, ChevronRight, X } from "lucide-react"
 import categoriesData from "../data/categories.json"
 
 interface NavigationProps {

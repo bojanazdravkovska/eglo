@@ -4,7 +4,7 @@ import { TrendingUp, Clock, Users } from "lucide-react"
 const trendingIdeas = [
   {
     title: "Smart Lighting Automation",
-    description: "Control your entire home's lighting with voice commands and schedules",
+    description: "Control your entire home&apos;s lighting with voice commands and schedules",
     image: "/assets/images/smart-home-lighting.jpg",
     readTime: "3 min read",
     views: "2.1k",
@@ -19,7 +19,7 @@ const trendingIdeas = [
   },
   {
     title: "Sustainable LED Solutions",
-    description: "Energy-efficient lighting that's beautiful and environmentally friendly",
+    description: "Energy-efficient lighting that&apos;s beautiful and environmentally friendly",
     image: "/assets/images/sustainable-led-lighting.jpg",
     trend: "New",
     readTime: "4 min read",
