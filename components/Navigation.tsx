@@ -258,16 +258,37 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                   {/* Mobile Sub-subcategories */}
                                   {expandedMobileSubcategory === subcategory.id && subcategory.subcategories.length > 0 && (
                                     <div className="bg-gray-100 animate-in slide-in-from-top-2 duration-200">
-                                      {subcategory.subcategories.map((subSubcategory, subIndex) => (
-                                        <Link
-                                          key={subIndex}
-                                          href="#"
-                                          className="block p-3 pl-16 text-sm text-gray-600 hover:text-teal-600 transition-colors"
-                                          onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                          {subSubcategory}
-                                        </Link>
-                                      ))}
+                                      {subcategory.subcategories.map((subSubcategory, subIndex) => {
+                                        if (typeof subSubcategory === 'string') {
+                                          return (
+                                            <Link
+                                              key={subIndex}
+                                              href="#"
+                                              className="block p-3 pl-16 text-sm text-gray-600 hover:text-teal-600 transition-colors"
+                                              onClick={() => setIsMobileMenuOpen(false)}
+                                            >
+                                              {subSubcategory}
+                                            </Link>
+                                          );
+                                        } else if (
+                                          typeof subSubcategory === 'object' &&
+                                          subSubcategory !== null &&
+                                          'id' in subSubcategory &&
+                                          'name' in subSubcategory
+                                        ) {
+                                          return (
+                                            <Link
+                                              key={subSubcategory.id}
+                                              href={`/subcategory/${subSubcategory.id}`}
+                                              className="block p-3 pl-16 text-sm text-gray-600 hover:text-teal-600 transition-colors"
+                                              onClick={() => setIsMobileMenuOpen(false)}
+                                            >
+                                              {subSubcategory.name}
+                                            </Link>
+                                          );
+                                        }
+                                        return null;
+                                      }).filter(Boolean)}
                                       <Link
                                         href="#"
                                         className="block p-3 pl-16 text-sm text-teal-600 hover:text-teal-700 transition-colors font-medium"
