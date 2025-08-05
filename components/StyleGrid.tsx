@@ -1,37 +1,38 @@
+"use client"
+
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 const styles = [
   {
-    title: "Scandinavian",
-    description: "Clean lines and natural warmth",
+    key: "scandinavian",
     image: "/assets/images/scandinavian.jpg",
   },
   {
-    title: "Natural",
-    description: "Organic textures and earthy tones",
+    key: "natural",
     image: "/assets/images/natural.jpg",
   },
   {
-    title: "Vintage",
-    description: "Timeless elegance and classic charm",
+    key: "vintage",
     image: "/assets/images/vintage-retro.jpg",
   },
   {
-    title: "Industrial",
-    description: "Raw materials and urban sophistication",
+    key: "industrial",
     image: "/assets/images/industrial-2_3.jpg",
   },
 ]
 
 export function StyleGrid() {
+  const t = useTranslations('styleGrid')
+
   return (
     <section className="py-20 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Shop by Style</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('title')}</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Find lighting that matches your aesthetic and creates the perfect ambiance for your space
+            {t('subtitle')}
           </p>
         </div>
 
@@ -44,7 +45,7 @@ export function StyleGrid() {
                 <div className="relative h-72 mb-4 overflow-hidden rounded-lg bg-gray-50">
                   <Image
                     src={style.image || "/placeholder.svg"}
-                    alt={`${style.title} style lighting`}
+                    alt={`${t(`styles.${style.key}.title`)} style lighting`}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
@@ -53,7 +54,7 @@ export function StyleGrid() {
                   {/* Hover Content */}
                   <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                     <div className="flex items-center justify-between text-white">
-                      <span className="font-medium text-sm">Explore Style</span>
+                      <span className="font-medium text-sm">{t('exploreStyle')}</span>
                       <ArrowRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -62,9 +63,9 @@ export function StyleGrid() {
                 {/* Text Content */}
                 <div className="text-center px-2">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-teal-600 transition-colors duration-300">
-                    {style.title}
+                    {t(`styles.${style.key}.title`)}
                   </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{style.description}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed">{t(`styles.${style.key}.description`)}</p>
                 </div>
               </div>
             </div>

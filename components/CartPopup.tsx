@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { Check } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 interface CartPopupProps {
   productName: string
@@ -10,6 +11,7 @@ interface CartPopupProps {
 }
 
 export function CartPopup({ productName, isVisible, onClose }: CartPopupProps) {
+  const t = useTranslations('cart')
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
@@ -33,7 +35,7 @@ export function CartPopup({ productName, isVisible, onClose }: CartPopupProps) {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-900">
-              {productName} has been added to cart
+              {productName} {t('addedToCart')}
             </p>
           </div>
         </div>

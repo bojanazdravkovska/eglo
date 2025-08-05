@@ -1,8 +1,13 @@
+"use client"
+
 import { Lightbulb, ArrowDown } from "lucide-react"
 import { Button } from "./Button"
 import Image from "next/image"
+import { useTranslations } from 'next-intl'
 
 export function InspirationHero() {
+  const t = useTranslations('inspirationHero')
+  
   return (
     <section className="relative h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-white">
       {/* Background Images with Parallax Effect */}
@@ -101,27 +106,23 @@ export function InspirationHero() {
         <div className="text-center max-w-4xl -mt-60">
           <div className="flex items-center justify-center gap-3 mb-6 animate-fade-in">
             <Lightbulb className="w-8 h-8 text-teal-600 animate-pulse" />
-            <span className="text-teal-600 font-semibold uppercase tracking-wide">Lighting Inspiration</span>
+            <span className="text-teal-600 font-semibold uppercase tracking-wide">{t('lightingInspiration')}</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 animate-slide-up">
-            Illuminate Your
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-gray-800">
-              Imagination
-            </span>
+            {t('title')}
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed animate-slide-up delay-200">
-            Discover endless possibilities with our curated collection of lighting designs that transform spaces into
-            extraordinary experiences
+            {t('subtitle')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-slide-up delay-300 pointer-events-auto">
             <Button size="lg" className="bg-teal-600 hover:bg-teal-700 px-8 py-4 text-lg">
-              Explore Ideas
+              {t('exploreIdeas')}
             </Button>
             <Button size="lg" variant="outline" className="px-8 py-4 text-lg bg-transparent">
-              Get Consultation
+              {t('getConsultation')}
             </Button>
           </div>
         </div>

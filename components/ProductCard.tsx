@@ -1,6 +1,10 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
+import { useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
 
 interface ProductCardProps {
   productName: string
@@ -18,6 +22,9 @@ export default function ProductCard({
   productSlug
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const t = useTranslations('productCard')
+  const params = useParams()
+  const locale = params.locale as string
 
   // Create the view image path by replacing the filename
   const viewImagePath = productImg.replace('.jpg', '-view.jpg')
@@ -44,7 +51,7 @@ export default function ProductCard({
           className="object-cover transition-opacity duration-300"
         />
         <div className="absolute top-2 left-2">
-          <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">NEW</span>
+          <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">{t('new')}</span>
         </div>
       </div>
       <div className="p-4">
@@ -56,7 +63,7 @@ export default function ProductCard({
             className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition-colors"
             onClick={(e) => e.stopPropagation()}
           >
-            Add to Cart
+            {t('addToCart')}
           </button>
         </div>
       </div>
@@ -66,7 +73,7 @@ export default function ProductCard({
   // If productSlug is provided, wrap in Link, otherwise return just the card
   if (productSlug) {
     return (
-      <Link href={`/product/${productSlug}`} className="block">
+      <Link href={`/${locale}/product/${productSlug}`} className="block">
         {cardContent}
       </Link>
     )

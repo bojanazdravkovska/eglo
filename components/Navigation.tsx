@@ -4,6 +4,8 @@ import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
 import { Lightbulb, Fan, Zap, Home, ChevronRight, X } from "lucide-react"
 import categoriesData from "../data/categories.json"
+import { useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
 
 interface NavigationProps {
   isMobileMenuOpen: boolean
@@ -16,6 +18,10 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
   const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>(null)
   const [expandedMobileSubcategory, setExpandedMobileSubcategory] = useState<string | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const t = useTranslations('navigation')
+  const tCategories = useTranslations('categories')
+  const params = useParams()
+  const locale = params.locale as string
 
   const getIcon = (iconName: string) => {
     switch (iconName) {
@@ -80,11 +86,11 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
               onMouseLeave={handleMouseLeave}
             >
               <Link
-                href={`/category/${category.id}`}
+                href={`/${locale}/category/${category.id}`}
                 className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors font-medium"
               >
                 {getIcon(category.icon)}
-                {category.name}
+                {tCategories(category.nameKey.replace('categories.', ''))}
               </Link>
 
               {/* Dropdown Menu */}
@@ -111,10 +117,10 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                               </span>
                             ) : (
                               <Link
-                                href={`/subcategory/${subcategory.id}`}
+                                href={`/${locale}/subcategory/${subcategory.id}`}
                                 className="flex items-center justify-between text-gray-700 hover:text-teal-600 transition-colors cursor-pointer py-1 px-2 rounded"
                               >
-                                <span className="text-sm font-medium">{subcategory.name}</span>
+                                <span className="text-sm font-medium">{tCategories(subcategory.nameKey.replace('categories.', ''))}</span>
                                 {subcategory.subcategories.length > 0 && (
                                   <ChevronRight className="w-4 h-4" />
                                 )}
@@ -141,24 +147,24 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                       subSubcategory !== null &&
                                       'id' in subSubcategory &&
                                       'name' in subSubcategory
-                                    ) {
-                                      return (
-                                        <Link
-                                          key={subSubcategory.id}
-                                          href={`/subcategory/${subSubcategory.id}`}
-                                          className="block text-sm text-gray-600 hover:text-teal-600 transition-colors py-1 px-2 rounded"
-                                        >
-                                          {subSubcategory.name}
-                                        </Link>
-                                      );
-                                    }
+                                                                            ) {
+                                          return (
+                                            <Link
+                                              key={subSubcategory.id}
+                                              href={`/${locale}/subcategory/${subSubcategory.id}`}
+                                              className="block text-sm text-gray-600 hover:text-teal-600 transition-colors py-1 px-2 rounded"
+                                            >
+                                              {tCategories(subSubcategory.nameKey.replace('categories.', ''))}
+                                            </Link>
+                                          );
+                                        }
                                     return null;
                                   }).filter(Boolean)}
                                   <Link
                                     href="#"
                                     className="block text-sm text-teal-600 hover:text-teal-700 transition-colors py-1 px-2 rounded font-medium flex items-center gap-1"
                                   >
-                                    All
+                                    {t('all')}
                                     <ChevronRight className="w-3 h-3" />
                                   </Link>
                                 </div>
@@ -176,11 +182,11 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
           
           {/* Inspiration Link */}
           <Link
-            href="/inspiration"
+            href={`/${locale}/inspiration`}
             className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors font-medium"
           >
             <Lightbulb className="w-4 h-4" />
-            Inspiration
+            {t('inspiration')}
           </Link>
         </div>
 
@@ -192,7 +198,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
               <div className="absolute top-0 left-0 w-full h-full bg-white">
                 <div className="p-4 border-b border-gray-200">
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-semibold">Menu</span>
+                    <span className="text-lg font-semibold">{t('menu')}</span>
                     <button
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="p-2 hover:bg-gray-100 rounded-full"
@@ -213,7 +219,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                       >
                         <div className="flex items-center gap-3">
                           {getIcon(category.icon)}
-                          <span className="font-medium">{category.name}</span>
+                          <span className="font-medium">{tCategories(category.nameKey.replace('categories.', ''))}</span>
                         </div>
                         {category.subcategories.length > 0 && (
                           <ChevronRight 
@@ -245,7 +251,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                     )}
                                     className="w-full flex items-center justify-between p-4 pl-12 text-left hover:bg-gray-100 transition-colors"
                                   >
-                                    <span className="text-gray-700">{subcategory.name}</span>
+                                    <span className="text-gray-700">{tCategories(subcategory.nameKey.replace('categories.', ''))}</span>
                                     {subcategory.subcategories.length > 0 && (
                                       <ChevronRight 
                                         className={`w-4 h-4 transition-transform text-teal-600 ${
@@ -279,11 +285,11 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                           return (
                                             <Link
                                               key={subSubcategory.id}
-                                              href={`/subcategory/${subSubcategory.id}`}
+                                              href={`/${locale}/subcategory/${subSubcategory.id}`}
                                               className="block p-3 pl-16 text-sm text-gray-600 hover:text-teal-600 transition-colors"
                                               onClick={() => setIsMobileMenuOpen(false)}
                                             >
-                                              {subSubcategory.name}
+                                              {tCategories(subSubcategory.nameKey.replace('categories.', ''))}
                                             </Link>
                                           );
                                         }
@@ -294,7 +300,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                         className="block p-3 pl-16 text-sm text-teal-600 hover:text-teal-700 transition-colors font-medium"
                                         onClick={() => setIsMobileMenuOpen(false)}
                                       >
-                                        All
+                                        {t('all')}
                                       </Link>
                                     </div>
                                   )}
@@ -310,12 +316,12 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                   {/* Mobile Inspiration Link */}
                   <div className="border-b border-gray-100">
                     <Link
-                      href="/inspiration"
+                      href={`/${locale}/inspiration`}
                       className="flex items-center gap-3 p-4 text-left hover:bg-gray-50 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <Lightbulb className="w-5 h-5" />
-                      <span className="font-medium">Inspiration</span>
+                      <span className="font-medium">{t('inspiration')}</span>
                     </Link>
                   </div>
                 </div>

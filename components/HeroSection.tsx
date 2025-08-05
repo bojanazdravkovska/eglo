@@ -1,8 +1,13 @@
+"use client"
+
 import Image from "next/image"
 import { Button } from "./Button"
 import { ChevronRight } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 export function HeroSection() {
+  const t = useTranslations('heroSection')
+  
   return (
     <section className="relative h-[600px] bg-gradient-to-r from-amber-50 to-orange-50 overflow-hidden -mx-4 md:-mx-6 lg:-mx-8">
       <div className="absolute inset-0">
@@ -20,12 +25,12 @@ export function HeroSection() {
         <div className="max-w-7xl mx-auto w-full text-center">
           <div className="max-w-2xl mx-auto text-white">
             <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
-              Illuminate Your
-              <span className="block text-amber-300">Perfect Space</span>
+              {t('title')}
+              <span className="block text-amber-300">{t('subtitle')}</span>
             </h1>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="primary" className="px-8 py-4 text-lg ml-12">
-                Explore Collection
+                {t('exploreCollection')}
                 <ChevronRight className="ml-2 w-5 h-5" />
               </Button>
             </div>

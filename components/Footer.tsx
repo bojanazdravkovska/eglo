@@ -1,11 +1,17 @@
 import Link from "next/link"
 import { Clock, Mail, FileText, Facebook, Youtube, Linkedin, Instagram } from "lucide-react"
+import { useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
 
 interface FooterProps {
   noPadding?: boolean
 }
 
 export function Footer({}: FooterProps) {
+  const t = useTranslations('footer')
+  const params = useParams()
+  const locale = params.locale as string
+
   return (
     <>
       {/* Contact Section Above Footer */}
@@ -13,7 +19,7 @@ export function Footer({}: FooterProps) {
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-2">
-              Are you stumbling in the dark?
+              {t('contact.title')}
             </h2>
             <p className="text-teal-600 text-xl md:text-2xl font-semibold">
               +38349699100
@@ -25,7 +31,7 @@ export function Footer({}: FooterProps) {
               <div className="w-12 h-12 border-2 border-teal-600 rounded-full flex items-center justify-center mb-3">
                 <Clock className="w-6 h-6 text-teal-600" />
               </div>
-              <p className="text-gray-600 font-medium">Working hours</p>
+              <p className="text-gray-600 font-medium">{t('contact.workingHours')}</p>
               <p className="text-gray-500 text-sm">09:00 - 20:00</p>
             </div>
             
@@ -33,7 +39,7 @@ export function Footer({}: FooterProps) {
               <div className="w-12 h-12 border-2 border-teal-600 rounded-full flex items-center justify-center mb-3">
                 <Mail className="w-6 h-6 text-teal-600" />
               </div>
-              <p className="text-gray-600 font-medium">Email</p>
+              <p className="text-gray-600 font-medium">{t('contact.email')}</p>
               <p className="text-teal-600 text-sm">info-macedonia@eglo.com</p>
             </div>
             
@@ -41,8 +47,8 @@ export function Footer({}: FooterProps) {
               <div className="w-12 h-12 border-2 border-teal-600 rounded-full flex items-center justify-center mb-3">
                 <FileText className="w-6 h-6 text-teal-600" />
               </div>
-              <p className="text-gray-600 font-medium">Contact form</p>
-              <p className="text-teal-600 text-sm">Get in touch</p>
+              <p className="text-gray-600 font-medium">{t('contact.contactForm')}</p>
+              <p className="text-teal-600 text-sm">{t('contact.getInTouch')}</p>
             </div>
           </div>
         </div>
@@ -59,27 +65,27 @@ export function Footer({}: FooterProps) {
                 <span className="text-xl md:text-2xl font-bold">EGLO</span>
               </div>
               <p className="text-gray-400 mb-4 text-sm md:text-base">
-                Illuminating homes with premium lighting solutions since 1985.
+                {t('brand.description')}
               </p>
             </div>
 
             {/* Company */}
             <div>
-              <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">Company</h3>
+              <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">{t('sections.company')}</h3>
               <ul className="space-y-1 md:space-y-2 text-gray-400 text-sm md:text-base">
                 <li>
-                  <Link href="/about" className="hover:text-white transition-colors">
-                    About EGLO
+                  <Link href={`/${locale}/about`} className="hover:text-white transition-colors">
+                    {t('links.aboutEglo')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/worldwide" className="hover:text-white transition-colors">
-                    EGLO worldwide
+                  <Link href={`/${locale}/worldwide`} className="hover:text-white transition-colors">
+                    {t('links.egloWorldwide')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="principles" className="hover:text-white transition-colors">
-                    Our principles
+                  <Link href={`/${locale}/principles`} className="hover:text-white transition-colors">
+                    {t('links.ourPrinciples')}
                   </Link>
                 </li>
               </ul>
@@ -87,11 +93,11 @@ export function Footer({}: FooterProps) {
 
             {/* Career */}
             <div>
-              <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">Career</h3>
+              <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">{t('sections.career')}</h3>
               <ul className="space-y-1 md:space-y-2 text-gray-400 text-sm md:text-base">
                 <li>
-                  <Link href="/working-at-eglo" className="hover:text-white transition-colors">
-                    Working at EGLO
+                  <Link href={`/${locale}/working-at-eglo`} className="hover:text-white transition-colors">
+                    {t('links.workingAtEglo')}
                   </Link>
                 </li>
               </ul>
@@ -99,21 +105,21 @@ export function Footer({}: FooterProps) {
 
             {/* Service */}
             <div>
-              <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">Service</h3>
+              <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">{t('sections.service')}</h3>
               <ul className="space-y-1 md:space-y-2 text-gray-400 text-sm md:text-base">
                 <li>
-                  <Link href="warranty" className="hover:text-white transition-colors">
-                    Warranty conditions
+                  <Link href={`/${locale}/warranty`} className="hover:text-white transition-colors">
+                    {t('links.warrantyConditions')}
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:text-white transition-colors">
-                    Proper recycling
+                    {t('links.properRecycling')}
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="hover:text-white transition-colors">
-                    DOWNLOADS
+                    {t('links.downloads')}
                   </Link>
                 </li>
               </ul>
@@ -121,7 +127,7 @@ export function Footer({}: FooterProps) {
 
             {/* Social Networks */}
             <div>
-              <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">Social networks</h3>
+              <h3 className="font-semibold mb-3 md:mb-4 text-sm md:text-base uppercase">{t('sections.socialNetworks')}</h3>
               <div className="flex space-x-3">
                 <Link 
                   href="https://www.facebook.com/eglo.mk" 
@@ -178,21 +184,20 @@ export function Footer({}: FooterProps) {
           <div className="border-t border-gray-800 mt-6 md:mt-8 pt-6 md:pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-xs md:text-sm">
               <div className="mb-2 md:mb-0">
-                <p>&copy; EGLO Lighting GmbH</p>
+                <p>{t('bottom.copyright')}</p>
               </div>
               <div className="text-center mb-2 md:mb-0 max-w-2xl">
                 <p>
-                  All prices are inclusive of 18% VAT and, where applicable, delivery costs may be added. 
-                  RRP = Manufacturer&apos;s Recommended Retail Price
+                  {t('bottom.legalText')}
                 </p>
               </div>
               <div className="flex space-x-4">
                 <Link href="#" className="hover:text-white transition-colors">
-                  Privacy policies
+                  {t('bottom.privacyPolicies')}
                 </Link>
                 <span>|</span>
                 <Link href="#" className="hover:text-white transition-colors">
-                  Print
+                  {t('bottom.print')}
                 </Link>
               </div>
             </div>

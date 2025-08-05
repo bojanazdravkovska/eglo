@@ -2,9 +2,9 @@
   "categories": [
     {
       "id": "interior-lights",
-      "name": "Interior lights",
+      "nameKey": "categories.interiorLights.name",
       "icon": "Lightbulb",
-      "description": "A perfect light for every room. Emphasise the uniqueness of your room through combining soft colours, elegant furniture and the latest lighting technology.\n\nEvery room is different; you want to create a relaxing atmosphere in one and work in another. Discover our extensive selection of lighting products and find your personal style.",
+      "descriptionKey": "categories.interiorLights.description",
       "images": {
         "image1": "/assets/images/interior-lights1.jpg",
         "image2": "/assets/images/interior-lights2.jpg"
@@ -12,8 +12,8 @@
       "subcategories": [
         {
           "id": "smart-lighting",
-          "name": "Smart Lighting",
-          "description": "We have the best smart lighting solutions for your home, with our EGLO Connect and EGLO Access range. There's something for every family.\n\nControl your lighting via a remote control or an app. It's convenient and easy to use, with the touch of a button.",
+          "nameKey": "categories.interiorLights.subcategories.smartLighting.name",
+          "descriptionKey": "categories.interiorLights.subcategories.smartLighting.description",
           "images": {
             "image1": "/assets/images/smart-lighting.jpg"
           },
@@ -21,16 +21,16 @@
         },
         {
           "id": "led-lamps",
-          "name": "LED lamps",
-          "description": "LED offers the best lighting technology on the market. Take care of your pennies with modern LED lights and take care of our planet.\n\nMove away from traditional bulbs, LEDs illuminate the future. Discover a wide selection of exceptional designs for every taste.",
+          "nameKey": "categories.interiorLights.subcategories.ledLamps.name",
+          "descriptionKey": "categories.interiorLights.subcategories.ledLamps.description",
           "images": {
             "image1": "/assets/images/led-lamps.jpg"
           },
           "subcategories": [
             {
               "id": "led-strips",
-              "name": "LED Strips",
-              "description": "LED strips provide indirect lighting in your home to showcase and illuminate specific pieces of furniture and home decor, including bookcases or frames.",
+              "nameKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledStrips.name",
+              "descriptionKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledStrips.description",
               "images": {
                 "image1": "/assets/images/led-strips.jpg"
               },
@@ -38,8 +38,8 @@
             },
             {
               "id": "led-panel",
-              "name": "LED panel",
-              "description": "LED panels provide fantastic lighting through a discreet design and integrated style. With the ability to be integrated into the wall or ceiling, our LED panels provide good lighting in your desired area while saving space in your home.",
+              "nameKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledPanel.name",
+              "descriptionKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledPanel.description",
               "images": {
                 "image1": "/assets/images/ledPanel.jpg"
               },
@@ -47,8 +47,8 @@
             },  
             {
               "id": "floor-led-lights",
-              "name": "Floor LED lights",
-              "description": "LED floor lamps offer durability, efficiency and mobility. Our LED floor lamps not only compliment your basic lighting, but can be perfectly matched to enhance and illuminate your interior.",
+              "nameKey": "categories.interiorLights.subcategories.ledLamps.subcategories.floorLedLights.name",
+              "descriptionKey": "categories.interiorLights.subcategories.ledLamps.subcategories.floorLedLights.description",
               "images": {
                 "image1": "/assets/images/ledFloor.jpg"
               },
@@ -56,8 +56,8 @@
             },
             {
               "id": "ceiling-led-lights",
-              "name": "Ceiling LED lights",
-              "description": "LED ceiling lights provide bright lighting with low energy consumption. Unlike conventional ceiling lights, they are approximately 90% more efficient and last up to 50 times longer.",
+              "nameKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ceilingLedLights.name",
+              "descriptionKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ceilingLedLights.description",
               "images": {
                 "image1": "/assets/images/ceilingLight.jpg"
               },
@@ -65,8 +65,8 @@
             },
             {
               "id": "led-pendant-lights",
-              "name": "LED pendant lights",
-              "description": "Our range of LED pendant lighting offers both contemporary style and energy efficient technology. The wide range provides lighting for any interior, such as just lighting your dining room table, complimenting your decor and saving money at the same time. Explore our large range of LED pendant lights with our variety of styles, materials and colours.",
+              "nameKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledPendantLights.name",
+              "descriptionKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledPendantLights.description",
               "images": {
                 "image1": "/assets/images/pendantLight.jpg"
               },
@@ -74,8 +74,8 @@
             },
             {
               "id": "led-wall-lights",
-              "name": "LED wall lights",
-              "description": "Our LED wall lights offer an energy-efficient and sustainable lighting solution. This product can be adapted and used in many ways, to create indirect or direct lighting in your home.",
+              "nameKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledWallLights.name",
+              "descriptionKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledWallLights.description",
               "images": {
                 "image1": "/assets/images/wallLight.jpg"
               },
@@ -83,8 +83,8 @@
             },
             {
               "id": "led-table-lights",
-              "name": "LED table lights",
-              "description": "Our LED table lamp collection is not only functional, but can also be used as a decorative element in your home. LED technology provides lighting products that are energy efficient and environmentally friendly.",
+              "nameKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledTableLights.name",
+              "descriptionKey": "categories.interiorLights.subcategories.ledLamps.subcategories.ledTableLights.description",
               "images": {
                 "image1": "/assets/images/tableLamp.jpg"
               },
@@ -94,8 +94,8 @@
         },
         {
           "id": "floor-lamps",
-          "name": "Floor lamps",
-          "description": "Add feature lighting to your home and brighten up areas with our collection of floor lamps. Versatile and modern, allowing you to adapt the style of the lamps to your home. Regardless of the style, you're sure to find the perfect floor lamp for your home. All you have to do is insert the floor lamp where you want it and you're done! Anyone who enjoys renovating or changing their decor will be happy that their floor lamp simply moves with them.",
+          "nameKey": "categories.interiorLights.subcategories.floorLamps.name",
+          "descriptionKey": "categories.interiorLights.subcategories.floorLamps.description",
           "images": {
             "image1": "/assets/images/floorLamp.jpg"
           },
@@ -103,8 +103,8 @@
         },
         {
           "id": "ceiling-lights",
-          "name": "Ceiling lights",
-          "description": "Ceiling light is one of the most important elements of interior lighting in any room. It provides basic lighting and illuminates your interior space. Create beautiful atmospheres in your home by combining ceiling lights with other lighting products. We offer a wide range of different designs to compliment any decor.",
+          "nameKey": "categories.interiorLights.subcategories.ceilingLights.name",
+          "descriptionKey": "categories.interiorLights.subcategories.ceilingLights.description",
           "images": {
             "image1": "/assets/images/ceilingLights.jpg"
           },
@@ -112,8 +112,8 @@
         },
         {
           "id": "pendant-lights",
-          "name": "Pendant lights",
-          "description": "Pendant lights are the bright centerpiece for your room. Our modern and unusual designs offer a unique touch to your home. Our incredible range of pendant lights offers some elegant designs. You're sure to find your next statement piece here.",
+          "nameKey": "categories.interiorLights.subcategories.pendantLights.name",
+          "descriptionKey": "categories.interiorLights.subcategories.pendantLights.description",
           "images": {
             "image1": "/assets/images/pendantLights.jpg"
           },
@@ -121,8 +121,8 @@
         },
         {
           "id": "chandeliers",
-          "name": "Chandeliers",
-          "description": "Our chandeliers offer luxury and grandeur. Transform your home and bring shine and glamour to your living space.",
+          "nameKey": "categories.interiorLights.subcategories.chandeliers.name",
+          "descriptionKey": "categories.interiorLights.subcategories.chandeliers.description",
           "images": {
             "image1": "/assets/images/chandelier.webp"
           },
@@ -130,8 +130,8 @@
         },
         {
           "id": "wall-lights",
-          "name": "Wall lights",
-          "description": "Wall lights are versatile, applicable, universal and practical. Whether they are used for lighting hallways, bathrooms, as accent lights or reading lamps, we offer a wide variety of stylish wall lamps.",
+          "nameKey": "categories.interiorLights.subcategories.wallLights.name",
+          "descriptionKey": "categories.interiorLights.subcategories.wallLights.description",
           "images": {
             "image1": "/assets/images/wallLamp.jpg"
           },
@@ -139,8 +139,8 @@
         },
         {
           "id": "table-lamps",
-          "name": "Table lamps",
-          "description": "Whether you're reading or working, enhance your interior lighting with a stunning table lamp. Our table lamps offer a variety of designs from trendy to classic. Discover new styles using high-quality materials.",
+          "nameKey": "categories.interiorLights.subcategories.tableLamps.name",
+          "descriptionKey": "categories.interiorLights.subcategories.tableLamps.description",
           "images": {
             "image1": "/assets/images/tableLamps.jpg"
           },
@@ -148,8 +148,8 @@
         },
         {
           "id": "track-spotlights",
-          "name": "Track and spotlights",
-          "description": "Track and spotlights are a great way to add a touch of light to your home. They are perfect for reading, working, or just relaxing. Our track and spotlights are designed to be stylish and functional, with a range of styles and colours to choose from.",
+          "nameKey": "categories.interiorLights.subcategories.trackSpotlights.name",
+          "descriptionKey": "categories.interiorLights.subcategories.trackSpotlights.description",
           "images": {
             "image1": "/assets/images/tracks.jpg"
           },
@@ -157,8 +157,8 @@
         },
         {
           "id": "recessed-surface",
-          "name": "Recessed and surface-mounted lights",
-          "description": "Recessed and surface-mounted lights are a great way to add a touch of light to your home. They are perfect for reading, working, or just relaxing. Our recessed and surface-mounted lights are designed to be stylish and functional, with a range of styles and colours to choose from.",
+          "nameKey": "categories.interiorLights.subcategories.recessedSurface.name",
+          "descriptionKey": "categories.interiorLights.subcategories.recessedSurface.description",
           "images": {
             "image1": "/assets/images/recessed.jpg"
           },
@@ -166,8 +166,8 @@
         },
         {
           "id": "under-cabinet",
-          "name": "Under-cabinet lights",
-          "description": "You don't want shadows on your work surface when you're cutting and chopping in the kitchen. We have the solution for you! Illuminate your kitchen work surfaces using under-cabinet lighting. Using LED strips would involve a very simple installation process - stick, connect, done.",
+          "nameKey": "categories.interiorLights.subcategories.underCabinet.name",
+          "descriptionKey": "categories.interiorLights.subcategories.underCabinet.description",
           "images": {
             "image1": "/assets/images/cabinetLights.jpg"
           },
@@ -177,9 +177,9 @@
     },
     {
       "id": "outdoor-lights",
-      "name": "Outdoor lights",
+      "nameKey": "categories.outdoorLights.name",
       "icon": "Zap",
-      "description": "Illuminate your outdoor spaces with our comprehensive range of exterior lighting solutions. From garden path lights to sophisticated facade lighting, we offer everything you need to create the perfect outdoor ambiance.\n\nTransform your garden, patio, and entrance areas with weather-resistant lighting that combines functionality with elegant design. Our outdoor collection ensures safety and beauty in every season.",
+      "descriptionKey": "categories.outdoorLights.description",
       "images": {
         "image1": "/assets/images/outdoor-lights1.png",
         "image2": "/assets/images/outdoor-lights2.png"
@@ -187,8 +187,8 @@
       "subcategories": [
         {
           "id": "outdoor-led-lights",
-          "name": "Outdoor LED lights",
-          "description": "Want to make your home's exterior energy efficient? Then simply use our LED outdoor lighting products. Forget about traditional bulbs and join the 21st century. Do you want your home's exterior lighting design to be energy efficient? By using our LED exterior lights, you are investing in an energy-efficient home.",
+          "nameKey": "categories.outdoorLights.subcategories.outdoorLedLights.name",
+          "descriptionKey": "categories.outdoorLights.subcategories.outdoorLedLights.description",
           "images": {
             "image1": "/assets/images/outdoor-lights1.png"
           },
@@ -196,8 +196,8 @@
         },
         {
           "id": "solar-lights",
-          "name": "Solar lights",
-          "description": "The benefits of solar lighting are that it is versatile, practical and sustainable. You don't need an electrical connection. The sun provides all the energy needed to operate the light. Find the perfect spot for your outdoor lighting. We can help you plan.",
+          "nameKey": "categories.outdoorLights.subcategories.solarLights.name",
+          "descriptionKey": "categories.outdoorLights.subcategories.solarLights.description",
           "images": {
             "image1": "/assets/images/solar.jpg"
           },
@@ -205,8 +205,8 @@
         },
         {
           "id": "outdoor-wall-lights",
-          "name": "Outdoor wall lights",
-          "description": "Our outdoor wall lights offer a great solution for your outdoor lighting needs. Explore our wide range of wall lighting, understanding the use of colors and material combinations to meet your lighting needs.",
+          "nameKey": "categories.outdoorLights.subcategories.outdoorWallLights.name",
+          "descriptionKey": "categories.outdoorLights.subcategories.outdoorWallLights.description",
           "images": {
             "image1": "/assets/images/outdoor-wall-lights.png"
           },
@@ -214,8 +214,8 @@
         },
         {
           "id": "exterior-ceiling-lights",
-          "name": "Exterior ceiling lights",
-          "description": "Our outdoor wall lights offer a great solution for your outdoor lighting needs. Explore our wide range of wall lighting, understanding the use of colors and material combinations to meet your lighting needs.",
+          "nameKey": "categories.outdoorLights.subcategories.exteriorCeilingLights.name",
+          "descriptionKey": "categories.outdoorLights.subcategories.exteriorCeilingLights.description",
           "images": {
             "image1": "/assets/images/Exterior.webp"
           },
@@ -223,8 +223,8 @@
         },
         {
           "id": "outdoor-spotlights",
-          "name": "Outdoor spotlights",
-          "description": "Who doesn't love nature? We believe that your living space doesn't end at the patio door. We have a wide range of outdoor lighting products to illuminate your garden. Our outdoor lights offer functionality and practicality. Light up your garden. EGLO has something for everyone. Using our smart solutions and LED technology, you are in control.",
+          "nameKey": "categories.outdoorLights.subcategories.outdoorSpotlights.name",
+          "descriptionKey": "categories.outdoorLights.subcategories.outdoorSpotlights.description",
           "images": {
             "image1": "/assets/images/spotlights.webp"
           },
@@ -232,8 +232,8 @@
         },  
         {
           "id": "earth-luminaires",
-          "name": "Earth luminaires",
-          "description": "Who doesn't love nature? We believe that your living space doesn't end at the patio door. We have a wide range of outdoor lighting products to illuminate your garden. Our outdoor lights offer functionality and practicality. Light up your garden. EGLO has something for everyone. Using our smart solutions and LED technology, you are in control.",
+          "nameKey": "categories.outdoorLights.subcategories.earthLuminaires.name",
+          "descriptionKey": "categories.outdoorLights.subcategories.earthLuminaires.description",
           "images": {
             "image1": "/assets/images/earth.jpg"
           },
@@ -243,17 +243,17 @@
     },
     {
       "id": "ceiling-fans",
-      "name": "Ceiling fans",
+      "nameKey": "categories.ceilingFans.name",
       "icon": "Fan",
-      "description": "Stay cool and comfortable with our selection of ceiling fans that combine style with functionality. Whether you prefer fans with integrated lighting or standalone models, we have options to suit every room and preference.\n\nOur ceiling fans are designed for optimal air circulation while maintaining a quiet, efficient operation. Choose from modern designs to classic styles that complement your interior perfectly.",
+      "descriptionKey": "categories.ceilingFans.description",
       "images": {
         "image1": "/assets/images/ceilingFan.jpg"
       },
       "subcategories": [
         {
           "id": "ceiling-fans-with-light",
-          "name": "Ceiling Fans With Light",
-          "description": "Our ceiling fans with light are designed to provide both cooling and lighting. They are perfect for rooms where you want to create a comfortable and stylish atmosphere.",
+          "nameKey": "categories.ceilingFans.subcategories.ceilingFansWithLight.name",
+          "descriptionKey": "categories.ceilingFans.subcategories.ceilingFansWithLight.description",
           "images": {
             "image1": "/assets/images/ceilingFan.jpg"
           },
@@ -261,8 +261,8 @@
         },
         {
           "id": "ceiling-fans-without-light",
-          "name": "Ceiling fans without light",
-          "description": "Our ceiling fans without light are designed to provide cooling and ventilation. They are perfect for rooms where you want to create a comfortable and stylish atmosphere.",
+          "nameKey": "categories.ceilingFans.subcategories.ceilingFansWithoutLight.name",
+          "descriptionKey": "categories.ceilingFans.subcategories.ceilingFansWithoutLight.description",
           "images": {
             "image1": "/assets/images/ceilingFan.jpg"
           },
@@ -272,9 +272,9 @@
     },
     {
       "id": "illuminants",
-      "name": "Illuminants",
+      "nameKey": "categories.illuminants.name",
       "icon": "Zap",
-      "description": "Find the perfect bulbs and illuminants for your lighting fixtures. Our comprehensive range includes various socket types, energy-efficient LED options, and traditional lighting solutions to meet all your illumination needs.\n\nFrom E27 and E14 sockets to specialized GU10 and G9 bulbs, we offer high-quality illuminants that provide optimal brightness, color temperature, and energy efficiency for every application.",
+      "descriptionKey": "categories.illuminants.description",
       "images": {
         "image1": "/assets/images/bulbs1.jpg",
         "image2": "/assets/images/bulbs2.jpg"
@@ -282,45 +282,45 @@
       "subcategories": [
         {
           "id": "e27",
-          "name": "E27",
+          "nameKey": "categories.illuminants.subcategories.e27.name",
           "subcategories": []
         },
         {
           "id": "e14",
-          "name": "E14",
+          "nameKey": "categories.illuminants.subcategories.e14.name",
           "subcategories": []
         },
         {
           "id": "g4",
-          "name": "G4",
+          "nameKey": "categories.illuminants.subcategories.g4.name",
           "subcategories": []
         },
         {
           "id": "g9",
-          "name": "G9",
+          "nameKey": "categories.illuminants.subcategories.g9.name",
           "subcategories": []
         },
         {
           "id": "gu5-3",
-          "name": "GU5.3",
+          "nameKey": "categories.illuminants.subcategories.gu53.name",
           "subcategories": []
         },
         {
           "id": "gu10",
-          "name": "GU10",
+          "nameKey": "categories.illuminants.subcategories.gu10.name",
           "subcategories": []
         },
         {
           "id": "r7s",
-          "name": "R7S",
+          "nameKey": "categories.illuminants.subcategories.r7s.name",
           "subcategories": []
         },
         {
           "id": "gx53",
-          "name": "GX53",
+          "nameKey": "categories.illuminants.subcategories.gx53.name",
           "subcategories": []
         }
-              ]
-      }
-    ]
+      ]
+    }
+  ]
 } 

@@ -1,8 +1,13 @@
+'use client'
+
 import { Button } from "./Button"
 import { Plus, Settings, Users, BarChart3 } from "lucide-react"
 import Link from "next/link"
+import { useTranslations } from 'next-intl'
 
 export function AdminPanel() {
+  const t = useTranslations('admin')
+  
   return (
     <>
       {/* White spacer for space between banner and panel */}
@@ -12,21 +17,21 @@ export function AdminPanel() {
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Admin Dashboard</h2>
-            <p className="text-gray-600 mt-1">Manage your products and store</p>
+            <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
+            <p className="text-gray-600 mt-1">{t('subtitle')}</p>
           </div>
           
           <div className="flex gap-3">
             <Link href="/add-product">
               <Button variant="primary" className="flex items-center gap-2">
                 <Plus className="w-4 h-4" />
-                Add Product
+                {t('actions.addProduct')}
               </Button>
             </Link>
             
             <Button variant="outline" className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
-              Settings
+              {t('actions.settings')}
             </Button>
           </div>
         </div>
@@ -38,7 +43,7 @@ export function AdminPanel() {
                 <BarChart3 className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Total Products</p>
+                <p className="text-sm text-gray-600">{t('stats.totalProducts')}</p>
                 <p className="text-xl font-semibold text-gray-900">1,234</p>
               </div>
             </div>
@@ -50,7 +55,7 @@ export function AdminPanel() {
                 <Users className="w-5 h-5 text-green-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Active Users</p>
+                <p className="text-sm text-gray-600">{t('stats.activeUsers')}</p>
                 <p className="text-xl font-semibold text-gray-900">5,678</p>
               </div>
             </div>
@@ -62,7 +67,7 @@ export function AdminPanel() {
                 <Settings className="w-5 h-5 text-amber-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Categories</p>
+                <p className="text-sm text-gray-600">{t('stats.categories')}</p>
                 <p className="text-xl font-semibold text-gray-900">24</p>
               </div>
             </div>

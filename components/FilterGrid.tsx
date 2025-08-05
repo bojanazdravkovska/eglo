@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { ChevronDown, X } from "lucide-react"
 import { Button } from "./Button"
+import { useTranslations } from 'next-intl'
 
 interface FilterOption {
   value: string
@@ -29,6 +30,7 @@ interface FilterGridProps {
 }
 
 export function FilterGrid({ filters, onFilterChange, onResetFilters, className = "", showMobileButton = true, isFilterPanelOpen, onToggleFilterPanel, selectedFilters: externalSelectedFilters, onSelectedFiltersChange }: FilterGridProps) {
+  const t = useTranslations('filterGrid')
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({})
   const [tempSelectedFilters, setTempSelectedFilters] = useState<Record<string, string[]>>({})
@@ -174,7 +176,7 @@ export function FilterGrid({ filters, onFilterChange, onResetFilters, className 
       {/* Desktop Active Filter Badges */}
       {Object.keys(currentSelectedFilters).length > 0 && (
         <div className="hidden md:flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900 pr-4">Filters</h2>
+          <h2 className="text-lg font-semibold text-gray-900 pr-4">{t('filters')}</h2>
           <div className="flex flex-wrap gap-2">
             {Object.entries(currentSelectedFilters).map(([filterKey, values]) => {
               const filter = filters.find(f => f.key === filterKey)
@@ -247,7 +249,7 @@ export function FilterGrid({ filters, onFilterChange, onResetFilters, className 
                       variant="primary"
                       size="sm"
                     >
-                      Apply
+                      {t('apply')}
                     </Button>
                   </div>
                 </div>
@@ -265,7 +267,7 @@ export function FilterGrid({ filters, onFilterChange, onResetFilters, className 
             variant="primary"
             size="sm"
           >
-            Reset all filters
+            {t('resetAllFilters')}
           </Button>
         </div>
       )}
@@ -280,7 +282,7 @@ export function FilterGrid({ filters, onFilterChange, onResetFilters, className 
               className="w-full flex items-center justify-between px-4 py-3 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors text-left"
             >
               <span className="text-sm font-medium text-gray-700">
-                Filters
+                {t('filters')}
               </span>
                                 <ChevronDown className={`w-4 h-4 text-teal-600 transition-transform ${filterPanelOpen ? 'rotate-180' : ''}`} />
             </button>
@@ -332,7 +334,7 @@ export function FilterGrid({ filters, onFilterChange, onResetFilters, className 
                         variant="primary"
                         size="sm"
                       >
-                        Apply
+                        {t('apply')}
                       </Button>
                     </div>
                   </div>
@@ -382,7 +384,7 @@ export function FilterGrid({ filters, onFilterChange, onResetFilters, className 
                   variant="primary"
                   size="sm"
                 >
-                  Reset all filters
+                  {t('resetAllFilters')}
                 </Button>
               </div>
             )}

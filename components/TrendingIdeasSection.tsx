@@ -1,44 +1,41 @@
+"use client"
+
 import Image from "next/image"
 import { TrendingUp, Clock, Users } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 const trendingIdeas = [
   {
-    title: "Smart Lighting Automation",
-    description: "Control your entire home&apos;s lighting with voice commands and schedules",
+    key: "smartLightingAutomation",
     image: "/assets/images/smart-home-lighting.jpg",
-    readTime: "3 min read",
     views: "2.1k",
   },
   {
-    title: "Layered Lighting Design",
-    description: "Combine ambient, task, and accent lighting for perfect illumination",
+    key: "layeredLightingDesign",
     image: "/assets/images/layered-lighting.png",
-    trend: "Rising",
-    readTime: "5 min read",
     views: "1.8k",
   },
   {
-    title: "Sustainable LED Solutions",
-    description: "Energy-efficient lighting that&apos;s beautiful and environmentally friendly",
+    key: "sustainableLedSolutions",
     image: "/assets/images/sustainable-led-lighting.jpg",
-    trend: "New",
-    readTime: "4 min read",
     views: "1.2k",
   },
 ]
 
 export function TrendingIdeas() {
+  const t = useTranslations('trendingIdeasSection')
+
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-2 mb-4">
             <TrendingUp className="w-6 h-6 text-teal-600" />
-            <span className="text-teal-600 font-semibold uppercase tracking-wide text-sm">What&apos;s Trending</span>
+            <span className="text-teal-600 font-semibold uppercase tracking-wide text-sm">{t('trending')}</span>
           </div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Latest Lighting Ideas</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">{t('title')}</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Stay ahead with the newest trends and innovations in home lighting
+            {t('subtitle')}
           </p>
         </div>
 
@@ -48,7 +45,7 @@ export function TrendingIdeas() {
               <div className="relative h-64 rounded-xl overflow-hidden mb-6">
                 <Image
                   src={idea.image || "/placeholder.svg"}
-                  alt={idea.title}
+                  alt={t(`ideas.${idea.key}.title`)}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
@@ -56,18 +53,18 @@ export function TrendingIdeas() {
 
               <div className="space-y-3">
                 <h3 className="text-xl font-semibold text-gray-900 group-hover:text-teal-600 transition-colors duration-300">
-                  {idea.title}
+                  {t(`ideas.${idea.key}.title`)}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">{idea.description}</p>
+                <p className="text-gray-600 leading-relaxed">{t(`ideas.${idea.key}.description`)}</p>
 
                 <div className="flex items-center gap-4 text-sm text-gray-500">
                   <div className="flex items-center gap-1">
                     <Clock className="w-4 h-4" />
-                    {idea.readTime}
+                    {t(`ideas.${idea.key}.readTime`)}
                   </div>
                   <div className="flex items-center gap-1">
                     <Users className="w-4 h-4" />
-                    {idea.views} views
+                    {idea.views} {t('views')}
                   </div>
                 </div>
               </div>

@@ -1,8 +1,11 @@
+"use client"
+
 import Image from "next/image"
 import { Button } from "./Button"
 import { Badge } from "./Badge"
 import { Card, CardContent } from "./Card"
 import { ChevronRight, Star } from "lucide-react"
+import { useTranslations } from 'next-intl'
 
 const products = [
   {
@@ -37,16 +40,18 @@ const products = [
 ]
 
 export function FeaturedProducts() {
+  const t = useTranslations('featuredProducts')
+  
   return (
     <section className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
-            <p className="text-lg text-gray-600">Handpicked favorites from our latest collection</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('title')}</h2>
+            <p className="text-lg text-gray-600">{t('subtitle')}</p>
           </div>
           <Button variant="outline" className="hidden md:flex bg-transparent">
-            View All Products
+            {t('viewAllProducts')}
             <ChevronRight className="ml-2 w-4 h-4" />
           </Button>
         </div>
@@ -65,7 +70,7 @@ export function FeaturedProducts() {
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                {product.originalPrice && <Badge className="absolute top-4 right-4 bg-red-500">Sale</Badge>}
+                {product.originalPrice && <Badge className="absolute top-4 right-4 bg-red-500">{t('sale')}</Badge>}
               </div>
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-teal-600 transition-colors">

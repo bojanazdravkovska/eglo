@@ -4,11 +4,14 @@ import Image from "next/image"
 import { Search, MapPin, User, ShoppingCart, Menu, X } from "lucide-react"
 import { Button } from "./Button"
 import { Input } from "./Input"
+import LocaleSwitcher from "./LanguageSwitcher"
 import { Badge } from "./Badge"
 import { Navigation } from "./Navigation"
 import { useState } from "react"
-import { useCart } from "../app/context/CartContext"
+import { useCart } from "../app/[locale]/context/CartContext"
 import { useRouter } from "next/navigation"
+import { useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
 
 interface HeaderProps {
   noPadding?: boolean
@@ -20,11 +23,14 @@ export function Header({ noPadding = false }: HeaderProps) {
   const { getTotalItems } = useCart()
   const cartItemCount = getTotalItems()
   const router = useRouter()
+  const params = useParams()
+  const locale = params.locale as string
+  const t = useTranslations('header')
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (searchTerm.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`)
+      router.push(`/${locale}/search?q=${encodeURIComponent(searchTerm.trim())}`)
     }
   }
 
@@ -36,16 +42,16 @@ export function Header({ noPadding = false }: HeaderProps) {
           <div className="flex items-center gap-2 md:gap-4">
             <div className="flex items-center gap-1">
               <MapPin className="w-4 h-4" />
-              <span className="hidden sm:inline">Find a Store</span>
+              <span className="hidden sm:inline">{t('topBar.findStore')}</span>
             </div>
             <span className="hidden sm:inline">|</span>
-            <span className="hidden md:inline">Customer Support</span>
+            <span className="hidden md:inline">{t('topBar.customerSupport')}</span>
             <span className="hidden md:inline">|</span>
-            <span>EN</span>
+            <LocaleSwitcher />
           </div>
           <div className="flex items-center gap-4">
-            <span className="hidden sm:inline">Free Shipping on Orders $99+</span>
-            <span className="sm:hidden">Free Shipping $99+</span>
+            <span className="hidden sm:inline">{t('topBar.freeShipping')}</span>
+            <span className="sm:hidden">{t('topBar.freeShippingMobile')}</span>
           </div>
         </div>
       </div>
@@ -66,7 +72,7 @@ export function Header({ noPadding = false }: HeaderProps) {
           </button>
 
           {/* Logo */}
-          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+          <Link href={`/${locale}`} className="flex items-center hover:opacity-80 transition-opacity">
             <Image
               src="/assets/images/Logo_EGLO.png"
               alt="EGLO Logo"
@@ -82,7 +88,7 @@ export function Header({ noPadding = false }: HeaderProps) {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
                 type="text"
-                placeholder="Search for lights, fans, and more..."
+                placeholder={t('search.placeholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 py-3 border-gray-200 focus:border-teal-500 focus:ring-teal-500 w-full"
@@ -92,15 +98,15 @@ export function Header({ noPadding = false }: HeaderProps) {
 
           {/* User Actions */}
           <div className="flex items-center gap-2 md:gap-4">
-            <Link href="/login">
+            <Link href={`/${locale}/login`}>
               <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 p-2 md:p-3 hover:text-teal-600 transition-colors">
                 <User className="w-5 h-5" />
-                <span className="hidden lg:inline">Login</span>
+                <span className="hidden lg:inline">{t('actions.login')}</span>
               </Button>
             </Link>
             <Button variant="ghost" size="sm" className="flex items-center gap-1 md:gap-2 p-2 md:p-3 relative">
               <ShoppingCart className="w-5 h-5" />
-              <span className="hidden lg:inline">Cart</span>
+              <span className="hidden lg:inline">{t('actions.cart')}</span>
               {cartItemCount > 0 && (
                 <Badge variant="secondary" className="absolute -top-1 -right-1 md:static md:ml-1 bg-teal-600 text-white">
                   {cartItemCount}
@@ -116,7 +122,7 @@ export function Header({ noPadding = false }: HeaderProps) {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <Input
               type="text"
-              placeholder="Search for lights, fans, and more..."
+              placeholder={t('search.placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 py-3 border-gray-200 focus:border-teal-500 focus:ring-teal-500 w-full"

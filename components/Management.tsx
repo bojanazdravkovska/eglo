@@ -1,84 +1,87 @@
 import React from "react"
 import Image from "next/image";
-
-const management = [
-  {
-    name: "René Tiefenbacher",
-    role: "CEO EGLO Group",
-    image: "/assets/images/RenéTiefenbacher.png",
-  },
-  {
-    name: "Axel Böchzelt",
-    role: "GM Sales",
-    image: "/assets/images/AxelBöchzelt.png",
-  },
-  {
-    name: "Martin Doppelbauer",
-    role: "GM Finance & IT\nLegal Dep. & Digitalization",
-    image: "/assets/images/MartinDoppelbauer.jpg",
-  },
-];
-
-const extendedManagement = [
-  {
-    name: "Christian Gspan",
-    role: "Purchasing, Transport Logistics, QS",
-    image: "/assets/images/ChristianGspan.png",
-  },
-  {
-    name: "Manuel Reinalter",
-    role: "Sales EU, Ecom, Corporate Communications",
-    image: "/assets/images/ManuelReinalter.jpg",
-  },
-  {
-    name: "Tanja Liscic",
-    role: "Communications, POS, PM",
-    image: "/assets/images/TanjaLiscic.jpg",
-  },
-  {
-    name: "Christian Huber",
-    role: "Production International, Technical Development",
-    image: "/assets/images/ChristianHuber.jpg",
-  },
-  {
-    name: "Christian Weger",
-    role: "Finance Bartenbach, LUXIT",
-    image: "/assets/images/ChristianWeger.jpg",
-  },
-];
-
-const cards = [
-  {
-    title: "EGLO worldwide",
-    icon: (
-      <svg className="w-12 h-12 text-teal-600 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 0c2.5 2.5 2.5 6.5 0 9m0-9c-2.5 2.5-2.5 6.5 0 9m0 0c-2.5 2.5-6.5 2.5-9 0m9 0c2.5 2.5 6.5 2.5 9 0" /></svg>
-    ),
-    href: "/worldwide",
-  },
-  {
-    title: "Our principles",
-    icon: (
-      <svg className="w-12 h-12 text-teal-600 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-    ),
-    href: "/principles",
-  },
-  {
-    title: "Working at EGLO",
-    icon: (
-      <svg className="w-12 h-12 text-teal-600 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9 5.87v-2a4 4 0 00-3-3.87m0 0a4 4 0 00-3 3.87v2m3-5.87V7a4 4 0 10-8 0v7m8 0a4 4 0 018 0v7" /></svg>
-    ),
-    href: "/working-at-eglo",
-  },
-];
+import { useTranslations } from 'next-intl';
 
 const Management: React.FC = () => {
+  const t = useTranslations('about.management');
+
+  const management = [
+    {
+      name: "René Tiefenbacher",
+      role: "CEO EGLO Group",
+      image: "/assets/images/RenéTiefenbacher.png",
+    },
+    {
+      name: "Axel Böchzelt",
+      role: "GM Sales",
+      image: "/assets/images/AxelBöchzelt.png",
+    },
+    {
+      name: "Martin Doppelbauer",
+      role: "GM Finance & IT\nLegal Dep. & Digitalization",
+      image: "/assets/images/MartinDoppelbauer.jpg",
+    },
+  ];
+
+  const extendedManagement = [
+    {
+      name: "Christian Gspan",
+      role: "Purchasing, Transport Logistics, QS",
+      image: "/assets/images/ChristianGspan.png",
+    },
+    {
+      name: "Manuel Reinalter",
+      role: "Sales EU, Ecom, Corporate Communications",
+      image: "/assets/images/ManuelReinalter.jpg",
+    },
+    {
+      name: "Tanja Liscic",
+      role: "Communications, POS, PM",
+      image: "/assets/images/TanjaLiscic.jpg",
+    },
+    {
+      name: "Christian Huber",
+      role: "Production International, Technical Development",
+      image: "/assets/images/ChristianHuber.jpg",
+    },
+    {
+      name: "Christian Weger",
+      role: "Finance Bartenbach, LUXIT",
+      image: "/assets/images/ChristianWeger.jpg",
+    },
+  ];
+
+  const cards = [
+    {
+      title: t('cards.worldwide'),
+      icon: (
+        <svg className="w-12 h-12 text-teal-600 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 0c2.5 2.5 2.5 6.5 0 9m0-9c-2.5 2.5-2.5 6.5 0 9m0 0c-2.5 2.5-6.5 2.5-9 0m9 0c2.5 2.5 6.5 2.5 9 0" /></svg>
+      ),
+      href: "/worldwide",
+    },
+    {
+      title: t('cards.principles'),
+      icon: (
+        <svg className="w-12 h-12 text-teal-600 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      ),
+      href: "/principles",
+    },
+    {
+      title: t('cards.workingAtEglo'),
+      icon: (
+        <svg className="w-12 h-12 text-teal-600 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9 5.87v-2a4 4 0 00-3-3.87m0 0a4 4 0 00-3 3.87v2m3-5.87V7a4 4 0 10-8 0v7m8 0a4 4 0 018 0v7" /></svg>
+      ),
+      href: "/working-at-eglo",
+    },
+  ];
+
   return (
     <section className="max-w-[1100px] mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
         <hr className="border-t border-gray-200 my-8" />
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 mt-2 text-center text-gray-900">EGLO Management</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 mt-2 text-center text-gray-900">{t('title')}</h2>
         <p className="text-center text-gray-600 mb-8">
-          A ship cannot be kept on course without a captain and a helm. For us, this responsibility is divided between group management and extended management.
+          {t('subtitle')}
         </p>
         <div className="flex flex-wrap justify-center gap-12 mb-10">
           {management.map((person) => (
@@ -95,7 +98,7 @@ const Management: React.FC = () => {
             </div>
           ))}
         </div>
-        <h3 className="text-center text-xl font-medium mb-6">Extended group management</h3>
+        <h3 className="text-center text-xl font-medium mb-6">{t('extendedManagement')}</h3>
         <div className="flex flex-wrap justify-center gap-8">
           {extendedManagement.map((person) => (
             <div key={person.name} className="text-center w-36 mb-6">
