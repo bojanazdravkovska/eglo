@@ -45,26 +45,24 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     notFound()
   }
 
+  // Resolve products list for both legacy (array) and new (object with products[]) shapes
+  const productsList = Array.isArray(productsData)
+    ? (productsData as any[])
+    : ((productsData as any)?.products ?? [])
+
   // Filter products by category
-  const categoryProducts = productsData.filter(product => product.category === resolvedParams.slug)
+  const categoryProducts = productsList.filter((product: any) => product.category === resolvedParams.slug)
 
 
 
-  // Show 12 instances for category pages
-  const fallbackProduct = {
-    id: "fallback",
-    name: "Sample Product",
-    description: "This is a sample product for demonstration purposes.",
-    price: 99.99,
-    image: "/assets/images/E27-bulb.jpg",
-    category: resolvedParams.slug,
-    subcategory: "sample"
+  // Use only filtered products for this category (no mixing/fallback)
+  const displayProducts = categoryProducts
+
+  const slugToCamelKey = (slug?: string): string | null => {
+    if (!slug || typeof slug !== 'string') return null
+    const cleaned = slug.replace(/[^a-z0-9-]/gi, '').toLowerCase()
+    return cleaned.replace(/-([a-z0-9])/g, (_, c) => String(c).toUpperCase())
   }
-  
-  // Use actual filtered products, or fallback if no products found
-  const displayProducts = categoryProducts.length > 0 
-    ? categoryProducts 
-    : [fallbackProduct]
 
   // Get filters from JSON file
   const categoryFilters = categoryFiltersData.filters
@@ -114,7 +112,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         <div className="mb-6 md:mb-8">
           {/* Page Title */}
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">{tCategories(category.nameKey.replace('categories.', ''))}</h1>
-          <p className="text-gray-600 mb-4">Found {categoryProducts.length} products in this category</p>
+
           
           {/* Description and Images Section */}
           <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
@@ -177,13 +175,24 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                   ) : (
                     <div className="flex flex-col">
                       <div className="flex items-center">
-                        <Link
-                          href={`/${locale}/subcategory/${subcategory.id}`}
-                          className="flex-1 py-2 px-3 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded transition-colors text-sm md:text-base text-left"
-                          style={{ textDecoration: 'none' }}
-                        >
-                          {tCategories(subcategory.nameKey.replace('categories.', ''))}
-                        </Link>
+                        {subcategory.subcategories.length > 0 ? (
+                          <button
+                            onClick={() => setExpandedSubcategory(
+                              expandedSubcategory === subcategory.id ? null : subcategory.id
+                            )}
+                            className="flex-1 py-2 px-3 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded transition-colors text-sm md:text-base text-left"
+                          >
+                            {tCategories(subcategory.nameKey.replace('categories.', ''))}
+                          </button>
+                        ) : (
+                          <Link
+                            href={`/${locale}/subcategory/${subcategory.id}`}
+                            className="flex-1 py-2 px-3 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded transition-colors text-sm md:text-base text-left"
+                            style={{ textDecoration: 'none' }}
+                          >
+                            {tCategories(subcategory.nameKey.replace('categories.', ''))}
+                          </Link>
+                        )}
                         {subcategory.subcategories.length > 0 && (
                           <button
                             onClick={() => setExpandedSubcategory(
@@ -368,16 +377,37 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
             {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 md:gap-4">
-              {displayProducts.map((product, index) => (
+              {displayProducts.map((product: any, index: number) => {
+                const primaryImage = Array.isArray(product.images) ? product.images[0] : product.image
+                const slugOrId = product.slug ?? String(product.id)
+                const priceStr = typeof product.price === 'number' ? `€${product.price.toFixed(2)}` : String(product.price)
+                // Try localized description from messages/products using slug-derived key
+                const key = slugToCamelKey(product.slug)
+                let localizedDesc = product.description
+                if (key) {
+                  try {
+                    const candidate = tProducts(`${key}.description`)
+                    if (
+                      candidate &&
+                      !candidate.startsWith('products.') &&
+                      candidate !== `${key}.description`
+                    ) {
+                      localizedDesc = candidate
+                    }
+                  } catch {
+                    localizedDesc = product.description
+                  }
+                }
+                return (
                 <ProductCard
-                  key={`${product.id}-${index}`}
+                  key={`${slugOrId}-${index}`}
                   productName={product.name}
-                  productDesc={product.description}
-                  productPrice={`€${product.price.toFixed(2)}`}
-                  productImg={product.image}
-                  productSlug={product.id.toString()}
+                  productDesc={localizedDesc}
+                  productPrice={priceStr}
+                  productImg={primaryImage}
+                  productSlug={slugOrId}
                 />
-              ))}
+              )})}
             </div>
           </div>
         </div>

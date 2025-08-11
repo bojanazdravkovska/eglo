@@ -247,7 +247,8 @@
       "icon": "Fan",
       "descriptionKey": "categories.ceilingFans.description",
       "images": {
-        "image1": "/assets/images/ceilingFan.jpg"
+        "image1": "/assets/images/ceilingFan.jpg",
+        "image2": "/assets/images/ceilingFan.jpg"
       },
       "subcategories": [
         {

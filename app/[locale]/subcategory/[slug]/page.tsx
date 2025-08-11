@@ -80,6 +80,7 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
   const locale = params_.locale as string
   const t = useTranslations('subcategoryPage')
   const tCategories = useTranslations('categories')
+  const tProducts = useTranslations('products')
   
   // Recursively find the subcategory in categories.json
   const subcategory = findSubcategoryById(categoriesData.categories, resolvedParams.slug);
@@ -105,15 +106,26 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
     imagePath: subcategory.images?.image1
   })
 
-  // Filter products by subcategory from the flat structure
-  const subcategoryProducts = productsData.filter(product => product.subcategory === resolvedParams.slug)
+  // Resolve products list for both legacy (array) and new (object with products[]) shapes
+  const productsList = Array.isArray(productsData)
+    ? (productsData as any[])
+    : ((productsData as any)?.products ?? [])
 
-  // Show actual products with variety - if not enough products in subcategory, show some from other subcategories
-  const displayProducts = subcategoryProducts.length > 0 
-    ? subcategoryProducts.length >= 6 
-      ? subcategoryProducts 
-      : [...subcategoryProducts, ...productsData.filter(p => p.subcategory !== resolvedParams.slug).slice(0, 6 - subcategoryProducts.length)]
-    : productsData.slice(0, 6) // Show first 6 products as fallback
+  // Filter products by subcategory and ensure they belong to the same top-level category
+  const subcategoryProducts = productsList.filter((product: any) => {
+    const matchesSubcategory = product.subcategory === resolvedParams.slug
+    const matchesTopCategory = topLevelCategory ? product.category === topLevelCategory.id : true
+    return matchesSubcategory && matchesTopCategory
+  })
+
+  // Display ONLY products from this subcategory (no mixing/fallback)
+  const displayProducts = subcategoryProducts
+
+  const slugToCamelKey = (slug?: string): string | null => {
+    if (!slug || typeof slug !== 'string') return null
+    const cleaned = slug.replace(/[^a-z0-9-]/gi, '').toLowerCase()
+    return cleaned.replace(/-([a-z0-9])/g, (_, c) => String(c).toUpperCase())
+  }
 
   // Get filters from JSON file
   const categoryFilters = categoryFiltersData.filters
@@ -172,19 +184,10 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
           {topLevelCategory?.id !== 'illuminants' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
               {/* Text Description */}
-              <div className="space-y-2 md:space-y-3">
-                <div className="space-y-2 md:space-y-3 text-gray-600 leading-relaxed text-sm md:text-base">
-                  {subcategory.descriptionKey && tCategories(subcategory.descriptionKey.replace('categories.', '')).split('\n\n').map((paragraph: string, index: number) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-                </div>
-                <Link 
-                  href="#" 
-                  className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium transition-colors text-sm md:text-base"
-                >
-                  {t('readMore')}
-                  <ChevronRight className="ml-1 w-4 h-4" />
-                </Link>
+              <div className="space-y-2 md:space-y-3 text-gray-600 leading-relaxed text-sm md:text-base">
+                {subcategory.descriptionKey && tCategories(subcategory.descriptionKey.replace('categories.', '')).split('\n\n').map((paragraph: string, index: number) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
               </div>
               {/* Image */}
               <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 bg-gray-100 rounded-lg md:rounded-2xl overflow-hidden flex items-center justify-center">
@@ -348,16 +351,38 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
 
             {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 md:gap-4">
-              {displayProducts.map((product, index) => (
-                <ProductCard
-                  key={`${product.id}-${index}`}
-                  productName={product.name}
-                  productDesc={product.description}
-                  productPrice={`€${product.price.toFixed(2)}`}
-                  productImg={product.image}
-                  productSlug={product.id.toString()}
-                />
-              ))}
+              {displayProducts.map((product: any, index: number) => {
+                const primaryImage = Array.isArray(product.images) ? product.images[0] : product.image
+                const slugOrId = product.slug ?? String(product.id)
+                const priceStr = typeof product.price === 'number' ? `€${product.price.toFixed(2)}` : String(product.price)
+                // Localized description if available
+                const key = slugToCamelKey(product.slug)
+                let localizedDesc = product.description
+                if (key) {
+                  try {
+                    const candidate = tProducts(`${key}.description`)
+                    if (
+                      candidate &&
+                      !candidate.startsWith('products.') &&
+                      candidate !== `${key}.description`
+                    ) {
+                      localizedDesc = candidate
+                    }
+                  } catch {
+                    localizedDesc = product.description
+                  }
+                }
+                return (
+                  <ProductCard
+                    key={`${slugOrId}-${index}`}
+                    productName={product.name}
+                    productDesc={localizedDesc}
+                    productPrice={priceStr}
+                    productImg={primaryImage}
+                    productSlug={slugOrId}
+                  />
+                )
+              })}
             </div>
           </div>
         </div>

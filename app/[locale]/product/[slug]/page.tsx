@@ -26,6 +26,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   const locale = params_.locale as string
   const t = useTranslations('productPage')
   const tProducts = useTranslations('products')
+  const tSpecLabels = useTranslations('productSpecs.labels')
   const tCategories = useTranslations('categories')
   const [selectedImage, setSelectedImage] = useState(0)
   const [quantity, setQuantity] = useState(1)
@@ -41,8 +42,17 @@ export default function ProductPage({ params }: ProductPageProps) {
   
   const { addToCart } = useCart()
   
-  // Find the product based on the slug
-  const product = productsData.find(prod => prod.id.toString() === resolvedParams.slug)
+  // Resolve products list for both legacy (array) and new (object with products[]) shapes
+  const productsList = Array.isArray(productsData)
+    ? (productsData as any[])
+    : ((productsData as any)?.products ?? [])
+
+  // Find the product based on slug or id across both shapes
+  const product = productsList.find((prod: any) => {
+    const idAsString = prod?.id != null ? String(prod.id) : undefined
+    const slugValue = prod?.slug
+    return idAsString === resolvedParams.slug || slugValue === resolvedParams.slug
+  })
 
   if (!product) {
     notFound()
@@ -51,6 +61,31 @@ export default function ProductPage({ params }: ProductPageProps) {
   // Find the category name from categories data
   const category = categoriesData.categories.find(cat => cat.id === product.category)
   const categoryName = category ? tCategories(category.nameKey.replace('categories.', '')) : product.category
+
+  // Normalize images to an array using the single image as fallback
+  const images: string[] = Array.isArray((product as any).images)
+    ? (product as any).images
+    : (product as any).image
+      ? [(product as any).image]
+      : []
+  const productImageForCart: string = images[0] ?? (product as any).image ?? ''
+
+  const toSpecKey = (label: string): string => {
+    const normalized = label
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ') // non-alphanumerics to space
+      .trim()
+    return normalized.split(' ').map((word, index) => index === 0 ? word : (word.charAt(0).toUpperCase() + word.slice(1))).join('')
+  }
+
+  const translateSpecLabel = (label: string): string => {
+    const key = toSpecKey(label)
+    try {
+      return tSpecLabels(key)
+    } catch {
+      return label
+    }
+  }
 
   const handleQuantityChange = (increment: boolean) => {
     if (increment) {
@@ -64,10 +99,10 @@ export default function ProductPage({ params }: ProductPageProps) {
     // Add the product to cart with the selected quantity
     for (let i = 0; i < quantity; i++) {
               addToCart({
-          id: product.id.toString(),
+          id: String((product as any).id),
           name: product.name,
-          price: product.price.toString(),
-          image: product.image
+          price: String((product as any).price),
+          image: productImageForCart
         })
     }
     
@@ -113,7 +148,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="pb-4 space-y-2">
             {validEntries.map(([key, value]) => (
               <div key={key} className="flex justify-between text-sm">
-                <span className="text-gray-600">{key}:</span>
+                <span className="text-gray-600">{translateSpecLabel(key)}:</span>
                 <span className="text-gray-900 font-medium">{String(value)}</span>
               </div>
             ))}
@@ -137,7 +172,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               {categoryName}
             </Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-gray-900">{tProducts(product.nameKey.replace('products.', ''))}</span>
+            <span className="text-gray-900">{product.name}</span>
           </nav>
         </div>
       </div>
@@ -149,12 +184,18 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="space-y-4">
             {/* Main Product Image */}
             <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
-              <Image
-                src={product.images[selectedImage]}
-                alt={tProducts(product.nameKey.replace('products.', ''))}
-                fill
-                className="object-cover"
-              />
+              {images.length > 0 ? (
+                <Image
+                  src={images[selectedImage]}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                  No image available
+                </div>
+              )}
               
               {/* Left Arrow */}
               {selectedImage > 0 && (
@@ -167,7 +208,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               )}
               
               {/* Right Arrow */}
-              {selectedImage < product.images.length - 1 && (
+              {selectedImage < images.length - 1 && (
                 <button
                   onClick={() => setSelectedImage(selectedImage + 1)}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 hover:text-teal-600 rounded-full p-2 transition-all duration-200 shadow-lg"
@@ -179,7 +220,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             
             {/* Thumbnail Images */}
             <div className="grid grid-cols-5 gap-2">
-              {product.images.map((image, index) => (
+              {images.map((image: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
@@ -189,7 +230,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 >
                   <Image
                     src={image}
-                    alt={`${tProducts(product.nameKey.replace('products.', ''))} view ${index + 1}`}
+                    alt={`${product.name} view ${index + 1}`}
                     fill
                     className="object-cover"
                   />
@@ -203,32 +244,34 @@ export default function ProductPage({ params }: ProductPageProps) {
             {/* Product Title and Price */}
             <div>
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                {tProducts(product.nameKey.replace('products.', ''))}
+                {product.name}
               </h1>
               <div className="space-y-2">
                 <p className="text-3xl md:text-4xl font-bold text-gray-900">
                   {product.price}
                 </p>
-                <p className="text-sm text-gray-600">
-                  {product.priceDetails}
-                </p>
-                <p className="text-sm text-green-600 font-medium">
-                  {product.shippingInfo}
-                </p>
+                {(product as any).priceDetails && (
+                  <p className="text-sm text-gray-600">{(product as any).priceDetails}</p>
+                )}
+                {(product as any).shippingInfo && (
+                  <p className="text-sm text-green-600 font-medium">{(product as any).shippingInfo}</p>
+                )}
               </div>
             </div>
 
             {/* Product Specifications */}
-            <div className="bg-gray-50 rounded-lg overflow-hidden p-5">
-              <div className="pb-4 space-y-2">
-                {Object.entries(product.product_details).map(([key, value]) => (
-                  <div key={key} className="flex justify-between text-sm">
-                    <span className="text-gray-600">{key}:</span>
-                    <span className="text-gray-900 font-medium">{value}</span>
-                  </div>
-                ))}
+            {(product as any).product_details && (
+              <div className="bg-gray-50 rounded-lg overflow-hidden p-5">
+                <div className="pb-4 space-y-2">
+                  {Object.entries((product as any).product_details).map(([key, value]) => (
+                    <div key={key} className="flex justify-between text-sm">
+                      <span className="text-gray-600">{key}:</span>
+                      <span className="text-gray-900 font-medium">{String(value)}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Instruction Manual Download */}
             <div className="border-t border-gray-200 pt-4">
@@ -294,14 +337,14 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="lg:max-w-[calc(50%-1rem)] bg-gray-50 rounded-lg overflow-hidden p-4">
             {product.category === 'illuminants' ? (
               <>
-                {renderSpecificationSection(t('lightInformation'), product.light_information, "light_information")}
-                {renderSpecificationSection(t('switchingInformation'), product.switching_information, "switching_information")}
+                {renderSpecificationSection(t('lightInformation'), (product as any).light_information, "light_information")}
+                {renderSpecificationSection(t('switchingInformation'), (product as any).switching_information, "switching_information")}
               </>
             ) : (
-              renderSpecificationSection(t('dimensions'), product.dimensions, "dimensions")
+              renderSpecificationSection(t('dimensions'), (product as any).dimensions, "dimensions")
             )}
-            {renderSpecificationSection(t('technicalInformation'), product.technical_information, "technical_information")}
-            {renderSpecificationSection(t('otherInformation'), product.other_information, "other_information")}
+            {renderSpecificationSection(t('technicalInformation'), (product as any).technical_information, "technical_information")}
+            {renderSpecificationSection(t('otherInformation'), (product as any).other_information, "other_information")}
           </div>
         </div>
       </div>
