@@ -11,15 +11,15 @@ import { useParams } from 'next/navigation'
 import productsData from "../../../data/products.json"
 
 interface Product {
-  id: number
+  id: string | number
+  slug?: string
   name: string
-  description: string
-  price: number
+  description?: string
+  price: number | string
   category: string
-  subcategory: string
-  image: string
-  rating: number
-  reviews: number
+  subcategory?: string
+  image?: string
+  images?: string[]
 }
 
 function SearchPageContent() {
@@ -45,9 +45,9 @@ function SearchPageContent() {
       // Search in name, description, category, and subcategory
       return (
         product.name.toLowerCase().includes(searchLower) ||
-        product.description.toLowerCase().includes(searchLower) ||
+        (product.description ?? '').toLowerCase().includes(searchLower) ||
         product.category.toLowerCase().includes(searchLower) ||
-        product.subcategory.toLowerCase().includes(searchLower)
+        (product.subcategory ?? '').toLowerCase().includes(searchLower)
       )
     })
 
@@ -56,8 +56,11 @@ function SearchPageContent() {
 
   useEffect(() => {
     try {
-      // Products are now in a flat array structure
-      setProducts(productsData as Product[])
+      // Support both flat array and object shape with products[]
+      const productsList: Product[] = Array.isArray(productsData)
+        ? (productsData as Product[])
+        : ((productsData as { products?: Product[] }).products ?? [])
+      setProducts(productsList)
       setLoading(false)
     } catch (error) {
       console.error('Error loading products:', error)
@@ -153,10 +156,10 @@ function SearchPageContent() {
               <ProductCard 
                 key={`${product.id}-${index}`} 
                 productName={product.name}
-                productDesc={product.description}
-                productPrice={`€${product.price.toFixed(2)}`}
-                productImg={product.image}
-                productSlug={product.id.toString()}
+                productDesc={(product.description ?? '')}
+                productPrice={typeof product.price === 'number' ? `€${product.price.toFixed(2)}` : String(product.price)}
+                productImg={(Array.isArray(product.images) ? product.images[0] : product.image) ?? "/assets/images/placeholder.jpg"}
+                productSlug={product.slug ?? String(product.id)}
               />
             ))}
           </div>

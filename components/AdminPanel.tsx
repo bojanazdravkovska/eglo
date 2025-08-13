@@ -4,9 +4,12 @@ import { Button } from "./Button"
 import { Plus, Settings, Users, BarChart3 } from "lucide-react"
 import Link from "next/link"
 import { useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
 
 export function AdminPanel() {
   const t = useTranslations('admin')
+  const params = useParams()
+  const locale = params.locale as string
   
   return (
     <>
@@ -22,7 +25,7 @@ export function AdminPanel() {
           </div>
           
           <div className="flex gap-3">
-            <Link href="/add-product">
+            <Link href={`/${locale}/add-product`}>
               <Button variant="primary" className="flex items-center gap-2">
                 <Plus className="w-4 h-4" />
                 {t('actions.addProduct')}
