@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Check, Plus, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import categoriesData from "../../../data/categories.json"
+import { useTranslations } from 'next-intl'
 
 type Step = 1 | 2 | 3 | 4
 
@@ -23,6 +24,14 @@ interface ProductImage {
   id: string
   file: File
   preview: string
+}
+
+interface CategoryNode {
+  id: string
+  nameKey: string
+  descriptionKey: string
+  images?: { image1?: string; image2?: string }
+  subcategories: CategoryNode[]
 }
 
 export default function AddProductPage() {
@@ -197,8 +206,10 @@ export default function AddProductPage() {
   ]
 
   // Get subcategories based on selected category
-  const selectedCategory = categoriesData.categories.find(cat => cat.id === formData.category)
-  const subcategories = selectedCategory?.subcategories || []
+  const tCategories = useTranslations('categories')
+  const categories = categoriesData.categories as unknown as CategoryNode[]
+  const selectedCategory = categories.find(cat => cat.id === formData.category)
+  const subcategories = selectedCategory?.subcategories ?? []
 
   const renderCategorySection = (categoryKey: string, title: string) => {
     const fields = categoryFields[categoryKey]
@@ -447,9 +458,9 @@ export default function AddProductPage() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   >
                     <option value="">Select a category</option>
-                    {categoriesData.categories.map((category) => (
+                    {categories.map((category) => (
                       <option key={category.id} value={category.id}>
-                        {category.name}
+                        {tCategories(category.nameKey.replace('categories.', ''))}
                       </option>
                     ))}
                   </select>
@@ -468,7 +479,7 @@ export default function AddProductPage() {
                       <option value="">Select a subcategory</option>
                       {subcategories.map((subcategory) => (
                         <option key={subcategory.id} value={subcategory.id}>
-                          {subcategory.name}
+                          {tCategories(subcategory.nameKey.replace('categories.', ''))}
                         </option>
                       ))}
                     </select>
@@ -572,8 +583,11 @@ export default function AddProductPage() {
                   <p className="text-sm text-gray-600">€{formData.price}</p>
                   {formData.category && (
                     <p className="text-sm text-gray-600">
-                      {categoriesData.categories.find(cat => cat.id === formData.category)?.name}
-                      {formData.subcategory && ` > ${subcategories.find(sub => sub.id === formData.subcategory)?.name}`}
+                      {selectedCategory ? tCategories(selectedCategory.nameKey.replace('categories.', '')) : ''}
+                      {formData.subcategory && (() => {
+                        const sub = subcategories.find(s => s.id === formData.subcategory)
+                        return sub ? ` > ${tCategories(sub.nameKey.replace('categories.', ''))}` : ''
+                      })()}
                     </p>
                   )}
                   {productImages.length > 0 && (
