@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
-import '../../styles/globals.css'
+import '../../styles/globals.css';
 import { ConditionalLayout } from '../../components/ConditionalLayout';
 import { CartProvider } from './context/CartContext';
 import { locales } from '../../i18n';
 import LocaleLayoutProvider from '../../components/providers/LocaleLayoutProvider';
 import { notFound } from 'next/navigation';
+import { getMessages } from 'next-intl/server';
+import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'EGLO',
@@ -12,27 +14,32 @@ export const metadata: Metadata = {
   icons: {
     icon: '/assets/images/icon.png?v=1',
     shortcut: '/assets/images/icon.png?v=1',
-    apple: '/assets/images/icon.png?v=1',
-  },
+    apple: '/assets/images/icon.png?v=1'
+  }
 };
+
 export const viewport = {
   width: 'device-width',
-  initialScale: 1,
+  initialScale: 1
 };
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export default async function Layout(props: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+export default async function Layout({
+  children,
+  params
+}: {
+  children: ReactNode;
+  params: { locale: string };
 }) {
-  const { locale } = await props.params;
+  const { locale } = params;
 
+  // Pull messages from your next-intl.config.ts
   let messages;
   try {
-    messages = (await import(`../../messages/${locale}.json`)).default;
+    messages = await getMessages(); // uses locale + config
   } catch {
     notFound();
   }
@@ -40,9 +47,7 @@ export default async function Layout(props: {
   return (
     <LocaleLayoutProvider locale={locale} messages={messages}>
       <CartProvider>
-        <ConditionalLayout>
-          {props.children}
-        </ConditionalLayout>
+        <ConditionalLayout>{children}</ConditionalLayout>
       </CartProvider>
     </LocaleLayoutProvider>
   );

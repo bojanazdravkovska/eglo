@@ -3,7 +3,11 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { useTranslations } from 'next-intl';
 
-export default function AboutEglo() {
+interface AboutEgloProps {
+  locale: string
+}
+
+export default function AboutEglo({ locale }: AboutEgloProps) {
   const t = useTranslations('about');
 
   return (
@@ -12,7 +16,7 @@ export default function AboutEglo() {
       <div className="border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4">
           <nav className="flex items-center space-x-2 text-sm text-gray-500">
-            <Link href="/" className="hover:text-teal-600 transition-colors">
+            <Link href={`/${locale}`} className="hover:text-teal-600 transition-colors">
               {t('breadcrumb.home')}
             </Link>
             <ChevronRight className="w-4 h-4" />
