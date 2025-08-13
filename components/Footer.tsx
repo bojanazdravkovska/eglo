@@ -22,7 +22,7 @@ export function Footer({}: FooterProps) {
               {t('contact.title')}
             </h2>
             <p className="text-teal-600 text-xl md:text-2xl font-semibold">
-              +38349699100
+              +389 76 338 000
             </p>
           </div>
           
@@ -32,7 +32,7 @@ export function Footer({}: FooterProps) {
                 <Clock className="w-6 h-6 text-teal-600" />
               </div>
               <p className="text-gray-600 font-medium">{t('contact.workingHours')}</p>
-              <p className="text-gray-500 text-sm">09:00 - 20:00</p>
+              <p className="text-gray-500 text-sm">09:00 - 21:00</p>
             </div>
             
             <div className="flex flex-col items-center text-center">

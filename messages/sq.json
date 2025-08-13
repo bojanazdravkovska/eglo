@@ -77,6 +77,44 @@
         "worldwide": "EGLO në mbarë botën",
         "principles": "Parimet tona",
         "workingAtEglo": "Puna në EGLO"
+      },
+      "people": {
+        "management": {
+          "rene": {
+            "name": "René Tiefenbacher",
+            "role": "CEO i Grupit EGLO"
+          },
+          "axel": {
+            "name": "Axel Böchzelt",
+            "role": "GM i Shitjeve"
+          },
+          "martin": {
+            "name": "Martin Doppelbauer",
+            "role": "GM i Financave & IT\nDepartamenti Ligjor & Digitalizimi"
+          }
+        },
+        "extended": {
+          "christianGspan": {
+            "name": "Christian Gspan",
+            "role": "Blerje, Logjistika e Transportit, QS"
+          },
+          "manuelReinalter": {
+            "name": "Manuel Reinalter",
+            "role": "Shitje në BE, E-commerce, Komunikime Korporative"
+          },
+          "tanjaLiscic": {
+            "name": "Tanja Liscic",
+            "role": "Komunikime, POS, PM"
+          },
+          "christianHuber": {
+            "name": "Christian Huber",
+            "role": "Prodhimi Ndërkombëtar, Zhvillimi Teknik"
+          },
+          "christianWeger": {
+            "name": "Christian Weger",
+            "role": "Financa Bartenbach, LUXIT"
+          }
+        }
       }
     }
   },

@@ -7,46 +7,46 @@ const Management: React.FC = () => {
 
   const management = [
     {
-      name: "René Tiefenbacher",
-      role: "CEO EGLO Group",
+      name: t('people.management.rene.name'),
+      role: t('people.management.rene.role'),
       image: "/assets/images/RenéTiefenbacher.png",
     },
     {
-      name: "Axel Böchzelt",
-      role: "GM Sales",
+      name: t('people.management.axel.name'),
+      role: t('people.management.axel.role'),
       image: "/assets/images/AxelBöchzelt.png",
     },
     {
-      name: "Martin Doppelbauer",
-      role: "GM Finance & IT\nLegal Dep. & Digitalization",
+      name: t('people.management.martin.name'),
+      role: t('people.management.martin.role'),
       image: "/assets/images/MartinDoppelbauer.jpg",
     },
   ];
 
   const extendedManagement = [
     {
-      name: "Christian Gspan",
-      role: "Purchasing, Transport Logistics, QS",
+      name: t('people.extended.christianGspan.name'),
+      role: t('people.extended.christianGspan.role'),
       image: "/assets/images/ChristianGspan.png",
     },
     {
-      name: "Manuel Reinalter",
-      role: "Sales EU, Ecom, Corporate Communications",
+      name: t('people.extended.manuelReinalter.name'),
+      role: t('people.extended.manuelReinalter.role'),
       image: "/assets/images/ManuelReinalter.jpg",
     },
     {
-      name: "Tanja Liscic",
-      role: "Communications, POS, PM",
+      name: t('people.extended.tanjaLiscic.name'),
+      role: t('people.extended.tanjaLiscic.role'),
       image: "/assets/images/TanjaLiscic.jpg",
     },
     {
-      name: "Christian Huber",
-      role: "Production International, Technical Development",
+      name: t('people.extended.christianHuber.name'),
+      role: t('people.extended.christianHuber.role'),
       image: "/assets/images/ChristianHuber.jpg",
     },
     {
-      name: "Christian Weger",
-      role: "Finance Bartenbach, LUXIT",
+      name: t('people.extended.christianWeger.name'),
+      role: t('people.extended.christianWeger.role'),
       image: "/assets/images/ChristianWeger.jpg",
     },
   ];

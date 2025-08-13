@@ -32,9 +32,9 @@ export default async function Layout({
   params
 }: {
   children: ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = params;
+  const { locale } = await params;
 
   // Pull messages from your next-intl.config.ts
   let messages;
