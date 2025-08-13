@@ -5,13 +5,21 @@ import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, ChevronDown } from "lucide-react"
 import { useState, use } from "react"
-import { usePathname, useParams } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useTranslations } from 'next-intl'
 import categoriesData from "../../../../data/categories.json"
 import productsData from "../../../../data/products.json"
 import categoryFiltersData from "../../../../data/categoryFilters.json"
 import ProductCard from "../../../../components/ProductCard"
 import { FilterGrid } from "../../../../components/FilterGrid"
+
+interface CategoryNode {
+  id: string
+  nameKey: string
+  descriptionKey: string
+  images?: { image1?: string; image2?: string }
+  subcategories: Array<string | CategoryNode>
+}
 
 interface SubSubcategory {
   id: string
@@ -27,55 +35,65 @@ interface SubcategoryPageProps {
   }>
 }
 
+// Helper: type guard to narrow subcategory items to objects
+function isCategoryNode(item: string | CategoryNode): item is CategoryNode {
+  return typeof item === 'object' && item !== null && 'id' in item
+}
+
 // Helper: recursively find subcategory by id
-function findSubcategoryById(categories: any[], id: string): any {
+function findSubcategoryById(categories: CategoryNode[], id: string): CategoryNode | null {
   for (const cat of categories) {
-    if (cat.id === id) return cat;
+    if (cat.id === id) return cat
     if (cat.subcategories && cat.subcategories.length > 0) {
-      const found = findSubcategoryById(
-        cat.subcategories.filter((sub: any) => typeof sub === 'object'),
-        id
-      );
-      if (found) return found;
+      const objectSubs = cat.subcategories.filter(isCategoryNode)
+      const found = findSubcategoryById(objectSubs, id)
+      if (found) return found
     }
   }
-  return null;
+  return null
 }
 
 // Helper: recursively find parent category
-function findParentCategory(categories: any[], id: string, parent: any = null): any {
+function findParentCategory(categories: CategoryNode[], id: string, parent: CategoryNode | null = null): CategoryNode | null {
   for (const cat of categories) {
-    if (cat.id === id) return parent;
+    if (cat.id === id) return parent
     if (cat.subcategories && cat.subcategories.length > 0) {
-      const found = findParentCategory(
-        cat.subcategories.filter((sub: any) => typeof sub === 'object'),
-        id,
-        cat
-      );
-      if (found) return found;
+      const objectSubs = cat.subcategories.filter(isCategoryNode)
+      const found = findParentCategory(objectSubs, id, cat)
+      if (found) return found
     }
   }
-  return null;
+  return null
 }
 
 // Helper: recursively find top-level category
-function findTopLevelCategory(categories: any[], id: string): any {
+function findTopLevelCategory(categories: CategoryNode[], id: string): CategoryNode | null {
   for (const cat of categories) {
-    if (cat.id === id) return cat;
+    if (cat.id === id) return cat
     if (cat.subcategories && cat.subcategories.length > 0) {
-      const found = findTopLevelCategory(
-        cat.subcategories.filter((sub: any) => typeof sub === 'object'),
-        id
-      );
-      if (found) return cat;
+      const objectSubs = cat.subcategories.filter(isCategoryNode)
+      const found = findTopLevelCategory(objectSubs, id)
+      if (found) return cat
     }
   }
-  return null;
+  return null
+}
+
+interface Product {
+  id: string | number
+  name: string
+  price: number | string
+  image?: string
+  images?: string[]
+  slug?: string
+  category: string
+  subcategory?: string
+  description?: string
+  [key: string]: unknown
 }
 
 export default function SubcategoryPage({ params }: SubcategoryPageProps) {
   const resolvedParams = use(params) as { slug: string }
-  const pathname = usePathname()
   const params_ = useParams()
   const locale = params_.locale as string
   const t = useTranslations('subcategoryPage')
@@ -83,9 +101,9 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
   const tProducts = useTranslations('products')
   
   // Recursively find the subcategory in categories.json
-  const subcategory = findSubcategoryById(categoriesData.categories, resolvedParams.slug);
-  const parentCategory = findParentCategory(categoriesData.categories, resolvedParams.slug);
-  const topLevelCategory = findTopLevelCategory(categoriesData.categories, resolvedParams.slug);
+  const subcategory = findSubcategoryById(categoriesData.categories as unknown as CategoryNode[], resolvedParams.slug)
+  const parentCategory = findParentCategory(categoriesData.categories as unknown as CategoryNode[], resolvedParams.slug)
+  const topLevelCategory = findTopLevelCategory(categoriesData.categories as unknown as CategoryNode[], resolvedParams.slug)
   
   const [expandedSubcategory, setExpandedSubcategory] = useState<string | null>(null)
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({})
@@ -107,12 +125,12 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
   })
 
   // Resolve products list for both legacy (array) and new (object with products[]) shapes
-  const productsList = Array.isArray(productsData)
-    ? (productsData as any[])
-    : ((productsData as any)?.products ?? [])
+  const productsList: Product[] = Array.isArray(productsData)
+    ? (productsData as Product[])
+    : ((productsData as { products?: Product[] }).products ?? [])
 
   // Filter products by subcategory and ensure they belong to the same top-level category
-  const subcategoryProducts = productsList.filter((product: any) => {
+  const subcategoryProducts = productsList.filter((product: Product) => {
     const matchesSubcategory = product.subcategory === resolvedParams.slug
     const matchesTopCategory = topLevelCategory ? product.category === topLevelCategory.id : true
     return matchesSubcategory && matchesTopCategory
@@ -209,8 +227,8 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
           <div className="hidden lg:block lg:w-80 bg-gray-50 rounded-lg p-3 md:p-4 order-2 lg:order-1">
             <h3 className="text-lg font-semibold text-gray-900 mb-3 md:mb-4">{t('categories')}</h3>
             <div className="space-y-1 md:space-y-2">
-              {topLevelCategory && topLevelCategory.subcategories.map((subcategory: any, index: number) => (
-                <div key={subcategory.id || index}>
+              {topLevelCategory && topLevelCategory.subcategories.map((subcategory: string | CategoryNode, index: number) => (
+                <div key={typeof subcategory === 'string' ? `${index}-${subcategory}` : subcategory.id}>
                   {typeof subcategory === 'string' ? (
                     <Link
                       href="#"
@@ -244,9 +262,9 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
                           </button>
                         )}
                       </div>
-                      {expandedSubcategory === subcategory.id && subcategory.subcategories.length > 0 && (
+                       {expandedSubcategory === subcategory.id && subcategory.subcategories.length > 0 && (
                         <div className="ml-4 mt-1 space-y-1 animate-in slide-in-from-top-2 duration-200">
-                          {subcategory.subcategories.map((subSubcategory: SubSubcategory | string, subIndex: number) =>
+                           {subcategory.subcategories.map((subSubcategory, subIndex) =>
                             typeof subSubcategory === 'string' ? (
                               <Link
                                 key={subIndex}
@@ -351,13 +369,13 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
 
             {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 md:gap-4">
-              {displayProducts.map((product: any, index: number) => {
+              {displayProducts.map((product: Product, index: number) => {
                 const primaryImage = Array.isArray(product.images) ? product.images[0] : product.image
                 const slugOrId = product.slug ?? String(product.id)
                 const priceStr = typeof product.price === 'number' ? `€${product.price.toFixed(2)}` : String(product.price)
                 // Localized description if available
                 const key = slugToCamelKey(product.slug)
-                let localizedDesc = product.description
+                let localizedDesc: string = product.description ?? ''
                 if (key) {
                   try {
                     const candidate = tProducts(`${key}.description`)
@@ -369,7 +387,7 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
                       localizedDesc = candidate
                     }
                   } catch {
-                    localizedDesc = product.description
+                    localizedDesc = product.description ?? ''
                   }
                 }
                 return (
@@ -378,7 +396,7 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
                     productName={product.name}
                     productDesc={localizedDesc}
                     productPrice={priceStr}
-                    productImg={primaryImage}
+                    productImg={primaryImage ?? "/assets/images/placeholder.jpg"}
                     productSlug={slugOrId}
                   />
                 )
@@ -389,4 +407,4 @@ export default function SubcategoryPage({ params }: SubcategoryPageProps) {
       </div>
     </div>
   )
-} 
+}
