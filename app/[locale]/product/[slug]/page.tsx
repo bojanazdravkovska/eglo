@@ -20,12 +20,31 @@ interface ProductPageProps {
   }>
 }
 
+interface Product {
+  id: string | number
+  name: string
+  price: number | string
+  image?: string
+  images?: string[]
+  slug?: string
+  category: string
+  description?: string
+  priceDetails?: string
+  shippingInfo?: string
+  product_details?: Record<string, unknown>
+  dimensions?: Record<string, unknown>
+  light_information?: Record<string, unknown>
+  switching_information?: Record<string, unknown>
+  technical_information?: Record<string, unknown>
+  other_information?: Record<string, unknown>
+  [key: string]: unknown
+}
+
 export default function ProductPage({ params }: ProductPageProps) {
   const resolvedParams = use(params) as { slug: string }
   const params_ = useParams()
   const locale = params_.locale as string
   const t = useTranslations('productPage')
-  const tProducts = useTranslations('products')
   const tSpecLabels = useTranslations('productSpecs.labels')
   const tCategories = useTranslations('categories')
   const [selectedImage, setSelectedImage] = useState(0)
@@ -43,14 +62,14 @@ export default function ProductPage({ params }: ProductPageProps) {
   const { addToCart } = useCart()
   
   // Resolve products list for both legacy (array) and new (object with products[]) shapes
-  const productsList = Array.isArray(productsData)
-    ? (productsData as any[])
-    : ((productsData as any)?.products ?? [])
+  const productsList: Product[] = Array.isArray(productsData)
+    ? (productsData as Product[])
+    : ((productsData as { products?: Product[] }).products ?? [])
 
   // Find the product based on slug or id across both shapes
-  const product = productsList.find((prod: any) => {
-    const idAsString = prod?.id != null ? String(prod.id) : undefined
-    const slugValue = prod?.slug
+  const product = productsList.find((prod: Product) => {
+    const idAsString = prod.id != null ? String(prod.id) : undefined
+    const slugValue = prod.slug
     return idAsString === resolvedParams.slug || slugValue === resolvedParams.slug
   })
 
@@ -63,12 +82,12 @@ export default function ProductPage({ params }: ProductPageProps) {
   const categoryName = category ? tCategories(category.nameKey.replace('categories.', '')) : product.category
 
   // Normalize images to an array using the single image as fallback
-  const images: string[] = Array.isArray((product as any).images)
-    ? (product as any).images
-    : (product as any).image
-      ? [(product as any).image]
+  const images: string[] = Array.isArray(product.images)
+    ? product.images
+    : product.image
+      ? [product.image]
       : []
-  const productImageForCart: string = images[0] ?? (product as any).image ?? ''
+  const productImageForCart: string = images[0] ?? product.image ?? ''
 
   const toSpecKey = (label: string): string => {
     const normalized = label
@@ -97,14 +116,14 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   const handleAddToCart = () => {
     // Add the product to cart with the selected quantity
-    for (let i = 0; i < quantity; i++) {
-              addToCart({
-          id: String((product as any).id),
+      for (let i = 0; i < quantity; i++) {
+        addToCart({
+          id: String(product.id),
           name: product.name,
-          price: String((product as any).price),
+          price: String(product.price),
           image: productImageForCart
         })
-    }
+      }
     
     // Show the popup
     setShowCartPopup(true)
@@ -250,20 +269,20 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <p className="text-3xl md:text-4xl font-bold text-gray-900">
                   {product.price}
                 </p>
-                {(product as any).priceDetails && (
-                  <p className="text-sm text-gray-600">{(product as any).priceDetails}</p>
+                {product.priceDetails && (
+                  <p className="text-sm text-gray-600">{product.priceDetails}</p>
                 )}
-                {(product as any).shippingInfo && (
-                  <p className="text-sm text-green-600 font-medium">{(product as any).shippingInfo}</p>
+                {product.shippingInfo && (
+                  <p className="text-sm text-green-600 font-medium">{product.shippingInfo}</p>
                 )}
               </div>
             </div>
 
             {/* Product Specifications */}
-            {(product as any).product_details && (
+            {product.product_details && (
               <div className="bg-gray-50 rounded-lg overflow-hidden p-5">
                 <div className="pb-4 space-y-2">
-                  {Object.entries((product as any).product_details).map(([key, value]) => (
+                  {Object.entries(product.product_details).map(([key, value]) => (
                     <div key={key} className="flex justify-between text-sm">
                       <span className="text-gray-600">{key}:</span>
                       <span className="text-gray-900 font-medium">{String(value)}</span>
@@ -337,14 +356,14 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="lg:max-w-[calc(50%-1rem)] bg-gray-50 rounded-lg overflow-hidden p-4">
             {product.category === 'illuminants' ? (
               <>
-                {renderSpecificationSection(t('lightInformation'), (product as any).light_information, "light_information")}
-                {renderSpecificationSection(t('switchingInformation'), (product as any).switching_information, "switching_information")}
+                {renderSpecificationSection(t('lightInformation'), product.light_information, "light_information")}
+                {renderSpecificationSection(t('switchingInformation'), product.switching_information, "switching_information")}
               </>
             ) : (
-              renderSpecificationSection(t('dimensions'), (product as any).dimensions, "dimensions")
+              renderSpecificationSection(t('dimensions'), product.dimensions, "dimensions")
             )}
-            {renderSpecificationSection(t('technicalInformation'), (product as any).technical_information, "technical_information")}
-            {renderSpecificationSection(t('otherInformation'), (product as any).other_information, "other_information")}
+            {renderSpecificationSection(t('technicalInformation'), product.technical_information, "technical_information")}
+            {renderSpecificationSection(t('otherInformation'), product.other_information, "other_information")}
           </div>
         </div>
       </div>

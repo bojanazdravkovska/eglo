@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, ChevronDown } from "lucide-react"
 import { useState, use } from "react"
-import { usePathname, useParams } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useTranslations } from 'next-intl'
 import categoriesData from "../../../../data/categories.json"
 import productsData from "../../../../data/products.json"
@@ -21,6 +21,18 @@ interface SubSubcategory {
   subcategories: never[]
 }
 
+interface Product {
+  id: string | number
+  name: string
+  price: number | string
+  image?: string
+  images?: string[]
+  slug?: string
+  category: string
+  description?: string
+  [key: string]: unknown
+}
+
 interface CategoryPageProps {
   params: Promise<{
     slug: string
@@ -29,7 +41,6 @@ interface CategoryPageProps {
 
 export default function CategoryPage({ params }: CategoryPageProps) {
   const resolvedParams = use(params) as { slug: string }
-  const pathname = usePathname()
   const params_ = useParams()
   const locale = params_.locale as string
   const t = useTranslations('categoryPage')
@@ -46,12 +57,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   }
 
   // Resolve products list for both legacy (array) and new (object with products[]) shapes
-  const productsList = Array.isArray(productsData)
-    ? (productsData as any[])
-    : ((productsData as any)?.products ?? [])
+  const productsList: Product[] = Array.isArray(productsData)
+    ? (productsData as Product[])
+    : ((productsData as { products?: Product[] }).products ?? [])
 
   // Filter products by category
-  const categoryProducts = productsList.filter((product: any) => product.category === resolvedParams.slug)
+  const categoryProducts = productsList.filter((product: Product) => product.category === resolvedParams.slug)
 
 
 
@@ -377,13 +388,13 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
             {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 md:gap-4">
-              {displayProducts.map((product: any, index: number) => {
+              {displayProducts.map((product: Product, index: number) => {
                 const primaryImage = Array.isArray(product.images) ? product.images[0] : product.image
                 const slugOrId = product.slug ?? String(product.id)
                 const priceStr = typeof product.price === 'number' ? `€${product.price.toFixed(2)}` : String(product.price)
                 // Try localized description from messages/products using slug-derived key
                 const key = slugToCamelKey(product.slug)
-                let localizedDesc = product.description
+                let localizedDesc: string = product.description ?? ''
                 if (key) {
                   try {
                     const candidate = tProducts(`${key}.description`)
@@ -395,7 +406,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                       localizedDesc = candidate
                     }
                   } catch {
-                    localizedDesc = product.description
+                    localizedDesc = product.description ?? ''
                   }
                 }
                 return (
@@ -404,7 +415,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                   productName={product.name}
                   productDesc={localizedDesc}
                   productPrice={priceStr}
-                  productImg={primaryImage}
+                  productImg={primaryImage ?? "/assets/images/placeholder.jpg"}
                   productSlug={slugOrId}
                 />
               )})}
