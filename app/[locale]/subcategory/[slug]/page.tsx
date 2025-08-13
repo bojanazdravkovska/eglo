@@ -21,13 +21,6 @@ interface CategoryNode {
   subcategories: Array<string | CategoryNode>
 }
 
-interface SubSubcategory {
-  id: string
-  nameKey: string
-  descriptionKey: string
-  images: { image1: string }
-  subcategories: never[]
-}
 
 interface SubcategoryPageProps {
   params: Promise<{
