@@ -5,7 +5,8 @@ import { CartProvider } from './context/CartContext';
 import { locales } from '../../i18n';
 import LocaleLayoutProvider from '../../components/providers/LocaleLayoutProvider';
 import { notFound } from 'next/navigation';
-import { getMessages } from 'next-intl/server';
+import { getMessages as getLocaleMessages } from '../../lib/getMessages';
+import type { Locale } from '../../i18n';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
@@ -36,10 +37,10 @@ export default async function Layout({
 }) {
   const { locale } = await params;
 
-  // Pull messages from your next-intl.config.ts
+  // Pull messages for the current locale (important for SSG)
   let messages;
   try {
-    messages = await getMessages(); // uses locale + config
+    messages = await getLocaleMessages(locale as Locale);
   } catch {
     notFound();
   }

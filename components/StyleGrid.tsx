@@ -36,11 +36,11 @@ export function StyleGrid() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
           {styles.map((style, index) => (
-            <div key={index} className="group cursor-pointer">
+            <div key={index} className="group cursor-pointer h-full">
               {/* Card Container with Border */}
-              <div className="border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-lg transition-all duration-300" style={{ backgroundColor: '#f4f2f1' }}>
+              <div className="border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-lg transition-all duration-300 h-full flex flex-col" style={{ backgroundColor: '#f4f2f1' }}>
                 {/* Image Container */}
                 <div className="relative h-72 mb-4 overflow-hidden rounded-lg bg-gray-50">
                   <Image
@@ -61,11 +61,11 @@ export function StyleGrid() {
                 </div>
 
                 {/* Text Content */}
-                <div className="text-center px-2">
+                <div className="text-center px-2 flex-1 flex flex-col">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-teal-600 transition-colors duration-300">
                     {t(`styles.${style.key}.title`)}
                   </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{t(`styles.${style.key}.description`)}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed flex-1">{t(`styles.${style.key}.description`)}</p>
                 </div>
               </div>
             </div>
