@@ -112,9 +112,12 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                             onMouseLeave={handleSubcategoryMouseLeave}
                           >
                             {typeof subcategory === 'string' ? (
-                              <span className="flex items-center justify-between text-gray-700 hover:text-teal-600 transition-colors cursor-pointer py-1 px-2 rounded">
+                              <Link
+                                href={`/${locale}/category/${category.id}`}
+                                className="flex items-center justify-between text-gray-700 hover:text-teal-600 transition-colors cursor-pointer py-1 px-2 rounded"
+                              >
                                 <span className="text-sm font-medium">{subcategory}</span>
-                              </span>
+                              </Link>
                             ) : (
                               <Link
                                 href={`/${locale}/subcategory/${subcategory.id}`}
@@ -136,7 +139,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                       return (
                                         <Link
                                           key={subIndex}
-                                          href="#"
+                                          href={`/${locale}/subcategory/${subcategory.id}`}
                                           className="block text-sm text-gray-600 hover:text-teal-600 transition-colors py-1 px-2 rounded"
                                         >
                                           {subSubcategory}
@@ -161,7 +164,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                     return null;
                                   }).filter(Boolean)}
                                   <Link
-                                    href="#"
+                                    href={`/${locale}/category/${category.id}`}
                                     className="block text-sm text-teal-600 hover:text-teal-700 transition-colors py-1 px-2 rounded font-medium flex items-center gap-1"
                                   >
                                     {t('all')}
@@ -211,24 +214,30 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                 <div className="overflow-y-auto h-full">
                   {categoriesData?.categories?.map((category) => (
                     <div key={category.id} className="border-b border-gray-100">
-                      <button
-                        onClick={() => setExpandedMobileCategory(
-                          expandedMobileCategory === category.id ? null : category.id
-                        )}
-                        className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
-                      >
-                        <div className="flex items-center gap-3">
-                          {getIcon(category.icon)}
-                          <span className="font-medium">{tCategories(category.nameKey.replace('categories.', ''))}</span>
-                        </div>
-                        {category.subcategories.length > 0 && (
-                          <ChevronRight 
-                            className={`w-5 h-5 transition-transform text-teal-600 ${
-                              expandedMobileCategory === category.id ? 'rotate-90' : ''
-                            }`}
-                          />
-                        )}
-                      </button>
+                                             <div className="flex items-center">
+                         <Link
+                           href={`/${locale}/category/${category.id}`}
+                           className="flex-1 flex items-center gap-3 p-4 text-left hover:bg-gray-50 transition-colors"
+                           onClick={() => setIsMobileMenuOpen(false)}
+                         >
+                           {getIcon(category.icon)}
+                           <span className="font-medium">{tCategories(category.nameKey.replace('categories.', ''))}</span>
+                         </Link>
+                         {category.subcategories.length > 0 && (
+                           <button
+                             onClick={() => setExpandedMobileCategory(
+                               expandedMobileCategory === category.id ? null : category.id
+                             )}
+                             className="p-4 pr-4 hover:bg-gray-50 transition-colors"
+                           >
+                             <ChevronRight 
+                               className={`w-5 h-5 transition-transform text-teal-600 ${
+                                 expandedMobileCategory === category.id ? 'rotate-90' : ''
+                               }`}
+                             />
+                           </button>
+                         )}
+                       </div>
 
                       {/* Mobile Subcategories */}
                       {expandedMobileCategory === category.id && category.subcategories.length > 0 && (
@@ -237,7 +246,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                             <div key={subcategory.id || index} className="border-t border-gray-100">
                               {typeof subcategory === 'string' ? (
                                 <Link
-                                  href="#"
+                                  href={`/${locale}/category/${category.id}`}
                                   className="block p-4 pl-12 text-gray-700 hover:text-teal-600 transition-colors"
                                   onClick={() => setIsMobileMenuOpen(false)}
                                 >
@@ -245,21 +254,29 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                 </Link>
                               ) : (
                                 <>
-                                  <button
-                                    onClick={() => setExpandedMobileSubcategory(
-                                      expandedMobileSubcategory === subcategory.id ? null : subcategory.id
-                                    )}
-                                    className="w-full flex items-center justify-between p-4 pl-12 text-left hover:bg-gray-100 transition-colors"
-                                  >
-                                    <span className="text-gray-700">{tCategories(subcategory.nameKey.replace('categories.', ''))}</span>
-                                    {subcategory.subcategories.length > 0 && (
-                                      <ChevronRight 
-                                        className={`w-4 h-4 transition-transform text-teal-600 ${
-                                          expandedMobileSubcategory === subcategory.id ? 'rotate-90' : ''
-                                        }`}
-                                      />
-                                    )}
-                                  </button>
+                                                                     <div className="flex items-center">
+                                     <Link
+                                       href={`/${locale}/subcategory/${subcategory.id}`}
+                                       className="flex-1 p-4 pl-12 text-left hover:bg-gray-100 transition-colors"
+                                       onClick={() => setIsMobileMenuOpen(false)}
+                                     >
+                                       <span className="text-gray-700">{tCategories(subcategory.nameKey.replace('categories.', ''))}</span>
+                                     </Link>
+                                     {subcategory.subcategories.length > 0 && (
+                                       <button
+                                         onClick={() => setExpandedMobileSubcategory(
+                                           expandedMobileSubcategory === subcategory.id ? null : subcategory.id
+                                         )}
+                                         className="p-4 pr-4 hover:bg-gray-100 transition-colors"
+                                       >
+                                         <ChevronRight 
+                                           className={`w-4 h-4 transition-transform text-teal-600 ${
+                                             expandedMobileSubcategory === subcategory.id ? 'rotate-90' : ''
+                                           }`}
+                                         />
+                                       </button>
+                                     )}
+                                   </div>
                                   
                                   {/* Mobile Sub-subcategories */}
                                   {expandedMobileSubcategory === subcategory.id && subcategory.subcategories.length > 0 && (
@@ -269,7 +286,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                           return (
                                             <Link
                                               key={subIndex}
-                                              href="#"
+                                              href={`/${locale}/subcategory/${subcategory.id}`}
                                               className="block p-3 pl-16 text-sm text-gray-600 hover:text-teal-600 transition-colors"
                                               onClick={() => setIsMobileMenuOpen(false)}
                                             >
@@ -296,7 +313,7 @@ export function Navigation({ isMobileMenuOpen, setIsMobileMenuOpen }: Navigation
                                         return null;
                                       }).filter(Boolean)}
                                       <Link
-                                        href="#"
+                                        href={`/${locale}/category/${category.id}`}
                                         className="block p-3 pl-16 text-sm text-teal-600 hover:text-teal-700 transition-colors font-medium"
                                         onClick={() => setIsMobileMenuOpen(false)}
                                       >

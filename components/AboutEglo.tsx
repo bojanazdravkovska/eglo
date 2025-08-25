@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
@@ -14,12 +16,12 @@ export default function AboutEglo({ locale }: AboutEgloProps) {
     <section className="w-full bg-white pt-0 pb-12 md:pb-16 lg:pb-20 min-h-screen">
       {/* Breadcrumbs */}
       <div className="border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4">
-          <nav className="flex items-center space-x-2 text-sm text-gray-500">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-3 md:py-4">
+          <nav className="flex items-center flex-wrap gap-1 md:gap-2 text-xs md:text-sm text-gray-500">
             <Link href={`/${locale}`} className="hover:text-teal-600 transition-colors">
               {t('breadcrumb.home')}
             </Link>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
             <span className="text-gray-900">{t('breadcrumb.about')}</span>
           </nav>
         </div>

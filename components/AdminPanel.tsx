@@ -18,21 +18,21 @@ export function AdminPanel() {
       
       <section className="bg-gray-50 border-t border-b border-gray-200 -mx-4 md:-mx-6 lg:-mx-8">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
+          <div className="text-center sm:text-left">
             <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
-            <p className="text-gray-600 mt-1">{t('subtitle')}</p>
+            <p className="text-gray-600 mt-1 mb-4 sm:mb-0">{t('subtitle')}</p>
           </div>
           
-          <div className="flex gap-3">
-            <Link href={`/${locale}/add-product`}>
-              <Button variant="primary" className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <Link href={`/${locale}/add-product`} className="w-full sm:w-auto">
+              <Button variant="primary" className="flex items-center justify-center gap-2 w-full sm:w-auto py-3 sm:py-2">
                 <Plus className="w-4 h-4" />
                 {t('actions.addProduct')}
               </Button>
             </Link>
             
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center justify-center gap-2 w-full sm:w-auto py-3 sm:py-2">
               <Settings className="w-4 h-4" />
               {t('actions.settings')}
             </Button>

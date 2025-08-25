@@ -106,12 +106,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     <div className="min-h-screen bg-white">
       {/* Breadcrumbs */}
       <div className="border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4">
-          <nav className="flex items-center space-x-2 text-sm text-gray-500">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-3 md:py-4">
+          <nav className="flex items-center flex-wrap gap-1 md:gap-2 text-xs md:text-sm text-gray-500">
             <Link href={`/${locale}`} className="hover:text-teal-600 transition-colors">
               {t('breadcrumb.home')}
             </Link>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
             <span className="text-gray-900">{tCategories(category.nameKey.replace('categories.', ''))}</span>
           </nav>
         </div>
@@ -125,12 +125,11 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">{tCategories(category.nameKey.replace('categories.', ''))}</h1>
 
           
-          {/* Description and Images Section */}
-          <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
-            {/* Text Description */}
-            <div className="lg:col-span-1 space-y-3 md:space-y-4">
-              <h2 className="text-xl md:text-2xl font-semibold text-gray-900">{tCategories(category.nameKey.replace('categories.', ''))}</h2>
-              <div className="space-y-2 md:space-y-3 text-gray-600 leading-relaxed text-sm md:text-base">
+                     {/* Description and Images Section */}
+           <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
+             {/* Text Description */}
+             <div className="lg:col-span-1 space-y-3 md:space-y-3">
+               <div className="space-y-2 md:space-y-3 text-gray-600 leading-relaxed text-sm md:text-base">
                                   {tCategories(category.descriptionKey.replace('categories.', '')).split('\n\n').map((paragraph: string, index: number) => (
                   <p key={index}>
                     {paragraph}
