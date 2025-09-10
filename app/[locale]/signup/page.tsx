@@ -7,6 +7,8 @@ import { Checkbox } from "../../../components/Checkbox"
 import { Eye, EyeOff, Mail, Lock, User, Phone } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useParams } from "next/navigation"
+import { useTranslations } from 'next-intl'
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -20,6 +22,9 @@ export default function SignupPage() {
     confirmPassword: "",
     acceptTerms: false
   })
+  const params = useParams()
+  const locale = params.locale as string
+  const t = useTranslations('signup')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -46,8 +51,8 @@ export default function SignupPage() {
             height={30}
             className="mx-auto mb-4"
           />
-          <h1 className="text-2xl font-bold text-gray-900">Create your account</h1>
-          <p className="text-gray-600 mt-2">Join EGLO and start your journey</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
+          <p className="text-gray-600 mt-2">{t('subtitle')}</p>
         </div>
 
         {/* Signup Form */}
@@ -57,7 +62,7 @@ export default function SignupPage() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                  First name
+                  {t('firstName')}
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -66,7 +71,7 @@ export default function SignupPage() {
                     type="text"
                     value={formData.firstName}
                     onChange={(e) => handleInputChange("firstName", e.target.value)}
-                    placeholder="First name"
+                    placeholder={t('placeholders.firstName')}
                     className="pl-10"
                     required
                   />
@@ -74,7 +79,7 @@ export default function SignupPage() {
               </div>
               <div>
                 <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                  Last name
+                  {t('lastName')}
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -83,7 +88,7 @@ export default function SignupPage() {
                     type="text"
                     value={formData.lastName}
                     onChange={(e) => handleInputChange("lastName", e.target.value)}
-                    placeholder="Last name"
+                    placeholder={t('placeholders.lastName')}
                     className="pl-10"
                     required
                   />
@@ -94,7 +99,7 @@ export default function SignupPage() {
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email address
+                {t('email')}
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -103,7 +108,7 @@ export default function SignupPage() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  placeholder="Enter your email"
+                  placeholder={t('placeholders.email')}
                   className="pl-10"
                   required
                 />
@@ -113,7 +118,7 @@ export default function SignupPage() {
             {/* Phone Field */}
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                Phone number
+                {t('phone')}
               </label>
               <div className="relative">
                 <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -122,7 +127,7 @@ export default function SignupPage() {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => handleInputChange("phone", e.target.value)}
-                  placeholder="Enter your phone number"
+                  placeholder={t('placeholders.phone')}
                   className="pl-10"
                   required
                 />
@@ -132,7 +137,7 @@ export default function SignupPage() {
             {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+                {t('password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -141,7 +146,7 @@ export default function SignupPage() {
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={(e) => handleInputChange("password", e.target.value)}
-                  placeholder="Create a password"
+                  placeholder={t('placeholders.password')}
                   className="pl-10 pr-10"
                   required
                 />
@@ -158,7 +163,7 @@ export default function SignupPage() {
             {/* Confirm Password Field */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                Confirm password
+                {t('confirmPassword')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -167,7 +172,7 @@ export default function SignupPage() {
                   type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                  placeholder="Confirm your password"
+                  placeholder={t('placeholders.confirmPassword')}
                   className="pl-10 pr-10"
                   required
                 />
@@ -189,13 +194,13 @@ export default function SignupPage() {
                 required
                 label={
                   <>
-                    I agree to the{" "}
+                    {t('acceptTerms')}{" "}
                     <a href="#" className="text-teal-600 hover:text-teal-700 font-medium">
-                      Terms of Service
+                      {t('termsOfService')}
                     </a>{" "}
-                    and{" "}
+                    {t('and')}{" "}
                     <a href="#" className="text-teal-600 hover:text-teal-700 font-medium">
-                      Privacy Policy
+                      {t('privacyPolicy')}
                     </a>
                   </>
                 }
@@ -209,7 +214,7 @@ export default function SignupPage() {
               variant="primary"
               className="w-full py-3"
             >
-              Create account
+              {t('createAccount')}
             </Button>
           </form>
 
@@ -220,7 +225,7 @@ export default function SignupPage() {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                <span className="px-2 bg-white text-gray-500">{t('orContinueWith')}</span>
               </div>
             </div>
           </div>
@@ -250,7 +255,7 @@ export default function SignupPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              Google
+              {t('google')}
             </Button>
             <Button
               type="button"
@@ -260,16 +265,16 @@ export default function SignupPage() {
               <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
               </svg>
-              Twitter
+              {t('twitter')}
             </Button>
           </div>
 
           {/* Sign In Link */}
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Already have an account?{" "}
-              <Link href="/login" className="font-medium text-teal-600 hover:text-teal-700">
-                Sign in
+              {t('alreadyHaveAccount')}{" "}
+              <Link href={`/${locale}/login`} className="font-medium text-teal-600 hover:text-teal-700">
+                {t('signIn')}
               </Link>
             </p>
           </div>
@@ -277,4 +282,4 @@ export default function SignupPage() {
       </div>
     </div>
   )
-} 
+}

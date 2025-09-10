@@ -7,12 +7,17 @@ import { Checkbox } from "../../../components/Checkbox"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useParams } from "next/navigation"
+import { useTranslations } from 'next-intl'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
+  const params = useParams()
+  const locale = params.locale as string
+  const t = useTranslations('login')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,8 +37,8 @@ export default function LoginPage() {
             height={30}
             className="mx-auto mb-4"
           />
-          <h1 className="text-2xl font-bold text-gray-900">Welcome back</h1>
-          <p className="text-gray-600 mt-2">Sign in to your account</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
+          <p className="text-gray-600 mt-2">{t('subtitle')}</p>
         </div>
 
         {/* Login Form */}
@@ -42,7 +47,7 @@ export default function LoginPage() {
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email address
+                {t('email')}
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -51,7 +56,7 @@ export default function LoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
+                  placeholder={t('placeholders.email')}
                   className="pl-10"
                   required
                 />
@@ -61,7 +66,7 @@ export default function LoginPage() {
             {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+                {t('password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -70,7 +75,7 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
+                  placeholder={t('placeholders.password')}
                   className="pl-10 pr-10"
                   required
                 />
@@ -89,10 +94,10 @@ export default function LoginPage() {
               <Checkbox
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                label="Remember me"
+                label={t('rememberMe')}
               />
               <a href="#" className="text-sm text-teal-600 hover:text-teal-700 font-medium">
-                Forgot password?
+                {t('forgotPassword')}
               </a>
             </div>
 
@@ -102,7 +107,7 @@ export default function LoginPage() {
               variant="primary"
               className="w-full py-3"
             >
-              Sign in
+              {t('signIn')}
             </Button>
           </form>
 
@@ -113,7 +118,7 @@ export default function LoginPage() {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                <span className="px-2 bg-white text-gray-500">{t('orContinueWith')}</span>
               </div>
             </div>
           </div>
@@ -143,7 +148,7 @@ export default function LoginPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              Google
+              {t('google')}
             </Button>
             <Button
               type="button"
@@ -153,16 +158,16 @@ export default function LoginPage() {
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" aria-hidden="true">
                 <path fill="currentColor" d="M2 2h10v10H2zM12 2h10v10H12zM2 12h10v10H2zM12 12h10v10H12z"/>
               </svg>
-              Microsoft
+              {t('microsoft')}
             </Button>
           </div>
 
           {/* Sign Up Link */}
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Don&apos;t have an account?{" "}
-              <Link href="/signup" className="font-medium text-teal-600 hover:text-teal-700">
-                Sign up
+              {t('dontHaveAccount')}{" "}
+              <Link href={`/${locale}/signup`} className="font-medium text-teal-600 hover:text-teal-700">
+                {t('signUp')}
               </Link>
             </p>
           </div>
@@ -170,4 +175,4 @@ export default function LoginPage() {
       </div>
     </div>
   )
-} 
+}
