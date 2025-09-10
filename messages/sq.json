@@ -411,7 +411,7 @@
       }
     }
   },
-  "admin": {
+  "adminNavigaton": {
     "title": "Paneli i Administratorit",
     "subtitle": "Menaxhoni produktet dhe dyqanin tuaj",
     "actions": {
@@ -421,7 +421,16 @@
     "stats": {
       "totalProducts": "Produktet Totale",
       "activeUsers": "Përdoruesit Aktivë",
-      "categories": "Kategoritë"
+      "categories": "Kategoritë",
+      "revenue": "Të Ardhurat"
+    },
+    "navigation": {
+      "dashboard": "Paneli",
+      "products": "Produktet",
+      "users": "Përdoruesit",
+      "settings": "Cilësimet",
+      "viewSite": "Shiko Sajtin",
+      "logout": "Dil"
     }
   },
   "cart": {
