@@ -1,21 +1,32 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://nativeapi-h8e7h4cgc6gpgbea.northeurope-01.azurewebsites.net'
+const API_BASE_URL = 'http://localhost:3000/api' // Force local API routes
 
+// Updated interfaces to match the new Eglo API
 export interface LoginRequest {
   email: string
   password: string
   rememberMe?: boolean
 }
 
+// Signup request - only email and password required
 export interface SignupRequest {
-  firstName: string
-  lastName: string
   email: string
-  phone: string
   password: string
-  confirmPassword: string
-  acceptTerms: boolean
 }
 
+// Updated response interface to match API response
+export interface EgloApiResponse {
+  success: boolean
+  message: string
+  token?: string
+  user?: {
+    email: string
+    userId: string
+    roles?: string[]
+  }
+  errors?: string[]
+}
+
+// Convert Eglo API response to our internal AuthResponse format
 export interface AuthResponse {
   token: string
   user: {
@@ -24,6 +35,7 @@ export interface AuthResponse {
     firstName: string
     lastName: string
     phone?: string
+    roles?: string[]  
   }
   expiresIn?: number
 }
@@ -40,6 +52,7 @@ export class ApiError extends Error {
   }
 }
 
+// Remove all CORS proxy logic and use local API routes
 class ApiService {
   private baseURL: string
 
@@ -52,6 +65,10 @@ class ApiService {
     options: RequestInit = {}
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`
+    
+    console.log('🔍 API_BASE_URL:', this.baseURL)
+    console.log('🔍 endpoint:', endpoint)
+    console.log('🔍 Full URL:', url)
     
     const config: RequestInit = {
       headers: {
@@ -75,6 +92,8 @@ class ApiService {
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
+        console.log('🔍 API Error Response:', errorData)
+        console.log('🔍 Response Status:', response.status)
         throw new ApiError(
           errorData.message || `HTTP error! status: ${response.status}`,
           response.status,
@@ -95,30 +114,76 @@ class ApiService {
     }
   }
 
-  async login(credentials: LoginRequest): Promise<AuthResponse> {
-    return this.request<AuthResponse>('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    })
+  // Convert Eglo API response to our internal format
+  private convertToAuthResponse(egloResponse: EgloApiResponse): AuthResponse {
+    if (!egloResponse.success || !egloResponse.token || !egloResponse.user) {
+      throw new ApiError(
+        egloResponse.message || 'Authentication failed',
+        400,
+        egloResponse.errors
+      )
+    }
+
+    return {
+      token: egloResponse.token,
+      user: {
+        id: egloResponse.user.userId,
+        email: egloResponse.user.email,
+        firstName: '', // Not provided by API
+        lastName: '', // Not provided by API
+        phone: '', // Not provided by API
+        roles: egloResponse.user.roles, // Add roles here
+      },
+    }
   }
 
-  async signup(userData: SignupRequest): Promise<AuthResponse> {
-    return this.request<AuthResponse>('/api/auth/register', {
+  async login(credentials: LoginRequest): Promise<AuthResponse> {
+    const egloResponse = await this.request<EgloApiResponse>('/auth/login', {
       method: 'POST',
-      body: JSON.stringify(userData),
+      body: JSON.stringify({
+        email: credentials.email,
+        password: credentials.password,
+      }),
     })
+
+    return this.convertToAuthResponse(egloResponse)
+  }
+
+  async signup(userData: SignupRequest): Promise<{ success: boolean; message: string }> {
+    const requestBody = {
+      email: userData.email,
+      password: userData.password,
+    }
+    
+    console.log('🔍 Signup Request Body:', requestBody)
+    
+    const egloResponse = await this.request<EgloApiResponse>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+    })
+
+    if (!egloResponse.success) {
+      throw new ApiError(
+        egloResponse.message || 'Signup failed',
+        400,
+        egloResponse.errors
+      )
+    }
+
+    return {
+      success: egloResponse.success,
+      message: egloResponse.message
+    }
   }
 
   async logout(): Promise<void> {
-    return this.request<void>('/api/auth/logout', {
-      method: 'POST',
-    })
+    // For now, just clear the local token since the API doesn't have a logout endpoint
+    this.removeToken()
   }
 
   async refreshToken(): Promise<AuthResponse> {
-    return this.request<AuthResponse>('/api/auth/refresh', {
-      method: 'POST',
-    })
+    // For now, throw an error since the API doesn't have a refresh endpoint
+    throw new ApiError('Token refresh not implemented', 501)
   }
 
   // Token management

@@ -1,23 +1,48 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import { apiService, AuthResponse, LoginRequest, SignupRequest, ApiError } from './api'
+import { useState, useEffect, useCallback } from "react";
+import { useRouter, useParams } from "next/navigation";
+import {
+  apiService,
+  AuthResponse,
+  LoginRequest,
+  SignupRequest,
+  ApiError,
+} from "./api";
 
 interface User {
-  id: string
-  email: string
-  firstName: string
-  lastName: string
-  phone?: string
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  roles?: string[];
 }
 
 interface AuthState {
-  user: User | null
-  isAuthenticated: boolean
-  isLoading: boolean
-  error: string | null
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
 }
+
+// Helper: decode JWT
+const decodeJWT = (token: string) => {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error("Error decoding JWT:", error);
+    return null;
+  }
+};
 
 export function useAuth() {
   const [authState, setAuthState] = useState<AuthState>({
@@ -25,137 +50,164 @@ export function useAuth() {
     isAuthenticated: false,
     isLoading: true,
     error: null,
-  })
-  
-  const router = useRouter()
+  });
 
-  // Initialize auth state on mount
+  const router = useRouter();
+  const { locale } = useParams() as { locale: string }; // ✅ get locale from URL
+
+  // Init auth state
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const token = apiService.getToken()
+        const token = apiService.getToken();
+        console.log("🔍 Token found:", token ? "Yes" : "No");
+
         if (token) {
-          // You might want to validate the token with the backend here
-          // For now, we'll assume it's valid if it exists
-          setAuthState(prev => ({
-            ...prev,
-            isAuthenticated: true,
-            isLoading: false,
-          }))
+          const decoded = decodeJWT(token);
+          console.log("🔍 Decoded JWT:", decoded);
+
+          if (decoded) {
+            setAuthState((prev) => ({
+              ...prev,
+              isAuthenticated: true,
+              isLoading: false,
+              user: {
+                id: decoded.sub || "unknown",
+                email: decoded.sub || "unknown@example.com",
+                firstName: "",
+                lastName: "",
+                phone: "",
+                roles: [],
+              },
+            }));
+          } else {
+            console.log("❌ Invalid token, clearing...");
+            apiService.removeToken();
+            setAuthState((prev) => ({
+              ...prev,
+              isAuthenticated: false,
+              isLoading: false,
+            }));
+          }
         } else {
-          setAuthState(prev => ({
+          console.log("❌ No token found");
+          setAuthState((prev) => ({
             ...prev,
             isAuthenticated: false,
             isLoading: false,
-          }))
+          }));
         }
       } catch (error) {
-        console.error('Auth initialization error:', error)
-        setAuthState(prev => ({
+        console.error("Auth initialization error:", error);
+        setAuthState((prev) => ({
           ...prev,
           isAuthenticated: false,
           isLoading: false,
-          error: 'Failed to initialize authentication',
-        }))
+          error: "Failed to initialize authentication",
+        }));
       }
-    }
+    };
 
-    initAuth()
-  }, [])
+    initAuth();
+  }, []);
 
-  const login = useCallback(async (credentials: LoginRequest) => {
-    setAuthState(prev => ({ ...prev, isLoading: true, error: null }))
-    
-    try {
-      const response: AuthResponse = await apiService.login(credentials)
-      
-      // Store the token
-      apiService.setToken(response.token)
-      
-      setAuthState({
-        user: response.user,
-        isAuthenticated: true,
-        isLoading: false,
-        error: null,
-      })
+  // Login
+  const login = useCallback(
+    async (credentials: LoginRequest) => {
+      setAuthState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-      // Redirect to home page or intended destination
-      router.push('/')
-      
-      return response
-    } catch (error) {
-      const errorMessage = error instanceof ApiError 
-        ? error.message 
-        : 'Login failed. Please try again.'
-      
-      setAuthState(prev => ({
-        ...prev,
-        isLoading: false,
-        error: errorMessage,
-      }))
-      
-      throw error
-    }
-  }, [router])
+      try {
+        const response: AuthResponse = await apiService.login(credentials);
+        apiService.setToken(response.token);
 
-  const signup = useCallback(async (userData: SignupRequest) => {
-    setAuthState(prev => ({ ...prev, isLoading: true, error: null }))
-    
-    try {
-      const response: AuthResponse = await apiService.signup(userData)
-      
-      // Store the token
-      apiService.setToken(response.token)
-      
-      setAuthState({
-        user: response.user,
-        isAuthenticated: true,
-        isLoading: false,
-        error: null,
-      })
+        setAuthState({
+          user: response.user,
+          isAuthenticated: true,
+          isLoading: false,
+          error: null,
+        });
 
-      // Redirect to home page
-      router.push('/')
-      
-      return response
-    } catch (error) {
-      const errorMessage = error instanceof ApiError 
-        ? error.message 
-        : 'Signup failed. Please try again.'
-      
-      setAuthState(prev => ({
-        ...prev,
-        isLoading: false,
-        error: errorMessage,
-      }))
-      
-      throw error
-    }
-  }, [router])
+        // ✅ Redirect with locale
+        router.push(`/${locale}`);
+        return response;
+      } catch (error) {
+        const errorMessage =
+          error instanceof ApiError
+            ? error.message
+            : "Login failed. Please try again.";
 
+        setAuthState((prev) => ({
+          ...prev,
+          isLoading: false,
+          error: errorMessage,
+        }));
+
+        throw error;
+      }
+    },
+    [router, locale]
+  );
+
+  // Signup
+  const signup = useCallback(
+    async (userData: SignupRequest) => {
+      setAuthState((prev) => ({ ...prev, isLoading: true, error: null }));
+
+      try {
+        const response = await apiService.signup(userData);
+        // Don't automatically log in the user after signup
+        // Don't set token or update auth state
+
+        setAuthState((prev) => ({
+          ...prev,
+          isLoading: false,
+          error: null,
+        }));
+
+        // Redirect to login page instead of home page
+        console.log('Signup successful, redirecting to login page:', `/${locale}/login`);
+        router.push(`/${locale}/login`);
+        return response;
+      } catch (error) {
+        const errorMessage =
+          error instanceof ApiError
+            ? error.message
+            : "Signup failed. Please try again.";
+
+        setAuthState((prev) => ({
+          ...prev,
+          isLoading: false,
+          error: errorMessage,
+        }));
+
+        throw error;
+      }
+    },
+    [router, locale]
+  );
+
+  // Logout
   const logout = useCallback(async () => {
     try {
-      await apiService.logout()
+      await apiService.logout();
     } catch (error) {
-      console.error('Logout error:', error)
+      console.error("Logout error:", error);
     } finally {
-      // Clear local state regardless of API call success
-      apiService.removeToken()
+      apiService.removeToken();
       setAuthState({
         user: null,
         isAuthenticated: false,
         isLoading: false,
         error: null,
-      })
-      
-      // Redirect to login page
-      router.push('/login')
+      });
+
+      router.push(`/${locale}/login`);
     }
-  }, [router])
+  }, [router, locale]);
 
   const clearError = useCallback(() => {
-    setAuthState(prev => ({ ...prev, error: null }))
-  }, [])
+    setAuthState((prev) => ({ ...prev, error: null }));
+  }, []);
 
   return {
     ...authState,
@@ -163,5 +215,5 @@ export function useAuth() {
     signup,
     logout,
     clearError,
-  }
+  };
 }

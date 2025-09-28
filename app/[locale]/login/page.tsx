@@ -9,20 +9,39 @@ import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { useTranslations } from 'next-intl'
+import { useAuth } from "../../../lib/useAuth"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  
   const params = useParams()
   const locale = params.locale as string
   const t = useTranslations('login')
+  const { login } = useAuth()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle login logic here
-    console.log("Login attempt:", { email, password, rememberMe })
+    setError(null)
+    setIsSubmitting(true)
+
+    try {
+      await login({
+        email,
+        password,
+        rememberMe,
+      })
+      
+      // Success - user will be redirected by useAuth hook
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Login failed. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -43,6 +62,12 @@ export default function LoginPage() {
 
         {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Field */}
             <div>
@@ -106,8 +131,9 @@ export default function LoginPage() {
               type="submit"
               variant="primary"
               className="w-full py-3"
+              disabled={isSubmitting}
             >
-              {t('signIn')}
+              {isSubmitting ? 'Signing In...' : t('signIn')}
             </Button>
           </form>
 

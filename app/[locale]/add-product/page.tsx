@@ -36,6 +36,13 @@ interface CategoryNode {
 
 export default function AddProductPage() {
   const [currentStep, setCurrentStep] = useState<Step>(1)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  
+  // Log component initialization
+  console.log("🎯 [FRONTEND] AddProductPage component initialized")
+  console.log("🎯 [FRONTEND] Initial state:", { currentStep, isSubmitting, submitError, submitSuccess })
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -97,6 +104,8 @@ export default function AddProductPage() {
 
   const saveField = (category: string) => {
     const { label, value } = inputValues[category]
+    console.log(`📝 [FRONTEND] Saving field for category "${category}":`, { label, value })
+    
     if (label.trim() && value.trim()) {
       const newField: FieldItem = {
         id: Date.now().toString(),
@@ -104,10 +113,16 @@ export default function AddProductPage() {
         value: value.trim()
       }
       
-      setCategoryFields(prev => ({
-        ...prev,
-        [category]: [...prev[category], newField]
-      }))
+      console.log(`✅ [FRONTEND] Created new field:`, newField)
+      
+      setCategoryFields(prev => {
+        const updated = {
+          ...prev,
+          [category]: [...prev[category], newField]
+        }
+        console.log(`📝 [FRONTEND] Updated category fields for "${category}":`, updated[category])
+        return updated
+      })
 
       // Clear inputs and hide them
       setInputValues(prev => ({
@@ -118,6 +133,10 @@ export default function AddProductPage() {
         ...prev,
         [category]: false
       }))
+      
+      console.log(`🧹 [FRONTEND] Cleared inputs for category "${category}"`)
+    } else {
+      console.log(`❌ [FRONTEND] Cannot save field - missing label or value for category "${category}"`)
     }
   }
 
@@ -192,17 +211,125 @@ export default function AddProductPage() {
     }
   }
 
-  const handleSubmit = () => {
-    // Handle form submission here
-    console.log("Form submitted:", formData)
-    console.log("Dynamic fields:", categoryFields)
+  const handleSubmit = async () => {
+    console.log("🚀 [FRONTEND] Starting product submission process...")
+    setIsSubmitting(true)
+    setSubmitError(null)
+    
+    try {
+      console.log("📝 [FRONTEND] Validating form data...")
+      console.log("📝 [FRONTEND] Form data:", formData)
+      console.log("📝 [FRONTEND] Category fields:", categoryFields)
+      
+      // Validate required fields
+      if (!formData.name.trim()) {
+        console.error("❌ [FRONTEND] Validation failed: Product name is required")
+        throw new Error('Product name is required')
+      }
+      if (!formData.description.trim()) {
+        console.error("❌ [FRONTEND] Validation failed: Product description is required")
+        throw new Error('Product description is required')
+      }
+      if (!formData.price || parseFloat(formData.price) <= 0) {
+        console.error("❌ [FRONTEND] Validation failed: Valid product price is required")
+        throw new Error('Valid product price is required')
+      }
+      
+      console.log("✅ [FRONTEND] Validation passed")
+
+      // Prepare the data for API submission
+      const productDetails = categoryFields["product-details"].reduce((acc, field) => {
+        acc[field.label] = field.value
+        return acc
+      }, {} as Record<string, string>)
+      
+      const dimensions = categoryFields["dimensions"].reduce((acc, field) => {
+        acc[field.label] = field.value
+        return acc
+      }, {} as Record<string, string>)
+      
+      const technicalInfo = categoryFields["technical-information"].reduce((acc, field) => {
+        acc[field.label] = field.value
+        return acc
+      }, {} as Record<string, string>)
+      
+      const otherInfo = categoryFields["other-information"].reduce((acc, field) => {
+        acc[field.label] = field.value
+        return acc
+      }, {} as Record<string, string>)
+
+      const submissionData = {
+        name: formData.name,
+        description: formData.description,
+        price: formData.price,
+        category: formData.category,
+        subcategory: formData.subcategory,
+        productDetails,
+        dimensions,
+        technicalInfo,
+        otherInfo
+      }
+
+      console.log("📤 [FRONTEND] Prepared submission data:")
+      console.log("📤 [FRONTEND] - Basic info:", { name: submissionData.name, description: submissionData.description, price: submissionData.price, category: submissionData.category, subcategory: submissionData.subcategory })
+      console.log("📤 [FRONTEND] - Product details:", productDetails)
+      console.log("📤 [FRONTEND] - Dimensions:", dimensions)
+      console.log("📤 [FRONTEND] - Technical info:", technicalInfo)
+      console.log("📤 [FRONTEND] - Other info:", otherInfo)
+      console.log("📤 [FRONTEND] - Full payload:", JSON.stringify(submissionData, null, 2))
+
+      console.log("🌐 [FRONTEND] Sending request to /api/products/add...")
+      
+      // Get auth token from localStorage
+      const token = localStorage.getItem('auth_token')
+      console.log("🔐 [FRONTEND] Auth token:", token ? "Found" : "Not found")
+      console.log("🔐 [FRONTEND] Token value:", token ? `${token.substring(0, 20)}...` : "No token")
+      
+      // Check all localStorage keys to debug
+      console.log("🔐 [FRONTEND] All localStorage keys:", Object.keys(localStorage))
+      
+      const response = await fetch('/api/products/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token && { 'Authorization': `Bearer ${token}` })
+        },
+        body: JSON.stringify(submissionData),
+      })
+
+      console.log("📥 [FRONTEND] Received response:")
+      console.log("📥 [FRONTEND] - Status:", response.status)
+      console.log("📥 [FRONTEND] - Status text:", response.statusText)
+      console.log("📥 [FRONTEND] - Headers:", Object.fromEntries(response.headers.entries()))
+
+      const result = await response.json()
+      console.log("📥 [FRONTEND] - Response body:", result)
+
+      if (response.ok) {
+        console.log("✅ [FRONTEND] Product created successfully!")
+        setSubmitSuccess(true)
+      } else {
+        console.error("❌ [FRONTEND] Error creating product:", result)
+        setSubmitError(result.message || 'Failed to create product. Please try again.')
+      }
+    } catch (error) {
+      console.error("💥 [FRONTEND] Exception occurred:", error)
+      console.error("💥 [FRONTEND] Error details:", {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined
+      })
+      setSubmitError(error instanceof Error ? error.message : 'Failed to create product. Please try again.')
+    } finally {
+      console.log("🏁 [FRONTEND] Submission process completed")
+      setIsSubmitting(false)
+    }
   }
 
   const steps = [
     { number: 1, title: "Product Information", description: "Product name and pricing details" },
     { number: 2, title: "Category Selection", description: "Select category and subcategory" },
     { number: 3, title: "Product Images", description: "Upload product images" },
-    { number: 4, title: "Product Created", description: "Your product has been created" }
+    { number: 4, title: "Review & Create", description: "Review your product and create it" }
   ]
 
   // Get subcategories based on selected category
@@ -210,6 +337,17 @@ export default function AddProductPage() {
   const categories = categoriesData.categories as unknown as CategoryNode[]
   const selectedCategory = categories.find(cat => cat.id === formData.category)
   const subcategories = selectedCategory?.subcategories ?? []
+  
+  // Helper function to get category name safely
+  const getCategoryName = (nameKey: string) => {
+    try {
+      const cleanKey = nameKey.replace('categories.', '')
+      return tCategories(cleanKey)
+    } catch (error) {
+      console.warn('Translation error for key:', nameKey, error)
+      return nameKey.replace('categories.', '')
+    }
+  }
 
   const renderCategorySection = (categoryKey: string, title: string) => {
     const fields = categoryFields[categoryKey]
@@ -460,7 +598,7 @@ export default function AddProductPage() {
                     <option value="">Select a category</option>
                     {categories.map((category) => (
                       <option key={category.id} value={category.id}>
-                        {tCategories(category.nameKey.replace('categories.', ''))}
+                        {getCategoryName(category.nameKey)}
                       </option>
                     ))}
                   </select>
@@ -479,7 +617,7 @@ export default function AddProductPage() {
                       <option value="">Select a subcategory</option>
                       {subcategories.map((subcategory) => (
                         <option key={subcategory.id} value={subcategory.id}>
-                          {tCategories(subcategory.nameKey.replace('categories.', ''))}
+                          {getCategoryName(subcategory.nameKey)}
                         </option>
                       ))}
                     </select>
@@ -566,36 +704,92 @@ export default function AddProductPage() {
 
             {currentStep === 4 && (
               <div className="space-y-6 text-center">
-                <div className="flex justify-center mb-6">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                    <Check className="w-8 h-8 text-green-600" />
-                  </div>
-                </div>
-                
-                <h2 className="text-2xl font-semibold text-gray-900">Your Product is Created!</h2>
-                <p className="text-gray-600 max-w-md mx-auto">
-                  Congratulations! Your product &quot;{formData.name}&quot; has been successfully created and added to your store.
-                </p>
-                
-                <div className="bg-gray-50 p-4 rounded-lg max-w-md mx-auto">
-                  <p className="text-sm text-gray-600">Product Details:</p>
-                  <p className="text-sm font-medium text-gray-900 mt-1">{formData.name}</p>
-                  <p className="text-sm text-gray-600">€{formData.price}</p>
-                  {formData.category && (
-                    <p className="text-sm text-gray-600">
-                      {selectedCategory ? tCategories(selectedCategory.nameKey.replace('categories.', '')) : ''}
-                      {formData.subcategory && (() => {
-                        const sub = subcategories.find(s => s.id === formData.subcategory)
-                        return sub ? ` > ${tCategories(sub.nameKey.replace('categories.', ''))}` : ''
-                      })()}
+                {submitSuccess ? (
+                  <>
+                    <div className="flex justify-center mb-6">
+                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                        <Check className="w-8 h-8 text-green-600" />
+                      </div>
+                    </div>
+                    
+                    <h2 className="text-2xl font-semibold text-gray-900">Your Product is Created!</h2>
+                    <p className="text-gray-600 max-w-md mx-auto">
+                      Congratulations! Your product &quot;{formData.name}&quot; has been successfully created and added to your store.
                     </p>
-                  )}
-                  {productImages.length > 0 && (
-                    <p className="text-sm text-gray-600 mt-2">
-                      {productImages.length} image{productImages.length !== 1 ? 's' : ''} uploaded
+                    
+                    <div className="bg-gray-50 p-4 rounded-lg max-w-md mx-auto">
+                      <p className="text-sm text-gray-600">Product Details:</p>
+                      <p className="text-sm font-medium text-gray-900 mt-1">{formData.name}</p>
+                      <p className="text-sm text-gray-600">€{formData.price}</p>
+                      {formData.category && (
+                        <p className="text-sm text-gray-600">
+                          {selectedCategory ? getCategoryName(selectedCategory.nameKey) : ''}
+                          {formData.subcategory && (() => {
+                            const sub = subcategories.find(s => s.id === formData.subcategory)
+                            return sub ? ` > ${getCategoryName(sub.nameKey)}` : ''
+                          })()}
+                        </p>
+                      )}
+                      {productImages.length > 0 && (
+                        <p className="text-sm text-gray-600 mt-2">
+                          {productImages.length} image{productImages.length !== 1 ? 's' : ''} uploaded
+                        </p>
+                      )}
+                    </div>
+                  </>
+                ) : submitError ? (
+                  <>
+                    <div className="flex justify-center mb-6">
+                      <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                        <X className="w-8 h-8 text-red-600" />
+                      </div>
+                    </div>
+                    
+                    <h2 className="text-2xl font-semibold text-gray-900">Error Creating Product</h2>
+                    <p className="text-red-600 max-w-md mx-auto">
+                      {submitError}
                     </p>
-                  )}
-                </div>
+                    
+                    <div className="bg-red-50 p-4 rounded-lg max-w-md mx-auto">
+                      <p className="text-sm text-red-600">
+                        Please check your product information and try again. If the problem persists, contact support.
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex justify-center mb-6">
+                      <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+                        <Check className="w-8 h-8 text-gray-600" />
+                      </div>
+                    </div>
+                    
+                    <h2 className="text-2xl font-semibold text-gray-900">Ready to Create Product</h2>
+                    <p className="text-gray-600 max-w-md mx-auto">
+                      Review your product details below and click &quot;Create Product&quot; to add it to your store.
+                    </p>
+                    
+                    <div className="bg-gray-50 p-4 rounded-lg max-w-md mx-auto">
+                      <p className="text-sm text-gray-600">Product Details:</p>
+                      <p className="text-sm font-medium text-gray-900 mt-1">{formData.name}</p>
+                      <p className="text-sm text-gray-600">€{formData.price}</p>
+                      {formData.category && (
+                        <p className="text-sm text-gray-600">
+                          {selectedCategory ? getCategoryName(selectedCategory.nameKey) : ''}
+                          {formData.subcategory && (() => {
+                            const sub = subcategories.find(s => s.id === formData.subcategory)
+                            return sub ? ` > ${getCategoryName(sub.nameKey)}` : ''
+                          })()}
+                        </p>
+                      )}
+                      {productImages.length > 0 && (
+                        <p className="text-sm text-gray-600 mt-2">
+                          {productImages.length} image{productImages.length !== 1 ? 's' : ''} uploaded
+                        </p>
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -613,14 +807,40 @@ export default function AddProductPage() {
             </Button>
 
             {currentStep === 4 ? (
-              <Button
-                variant="primary"
-                onClick={handleSubmit}
-                className="flex items-center gap-2"
-              >
-                Create Product
-                <Check className="w-4 h-4" />
-              </Button>
+              submitSuccess ? (
+                <Button
+                  variant="primary"
+                  onClick={() => window.location.href = '/'}
+                  className="flex items-center gap-2"
+                >
+                  Back to Dashboard
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              ) : (
+                <Button
+                  variant="primary"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className="flex items-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Creating...
+                    </>
+                  ) : submitError ? (
+                    <>
+                      Try Again
+                      <Check className="w-4 h-4" />
+                    </>
+                  ) : (
+                    <>
+                      Create Product
+                      <Check className="w-4 h-4" />
+                    </>
+                  )}
+                </Button>
+              )
             ) : (
               <Button
                 variant="primary"
