@@ -117,7 +117,7 @@ export function Header({ noPadding = false }: HeaderProps) {
                     className="flex items-center gap-1 md:gap-2 p-2 md:p-3 hover:text-red-600 transition-colors"
                   >
                     <LogOut className="w-5 h-5" />
-                    <span className="hidden lg:inline">Одјави се</span>
+                    <span className="hidden lg:inline">{t("actions.logout")}</span>
                   </Button>
                 </div>
               ) : (
@@ -129,7 +129,7 @@ export function Header({ noPadding = false }: HeaderProps) {
                     className="flex items-center gap-1 md:gap-2 p-2 md:p-3 hover:text-teal-600 transition-colors"
                   >
                     <User className="w-5 h-5" />
-                    <span className="hidden lg:inline">Најави се</span>
+                    <span className="hidden lg:inline">{t("actions.login")}</span>
                   </Button>
                 </Link>
               )}

@@ -205,7 +205,8 @@
       "placeholder": "Kërko për drita, tifozë dhe më shumë..."
     },
     "actions": {
-      "login": "Hyrje",
+      "login": "Hyni",
+      "logout": "Dilni",
       "cart": "Shporta"
     }
   },
@@ -1067,6 +1068,68 @@
       "distanceInMeters": "Distanca (në metra)",
       "baseLenghtInMmIn": "Gjatësia e bazës (në mm/inç)",
       "baseWidht": "Gjerësia e bazës"
+    }
+  },
+  "signup": {
+    "title": "Krijo Llogari",
+    "subtitle": "Regjistrohuni për të aksesuar të gjitha veçoritë",
+    "email": "Email",
+    "password": "Fjalëkalimi",
+    "confirmPassword": "Konfirmo fjalëkalimin",
+    "placeholders": {
+      "email": "Shkruani adresën tuaj të emailit",
+      "password": "Shkruani fjalëkalimin tuaj",
+      "confirmPassword": "Konfirmoni fjalëkalimin tuaj"
+    },
+    "acceptTerms": "Prano",
+    "termsOfService": "Kushtet e Shërbimit",
+    "and": "dhe",
+    "privacyPolicy": "Politikat e Privatësisë",
+    "createAccount": "Krijo Llogari",
+    "orContinueWith": "ose vazhdo me",
+    "google": "Google",
+    "twitter": "Twitter",
+    "alreadyHaveAccount": "Keni tashmë një llogari?",
+    "signIn": "Hyni"
+  },
+  "login": {
+    "title": "Hyni në Llogarinë Tuaj",
+    "subtitle": "Mirë se vini përsëri! Hyni për të vazhduar",
+    "email": "Email",
+    "password": "Fjalëkalimi",
+    "placeholders": {
+      "email": "Shkruani adresën tuaj të emailit",
+      "password": "Shkruani fjalëkalimin tuaj"
+    },
+    "rememberMe": "Më mbaj mend",
+    "forgotPassword": "Harruat fjalëkalimin?",
+    "signIn": "Hyni",
+    "orContinueWith": "ose vazhdo me",
+    "google": "Google",
+    "twitter": "Twitter",
+    "dontHaveAccount": "Nuk keni llogari?",
+    "signUp": "Regjistrohuni"
+  },
+  "admin": {
+    "title": "Paneli i Administratorit",
+    "subtitle": "Menaxhoni produktet dhe dyqanin tuaj",
+    "actions": {
+      "addProduct": "Shto Produkt",
+      "settings": "Cilësimet"
+    },
+    "stats": {
+      "totalProducts": "Produktet Totale",
+      "activeUsers": "Përdoruesit Aktivë",
+      "categories": "Kategoritë",
+      "revenue": "Të Ardhurat"
+    },
+    "navigation": {
+      "dashboard": "Paneli",
+      "products": "Produktet",
+      "users": "Përdoruesit",
+      "settings": "Cilësimet",
+      "viewSite": "Shiko Sajtin",
+      "logout": "Dil"
     }
   }
 }
