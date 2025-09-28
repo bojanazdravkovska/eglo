@@ -7,7 +7,7 @@ import { Checkbox } from "../../../components/Checkbox"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useTranslations } from 'next-intl'
 import { useAuth } from "../../../lib/useAuth"
 
@@ -25,7 +25,6 @@ export default function SignupPage() {
   
   const params = useParams()
   const locale = params.locale as string
-  const router = useRouter()
   const t = useTranslations('signup')
   const { signup } = useAuth()
 

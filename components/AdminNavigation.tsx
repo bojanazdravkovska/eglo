@@ -1,5 +1,5 @@
 import { Button } from "./Button"
-import { Plus, Settings, Users, BarChart3, Package, Home, LogOut } from "lucide-react"
+import { Settings, Users, BarChart3, Package, Home, LogOut } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { useTranslations } from 'next-intl'
