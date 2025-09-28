@@ -1087,8 +1087,6 @@
     "privacyPolicy": "Politikat e Privatësisë",
     "createAccount": "Krijo Llogari",
     "orContinueWith": "ose vazhdo me",
-    "google": "Google",
-    "twitter": "Twitter",
     "alreadyHaveAccount": "Keni tashmë një llogari?",
     "signIn": "Hyni"
   },
@@ -1105,8 +1103,6 @@
     "forgotPassword": "Harruat fjalëkalimin?",
     "signIn": "Hyni",
     "orContinueWith": "ose vazhdo me",
-    "google": "Google",
-    "twitter": "Twitter",
     "dontHaveAccount": "Nuk keni llogari?",
     "signUp": "Regjistrohuni"
   },
