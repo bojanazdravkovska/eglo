@@ -1127,5 +1127,40 @@
       "viewSite": "Shiko Sajtin",
       "logout": "Dil"
     }
+  },
+  "adminSignup": {
+    "title": "Testimi i Regjistrimit të Administratorit",
+    "subtitle": "Testoni regjistrimin direkt me API-në e jashtme",
+    "endpoint": "API Endpoint: /api/auth/register",
+    "useCorsProxy": "Përdor CORS Proxy",
+    "corsNote": "Shënim: Nëse keni probleme CORS, aktivizoni proxy-në CORS më poshtë.",
+    "corsDemo": "Kliko këtu",
+    "testingRegistration": "Po testoj regjistrimin...",
+    "testRegistration": "Testo Regjistrimin",
+    "backToSignup": "Kthehu te Regjistrimi i Zakonshëm",
+    "description": "Kjo faqe është për testimin e regjistrimit direkt me API-në e jashtme.",
+    "consoleNote": "Shiko konsolën për detaje të plota të përgjigjes."
+  },
+  "adminNavigation": {
+    "title": "Paneli i Administratorit",
+    "subtitle": "Menaxhoni produktet dhe dyqanin tuaj",
+    "actions": {
+      "addProduct": "Shto Produkt",
+      "settings": "Cilësimet"
+    },
+    "stats": {
+      "totalProducts": "Produktet Totale",
+      "activeUsers": "Përdoruesit Aktivë",
+      "categories": "Kategoritë",
+      "revenue": "Të Ardhurat"
+    },
+    "navigation": {
+      "dashboard": "Paneli",
+      "products": "Produktet",
+      "users": "Përdoruesit",
+      "settings": "Cilësimet",
+      "viewSite": "Shiko Sajtin",
+      "logout": "Dil"
+    }
   }
 }
