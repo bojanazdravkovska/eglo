@@ -1,17 +1,20 @@
-// api.ts
+// lib/api.ts
 
-// ---- Base URL ---------------------------------------------------------------
-// Default to your Azure API in production. You can override with env vars.
-// Keep /api here because your endpoints are called like "/auth/login" → "/api/auth/login".
+// ---------------------------------------------------------------------------
+// Base URL (prod defaults to your Azure API, overridable via env)
+// Keep `/api` because your endpoints are like "/auth/login" → "/api/auth/login"
+// ---------------------------------------------------------------------------
 const DEFAULT_API_BASE =
   'https://nativeapi-h8e7h4cgc6gpgbea.northeurope-01.azurewebsites.net/api';
 
-const API_BASE_URL = (
+export const API_BASE_URL = (
   process.env.NEXT_PUBLIC_API_BASE_URL ||
   (process.env.NODE_ENV === 'production' ? DEFAULT_API_BASE : 'http://localhost:3000/api')
 ).replace(/\/$/, ''); // strip trailing slash
 
-// ---- Types ------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
 export interface LoginRequest {
   email: string;
   password: string;
@@ -48,7 +51,23 @@ export interface AuthResponse {
   expiresIn?: number;
 }
 
-// ---- Error ------------------------------------------------------------------
+// A very light JSON-ish type (no "any")
+type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | Json[]
+  | { [key: string]: Json };
+
+// Shape we *optionally* expect from error bodies
+type ApiErrorPayload = {
+  message?: string;
+} & Record<string, Json>;
+
+// ---------------------------------------------------------------------------
+// Error
+// ---------------------------------------------------------------------------
 export class ApiError extends Error {
   status: number;
   details?: unknown;
@@ -61,7 +80,22 @@ export class ApiError extends Error {
   }
 }
 
-// ---- Service ----------------------------------------------------------------
+// ------------------------------ Type guards ---------------------------------
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function hasStringMessage(value: unknown): value is { message: string } {
+  return (
+    isRecord(value) &&
+    'message' in value &&
+    typeof (value as Record<string, unknown>).message === 'string'
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Service
+// ---------------------------------------------------------------------------
 class ApiService {
   private baseURL: string;
 
@@ -78,7 +112,6 @@ class ApiService {
     const url = this.buildUrl(endpoint);
 
     if (process.env.NODE_ENV !== 'production') {
-      // Dev-only debug logs
       console.log('🔍 API_BASE_URL:', this.baseURL);
       console.log('🔍 endpoint:', endpoint);
       console.log('🔍 Full URL:', url);
@@ -101,26 +134,39 @@ class ApiService {
       const response = await fetch(url, config);
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+        // Parse error body safely, without "any"
+        let rawError: unknown = {};
+        try {
+          rawError = await response.json();
+        } catch {
+          // leave rawError as {}
+        }
+
+        const errorData: ApiErrorPayload | Record<string, unknown> = isRecord(rawError)
+          ? (rawError as ApiErrorPayload)
+          : {};
+
+        const message = hasStringMessage(rawError)
+          ? rawError.message
+          : `HTTP error! status: ${response.status}`;
+
         if (process.env.NODE_ENV !== 'production') {
           console.log('🔍 API Error Response:', errorData);
           console.log('🔍 Response Status:', response.status);
         }
-        throw new ApiError(
-          (errorData as any).message || `HTTP error! status: ${response.status}`,
-          response.status,
-          errorData
-        );
+
+        throw new ApiError(message, response.status, errorData);
       }
 
-      return (await response.json()) as T;
-    } catch (error) {
+      // Successful JSON response
+      const parsed: unknown = await response.json();
+      return parsed as T;
+    } catch (error: unknown) {
       if (error instanceof ApiError) throw error;
-      throw new ApiError(
-        error instanceof Error ? error.message : 'An unknown error occurred',
-        0,
-        error
-      );
+
+      const message =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      throw new ApiError(message, 0, error);
     }
   }
 
@@ -147,7 +193,7 @@ class ApiService {
     };
   }
 
-  // ---- Public endpoints -----------------------------------------------------
+  // ------------------------- Public endpoints --------------------------------
 
   async login(credentials: LoginRequest): Promise<AuthResponse> {
     const egloResponse = await this.request<EgloApiResponse>('/auth/login', {
@@ -159,7 +205,7 @@ class ApiService {
     });
 
     return this.convertToAuthResponse(egloResponse);
-    }
+  }
 
   async signup(userData: SignupRequest): Promise<{ success: boolean; message: string }> {
     const egloResponse = await this.request<EgloApiResponse>('/auth/register', {
@@ -178,6 +224,7 @@ class ApiService {
   }
 
   async logout(): Promise<void> {
+    // No API logout endpoint; clear local token
     this.removeToken();
   }
 
@@ -185,7 +232,7 @@ class ApiService {
     throw new ApiError('Token refresh not implemented', 501);
   }
 
-  // ---- Token helpers --------------------------------------------------------
+  // --------------------------- Token helpers ---------------------------------
 
   setToken(token: string): void {
     if (typeof window !== 'undefined') {
@@ -210,9 +257,7 @@ class ApiService {
     return !!this.getToken();
   }
 }
-
-// Export a singleton instance
 export const apiService = new ApiService();
 
-// Export the class for testing or custom instances
-export { ApiService };
+// Usage example (uncomment to use):
+// apiService.login({ email: '
