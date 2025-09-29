@@ -6,7 +6,15 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./next-intl.config.ts");
 
 const nextConfig: NextConfig = {
-  // ...any other Next.js options you use
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination:
+          "https://nativeapi-h8e7h4cgc6gpgbea.northeurope-01.azurewebsites.net/api/:path*",
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
