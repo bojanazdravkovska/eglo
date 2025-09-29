@@ -1,4 +1,5 @@
-const API_BASE_URL = 'http://localhost:3000/api' // Force local API routes
+const DEFAULT_API_BASE =
+  'https://nativeapi-h8e7h4cgc6gpgbea.northeurope-01.azurewebsites.net/api';// Force local API routes
 
 // Updated interfaces to match the new Eglo API
 export interface LoginRequest {
