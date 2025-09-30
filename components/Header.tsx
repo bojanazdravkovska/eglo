@@ -55,10 +55,15 @@ export function Header({ noPadding = false }: HeaderProps) {
       <div className="bg-gray-50 py-2 px-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center text-sm text-gray-600">
           <div className="flex items-center gap-2 md:gap-4">
-            <div className="flex items-center gap-1">
+            <a 
+              href="https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUqCAgBEAAYFhgeMgYIABBFGDkyCAgBEAAYFhgeMg0IAhAAGIsDGIAEGKIEMg0IAxAAGIsDGIAEGKIEMgoIBBAAGIsDGO8FMgoIBRAAGIsDGO8FMgoIBhAAGIsDGO8F0gEINjE3NWoxajeoAgCwAgA&um=1&ie=UTF-8&fb=1&gl=mk&sa=X&geocode=Ke9lSzamFVQTMWF7CnsiBhyj&daddr=Ul.+Mesta+br.16,+Skopje+1000"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 hover:text-teal-600 transition-colors cursor-pointer"
+            >
               <MapPin className="w-4 h-4" />
               <span className="hidden sm:inline">{t("topBar.findStore")}</span>
-            </div>
+            </a>
             <span className="hidden sm:inline">|</span>
             <span className="hidden md:inline">
               {t("topBar.customerSupport")}

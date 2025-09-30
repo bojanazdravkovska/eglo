@@ -207,7 +207,7 @@
     "actions": {
       "login": "Најави се",
       "logout": "Одјави се",
-      "cart": "Количка"
+      "cart": "Кошничка"
     }
   },
   "footer": {
@@ -1074,6 +1074,8 @@
     "microsoft": "Microsoft",
     "dontHaveAccount": "Немате сметка?",
     "signUp": "Регистрирај се",
+    "showPassword": "Прикажи лозинка",
+    "hidePassword": "Сокриј лозинка",
     "placeholders": {
       "email": "Внесете ја вашата е-пошта",
       "password": "Внесете ја вашата лозинка"
