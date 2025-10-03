@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, MapPin, User, ShoppingCart, LogOut } from "lucide-react";
+import { Search, MapPin, User, ShoppingCart, LogOut, Menu } from "lucide-react";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import LocaleSwitcher from "./LanguageSwitcher";
@@ -82,6 +82,14 @@ export function Header({ noPadding = false }: HeaderProps) {
       <div className={`py-4 ${noPadding ? "px-0" : "px-4"}`}>
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="md:hidden p-2 mr-2 rounded hover:bg-gray-100"
+              aria-label="Open menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
             {/* Logo */}
             <Link href={`/${locale}`} className="flex items-center">
               <Image
